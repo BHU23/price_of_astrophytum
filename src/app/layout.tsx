@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
+import { useEffect } from "react";
+import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,12 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header></Header>
-        <div className="container px-6 py-4 mx-auto">
-          <div className="lg:flex lg:items-center lg:justify-between">
-            <div className="flex items-center justify-between">{children}</div>
+        <Providers>
+          <Header />
+          <div className="container px-6 py-4 mx-auto">
+                {children}
           </div>
-        </div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
