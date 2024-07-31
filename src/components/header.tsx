@@ -17,8 +17,6 @@ export default function Header() {
                 alt="Logo"
               />
             </a>
-
-            {/* Mobile menu button */}
             <div className="flex md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
@@ -113,16 +111,14 @@ export default function Header() {
                     strokeLinejoin="round"
                   />
                 </svg>
-
                 <span className="absolute top-0 left-0 p-1 text-xs text-white bg-blue-500 rounded-full"></span>
               </a> */}
-              <div></div>
-              <a
+              
+              <div
                 className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-                href="#"
               >
                 <ThemeSwitch />
-              </a>
+              </div>
             </div>
           </div>
         </div>
