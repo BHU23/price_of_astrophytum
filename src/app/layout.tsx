@@ -19,8 +19,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header></Header>
         <div className="container px-6 py-4 mx-auto">
-          <div className="lg:flex lg:items-center lg:justify-between">
-            <div className="flex items-center justify-between">{children}</div>
+          <div className="lg:flex lg:items-center justify-center">
+            <div className="flex items-center">{children}</div>
           </div>
         </div>
       </body>
