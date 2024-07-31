@@ -1,5 +1,4 @@
-import { DiVim } from "react-icons/di";
-import Line from "./line";
+
 interface TitlePageProp {
   name: string;
 }
