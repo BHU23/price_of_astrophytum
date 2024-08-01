@@ -93,7 +93,7 @@ export default function InputUploadImage({
         //   alt="Preview"
         //   className="w-full h-96 mt-4 border-2 border-gray-300 rounded-lg object-cover"
         // />
-        <div className="flex items-center justify-center w-full h-72 sm:h-96 md:h-96 border-gray-300 cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 rounded-lg">
+        <div className="flex items-center justify-center w-full h-72 sm:h-96 md:h-96 border-2 border-gray-300 cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 rounded-lg">
           <img
             src={imagePreview}
             alt="Preview"
