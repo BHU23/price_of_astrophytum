@@ -5,6 +5,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { useEffect } from "react";
 import { Providers } from "./providers";
+import { GlobalProvider } from "@/context/useGoble";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,13 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <Header />
-          <div className="container px-6 py-4 mx-auto w-full h-auto ">
-            {children}
-          </div>
-          <Footer />
-        </Providers>
+        <GlobalProvider>
+          <Providers>
+            <Header />
+            <div className="container px-6 py-4 mx-auto w-full h-auto ">
+              {children}
+            </div>
+            <Footer />
+          </Providers>
+        </GlobalProvider>
       </body>
     </html>
   );
