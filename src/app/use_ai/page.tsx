@@ -55,7 +55,7 @@ export default function UseAI() {
       <div className="flex flex-col md:flex-row md:justify-center md:flex-wrap my-4 gap-4 lg:gap-8">
         <div className="w-full lg:w-[46%]">
           {imagePreviewdisplay ? (
-            <div className="flex items-center justify-center w-full h-72 sm:h-96 md:h-[500px]  border-2 border-gray-300  rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+            <div className="flex items-center justify-center w-full h-72 sm:h-96 md:h-96  border-2 border-gray-300  rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
               {" "}
               <img
                 src={imagePreviewdisplay}
