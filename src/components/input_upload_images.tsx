@@ -12,11 +12,17 @@ export default function InputUploadImages({
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      onFileChange(previewUrl);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          console.log("reader.result"+reader.result);
+          onFileChange(reader.result); //
+        }
+      };
+      reader.readAsDataURL(file);
     }
   };
-
+  
   return (
     <div>
       <label

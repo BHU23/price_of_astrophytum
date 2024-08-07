@@ -8,12 +8,30 @@ import TitleTopic from "@/components/title_topic";
 import TotalPrice from "@/components/total_price";
 import UploadImages from "@/components/upload_images";
 import { useGlobal } from "@/context/useGoble";
+import { DiVim } from "react-icons/di";
+
+interface ClassesInterface {
+  total_max: number;
+  total_min: number;
+  className: string; // Changed from String to string
+}
+
+interface PredictionHistorysInterface {
+  image: string; // Changed from String to string
+  class: ClassesInterface;
+}
 
 export default function UseAI() {
   const { predictions } = useGlobal();
+  const [predictionHistorys, setPredictionHistory] = useState<
+    PredictionHistorysInterface[]
+  >([]);
+  const [loading, setLoading] = useState(false);
   const [imagePreviewdisplay, setImagePreviewdisplay] = useState<string | null>(
     null
   );
+  const [imagePredictionHistory, setImagePredictionHistory] =
+    useState<PredictionHistorysInterface | null>(null);
   const [images, setImages] = useState<string[]>([predictions]);
 
   const handleImagePreviewDisplay = (imagePreview: string) => {
@@ -22,12 +40,71 @@ export default function UseAI() {
 
   const handleFileChange = (previewUrl: string) => {
     setImages((prev) => [previewUrl, ...prev]);
+    if (images.length > 0) {
+      console.log("handleUpload"+images.length);
+      handleUpload(previewUrl);
+    }
   };
 
   const handleDelete = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
+    setPredictionHistory((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const handleAddPredictionHistory = (data: PredictionHistorysInterface) => {
+    setPredictionHistory((prev) => [data, ...prev]);
+    setImagePredictionHistory(data);
+  };
+  const handleSetPredictionHistory = (index: number) => {
+    console.log("index", index);
+    console.log("predictionHistorys", predictionHistorys);
+    setImagePredictionHistory(predictionHistorys[index]);
+  };
+
+  const handleUpload = async (image :string) => {
+    if (!image) return;
+
+    try {
+      console.log("handleUpload");
+      setLoading(true);
+      const apiUrl = "http://127.0.0.1:8000/api/history-predictions/";
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ image: image }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      const newPrediction: PredictionHistorysInterface = {
+        image: image,
+        class: {
+          className: data.className,
+          total_min: data.total_min,
+          total_max: data.total_max,
+        },
+      };
+
+      console.log("data", data);
+      const { className, total_min, total_max } = data;
+      console.log("Class Name:", className);
+      console.log("Total Min Price:", total_min);
+      console.log("Total Max Price:", total_max);
+      console.log("newPrediction:", newPrediction);
+
+      handleAddPredictionHistory(newPrediction);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
   useEffect(() => {
     if (images.length > 0) {
       if (!imagePreviewdisplay || !images.includes(imagePreviewdisplay)) {
@@ -37,7 +114,14 @@ export default function UseAI() {
       setImagePreviewdisplay("");
     }
   }, [images, imagePreviewdisplay]);
+  useEffect(() => {
+    if (images.length > 0) {
+      handleUpload(images[images.length - 1]);
+    }
+    
+  }, [predictions]);
 
+  console.log()
   return (
     <div className="w-full h-auto lg:h-screen">
       <div className="flex justify-center items-center">
@@ -47,6 +131,7 @@ export default function UseAI() {
       <div className="flex flex-row gap-4 items-center justify-start my-8">
         <UploadImages
           onsetImagePreviewdisplay={handleImagePreviewDisplay}
+          onsetPredictionHistorysPreviewdisplay={handleSetPredictionHistory}
           onsetImages={handleFileChange}
           handleDelete={handleDelete}
           imagePreviews={images}
@@ -116,16 +201,31 @@ export default function UseAI() {
               <TitleTopic name="Types" />
               <Line />
             </div>
-            <div className="flex flex-col h-auto lg:h-min-80 py-4 justify-start">
-              <BoxType key="normal" typeName="normal" price={100} />
-              <BoxType key="rensri" typeName="rensri" price={100} />
+            {loading && <div>loading...</div>}
+            {!loading && (
+              <>
+                <div className="flex flex-col h-auto lg:h-min-80 py-4 justify-start">
+                  {/* {imagePredictionHistory?.class.map(() => {})} */}
+                  <BoxType
+                    key={imagePredictionHistory?.class.className}
+                    typeName={imagePredictionHistory?.class.className ?? ""}
+                    price_min={imagePredictionHistory?.class.total_min ?? 0}
+                    price_max={imagePredictionHistory?.class.total_max ?? 0}
+                  />
+                  {/* <BoxType key="rensri" typeName="rensri" price={100} />
               <BoxType key="starshape" typeName="starshape" price={100} />
-              <BoxType key="v_type" typeName="v_type" price={200} />
-            </div>
-            <div className="flex-none h-[10%]">
-              <Line />
-              <TotalPrice total="800" />
-            </div>
+              <BoxType key="v_type" typeName="v_type" price={200} /> */}
+                </div>
+                <div className="flex-none h-[10%]">
+                  <Line />
+                  <TotalPrice
+                    total="800"
+                    price_min={imagePredictionHistory?.class.total_min ?? 0}
+                    price_max={imagePredictionHistory?.class.total_max ?? 0}
+                  />
+                </div>{" "}
+              </>
+            )}
           </div>
         </div>
       </div>

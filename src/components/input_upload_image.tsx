@@ -24,23 +24,30 @@ export default function InputUploadImage({
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      setImagePreview(previewUrl);
-      setVideoStatus(false); 
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          console.log("reader.result"+reader.result);
+          setImagePreview(reader.result); // This will be the Base64 string
+          setVideoStatus(false);
+        }
+      };
+      reader.readAsDataURL(file);
     }
   };
+
 
   const handleUpload = async () => {
     if (!imagePreview) return;
 
     try {
-      console.error("imagePreview", imagePreview);
       setPredictions(imagePreview);
       router.push("/use_ai");
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   };
+
 
   const openCamera = async () => {
     setVideoStatus(true);
@@ -87,11 +94,14 @@ export default function InputUploadImage({
           canvasRef.current.height
         );
         const dataUrl = canvasRef.current.toDataURL("image/png");
-        setImagePreview(dataUrl);
-        setVideoStatus(false); 
+        console.log(dataUrl);
+        setImagePreview(dataUrl); 
+        setVideoStatus(false);
       }
     }
+    closeCamera();
   };
+
 
   useEffect(() => {
     return () => {

@@ -12,7 +12,7 @@ export default function Home() {
         <Line />
         <div className="flex flex-col md:flex-row md:justify-center md:flex-wrap my-8 gap-4 lg:gap-8">
           <div className="w-full lg:w-[46%]">
-            <InputUploadImage nameButton="Uploand Image" />
+            <InputUploadImage nameButton="Upload Image" />
           </div>
         </div>
       </div>
