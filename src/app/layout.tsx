@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
-import Footer from "@/components/footer";
-import { useEffect } from "react";
 import { Providers } from "./providers";
 import { GlobalProvider } from "@/context/useGoble";
 const inter = Inter({ subsets: ["latin"] });
@@ -24,10 +22,12 @@ export default function RootLayout({
         <GlobalProvider>
           <Providers>
             <Header />
-            <div className="container px-6 py-4 mx-auto w-full h-auto ">
-              {children}
+            <div className="flex pt-20 w-full h-auto ">
+              <div className="w-full h-auto ">
+                {children}
+                {/* <Footer /> */}
+              </div>
             </div>
-            <Footer />
           </Providers>
         </GlobalProvider>
       </body>

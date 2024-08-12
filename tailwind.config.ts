@@ -17,15 +17,18 @@ const config: Config = {
       // },
       colors: {
         background: "rgba(var(--background))",
-        border: "rgba(var(--border))",
-        card: "rgba(var(--card))",
+        // border: "rgba(var(--border))",
+        card: "var(--card)",
+        border: "var(--border)",
         "copy-primary": "rgba(var(--copy-primary))",
         "copy-secondary": "rgba(var(--copy-secondary))",
-        cta: "rgba(var(--cta))",
-        "cta-active": "rgba(var(--cta-active))",
-        "cta-text": "rgba(var(--cta-text))",
+        cta: "var(--cta)",
+        "cta-active": "var(--cta-active)",
+        "cta-text": "var(--cta-text)",
 
-        grape: "rgba(var(--grape))",
+        pear: "var(--pear)",
+        tan: "var(--tan)",
+        btn: "var(--btn)",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -35,6 +38,6 @@ const config: Config = {
     },
   },
   plugins: [],
-  darkMode: 'class',
+  darkMode: "class",
 };
 export default config;

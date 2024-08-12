@@ -1,21 +1,57 @@
-import InputUploadImage from "@/components/input_upload_image";
-import Line from "@/components/line";
-import TitlePage from "@/components/title_page";
+import BoxLanding from "@/components/box_landing";
+import Footer from "@/components/footer";
+
 
 export default function Home() {
   return (
     <main className="h-screen">
-      <div className="w-full h-auto lg:h-screen">
-        <div className="flex justify-center items-center">
-          <TitlePage name="Hi! I CAN HELP YOU." />
+      <div className="w-full h-[90%] flex flex-col justify-center items-center gap-4">
+        <div className="flex flex-row items-center justify-between">
+          <img
+            className="w-auto h-20"
+            src={
+              "https://img2.pic.in.th/pic/Minimalist_Mascot_Camera_Logo-removebg-preview2c.png"
+            }
+            alt="Logo"
+          />
+
+          <img
+            className="w-auto h-20"
+            src={
+              "https://img5.pic.in.th/file/secure-sv1/Remove-bg.ai_172319125922822.png"
+            }
+            alt=""
+          />
         </div>
-        <Line />
-        <div className="flex flex-col md:flex-row md:justify-center md:flex-wrap my-8 gap-4 lg:gap-8">
-          <div className="w-full lg:w-[46%]">
-            <InputUploadImage nameButton="Upload Image" />
-          </div>
+        <div className="text-cta-text font-medium text-lg">
+          <h1>This is AI for your Astrophytum asterias nudum.</h1>
+        </div>
+        <div className="text-cta-text  text-center">
+          <span>
+            Upload photos of Astrophytum Asterias Nudum to this website for
+            instant identification and price estimation. Perfect for cactus
+            enthusiasts and collectors.
+          </span>
+        </div>
+        <div className="flex justify-between flex-col sm:flex-row">
+          <BoxLanding
+            Name="Classification"
+            LinkTo="/use_ai"
+            Description="Prediction of Price Astrophytum of Nudun."
+          />
+          <BoxLanding
+            Name="Prompt"
+            LinkTo="/use_ai"
+            Description="Prompt for texts to help your write posts sale cactus."
+          />
+          <BoxLanding
+            Name="Posts"
+            LinkTo="/posts"
+            Description="You can automated create posts to yours Facebook."
+          />
         </div>
       </div>
+      <Footer />
     </main>
   );
 }
