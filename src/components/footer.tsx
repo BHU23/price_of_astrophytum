@@ -1,16 +1,33 @@
 export default function Footer() {
     return (
         <div>
-            <footer className="bg-white dark:bg-gray-900">
-                <div className="container p-6 mx-auto">
-                    <div className="lg:flex">
-                        <div className="w-full -mx-6 lg:w-2/5">
+            <footer className="bg-white dark:bg-card shadow">
+                <div className="container p-6  max-w-full">
+                    <div className="lg:flex justify-between">
+                        <div className="-mx-6 lg:w-2/6">
                             <div className="px-6">
-                                <a href="#">
-                                    <img className="w-auto h-7" src="https://merakiui.com/images/full-logo.svg" alt="" />
-                                </a>
+                                <div className="flex flex-row items-center">
+                                    <a href="/">
+                                        <img
+                                            className="w-auto h-12 sm:h-14"
+                                            src={
+                                                "https://img2.pic.in.th/pic/Minimalist_Mascot_Camera_Logo-removebg-preview2c.png"
+                                            }
+                                            alt="Logo"
+                                        />
+                                    </a>
+                                    <a href="/">
+                                        <img
+                                            className="w-auto h-12 sm:h-14"
+                                            src={
+                                                "https://img5.pic.in.th/file/secure-sv1/Remove-bg.ai_172319125922822.png"
+                                            }
+                                            alt=""
+                                        />
+                                    </a>
+                                </div>
 
-                                <p className="max-w-sm mt-2 text-gray-500 dark:text-gray-400">Upload photos of Astrophytum Asterias Nudum to this website for instant identification and price estimation. Perfect for cactus enthusiasts and collectors.</p>
+                                <p className="max-w-base mt-2 text-gray-500 dark:text-gray-400">Upload photos of Astrophytum Asterias Nudum to this website for instant identification and price estimation. Perfect for cactus enthusiasts and collectors.</p>
 
                                 <div className="flex mt-6 -mx-2">
                                     <a href="#"
@@ -46,40 +63,44 @@ export default function Footer() {
                             </div>
                         </div>
 
-                        <div className=" mt-6 lg:mt-0 lg:flex-1">
+
+                        <div className=" mt-6 lg:mt-0 lg:flex-1 pt-4">
                             <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                                 <div>
-                                    <div className="flex text-gray-700 uppercase dark:text-white">
-                                        <img className="w-auto h-9 pr-2 mb-2" src="https://www.wiki3.th-th.nina.az/image/aHR0cHM6Ly93d3cud2lraTMudGgtdGgubmluYS5hei9pbWFnZS9hSFIwY0hNNkx5OTFjR3h2WVdRdWQybHJhVzFsWkdsaExtOXlaeTkzYVd0cGNHVmthV0V2ZEdndk55ODNZaTlUVlZSZlRFOUhUeTV3Ym1jL01qQXlNakF6TURReE9URTJNVFk9LnBuZw==.png" />
+                                    <div className="flex text-lg text-gray-700 uppercase dark:text-white">
+                                        <img className="w-auto h-10 pr-2 mb-2" src="https://www.wiki3.th-th.nina.az/image/aHR0cHM6Ly93d3cud2lraTMudGgtdGgubmluYS5hei9pbWFnZS9hSFIwY0hNNkx5OTFjR3h2WVdRdWQybHJhVzFsWkdsaExtOXlaeTkzYVd0cGNHVmthV0V2ZEdndk55ODNZaTlUVlZSZlRFOUhUeTV3Ym1jL01qQXlNakF6TURReE9URTJNVFk9LnBuZw==.png" />
                                         SURANAREE UNIVERSITY OF TECHNOLOGY
                                     </div>
 
-                                    <div className="block mt-2 text-sm text-gray-600 dark:text-gray-400 ">111 University Avenue Muang</div>
-                                    <div className="block  text-sm text-gray-600 dark:text-gray-400 ">Nakhon Ratchasima 30000 Thailand</div>
-                                    <div className="block  text-sm text-gray-600 dark:text-gray-400 ">0-4422-3000</div>
+                                    <div className="block text-base text-gray-600 dark:text-gray-400 ">111 University Avenue Muang</div>
+                                    <div className="block  text-base text-gray-600 dark:text-gray-400 ">Nakhon Ratchasima 30000 Thailand</div>
+                                    <div className="block  text-base text-gray-600 dark:text-gray-400 ">0-4422-3000</div>
                                 </div>
 
                                 <div className="mr-2">
-                                    <h3 className="text-gray-700 uppercase dark:text-white mb-5">Advisor</h3>
-                                    <div className="block mt-2 text-sm text-gray-600 dark:text-gray-400">ผู้ช่วยศาสตราจารย์ ดร. ศรัญญา
+                                    <h3 className="text-gray-700 uppercase dark:text-white mb-5 text-lg">Advisor</h3>
+                                    <div className="block text-base text-gray-600 dark:text-gray-400">ผู้ช่วยศาสตราจารย์ ดร. ศรัญญา
                                         กาญจนวัฒนา</div>
-                                    <div className="block  text-sm text-gray-600 dark:text-gray-400 ">044-224447</div>
-                                    <div className="block  text-sm text-gray-600 dark:text-gray-400 "> sarunya.k@sut.ac.th , sarunya.k@g.sut.ac.th</div>
+                                    <div className="block  text-base text-gray-600 dark:text-gray-400 ">044-224447</div>
+                                    <div className="block  text-base text-gray-600 dark:text-gray-400 "> sarunya.k@sut.ac.th , sarunya.k@g.sut.ac.th</div>
                                 </div>
 
 
                                 <div>
-                                    <h3 className="text-gray-700 uppercase dark:text-white mb-5">Contact</h3>
-                                    
-                                    <div>
-                                        <div className="block mt-2 text-sm text-gray-600 dark:text-gray-400">นายพีรณัฐ สังขวาสี</div>
-                                        <span className="block  text-sm text-gray-600 dark:text-gray-400 hover:underline">+66 88 476 4656</span>
-                                        <span className="block text-sm text-gray-600 dark:text-gray-400 hover:underline">b6403218@g.sut.ac.th</span>
-                                    </div>
-                                    <div>
-                                    <div className="block mt-2 text-sm text-gray-600 dark:text-gray-400">นายภูวดล ศรีธร</div>
-                                        <span className="block  text-sm text-gray-600 dark:text-gray-400 hover:underline">+66 88 476 4656</span>
-                                        <span className="block text-sm text-gray-600 dark:text-gray-400 hover:underline">b6419455@g.sut.ac.th</span>
+                                <h3 className="text-gray-700 uppercase dark:text-white mb-5 text-lg">Contact</h3>
+                                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
+                                        
+
+                                        <div>
+                                            <div className="block  text-base text-gray-600 dark:text-gray-400">นายพีรณัฐ สังขวาสี</div>
+                                            <span className="block  text-base text-gray-600 dark:text-gray-400 hover:underline">+66 88 476 4656</span>
+                                            <span className="block text-base text-gray-600 dark:text-gray-400 hover:underline">b6403218@g.sut.ac.th</span>
+                                        </div>
+                                        <div>
+                                            <div className="block text-base text-gray-600 dark:text-gray-400">นายภูวดล ศรีธร</div>
+                                            <span className="block  text-base text-gray-600 dark:text-gray-400 hover:underline">+66 88 476 4656</span>
+                                            <span className="block text-base text-gray-600 dark:text-gray-400 hover:underline">b6419455@g.sut.ac.th</span>
+                                        </div>
                                     </div>
 
                                 </div>
