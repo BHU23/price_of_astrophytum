@@ -4,9 +4,9 @@ export default function Footer() {
             <footer className="bg-white dark:bg-card shadow">
                 <div className="container p-6  max-w-full">
                     <div className="lg:flex justify-between">
-                        <div className="-mx-6 lg:w-2/6">
+                        <div className="-mx-6 lg:w-2/6 h-full">
                             <div className="px-6">
-                                <div className="flex flex-row items-center">
+                                <div className="flex flex-row items-center h-full">
                                     <a href="/">
                                         <img
                                             className="w-auto h-12 sm:h-14"
@@ -88,13 +88,12 @@ export default function Footer() {
 
                                 <div>
                                 <h3 className="text-gray-700 uppercase dark:text-white mb-5 text-lg">Contact</h3>
-                                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
-                                        
-
-                                        <div>
-                                            <div className="block  text-base text-gray-600 dark:text-gray-400">นายพีรณัฐ สังขวาสี</div>
-                                            <span className="block  text-base text-gray-600 dark:text-gray-400 hover:underline">+66 88 476 4656</span>
-                                            <span className="block text-base text-gray-600 dark:text-gray-400 hover:underline">b6403218@g.sut.ac.th</span>
+                                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-1">
+                                
+                                        <div className="flex flex-col">
+                                            <div className="block text-base text-gray-600 dark:text-gray-400">นายพีรณัฐ สังขวาสี</div>
+                                            <span className="block text-base text-gray-600 dark:text-gray-400 hover:underline">+66 88 476 4656</span>
+                                            <span className=" text-base text-gray-600 dark:text-gray-400 hover:underline">b6403218@g.sut.ac.th</span>
                                         </div>
                                         <div>
                                             <div className="block text-base text-gray-600 dark:text-gray-400">นายภูวดล ศรีธร</div>
