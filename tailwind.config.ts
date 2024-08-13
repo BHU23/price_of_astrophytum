@@ -24,6 +24,7 @@ const config: Config = {
         "copy-secondary": "rgba(var(--copy-secondary))",
         cta: "var(--cta)",
         "cta-active": "var(--cta-active)",
+        "cta-gray": "var(--cta-gray)",
         "cta-text": "var(--cta-text)",
 
         pear: "var(--pear)",
