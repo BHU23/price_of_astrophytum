@@ -27,11 +27,11 @@ export default function Footer() {
                                     </a>
                                 </div>
 
-                                <p className="max-w-base mt-2 text-cta-text">Upload photos of Astrophytum Asterias Nudum to this website for instant identification and price estimation. Perfect for cactus enthusiasts and collectors.</p>
+                                <p className="max-w-base mt-2 text-cta-gray">Upload photos of Astrophytum Asterias Nudum to this website for instant identification and price estimation. Perfect for cactus enthusiasts and collectors.</p>
 
                                 <div className="flex mt-6 -mx-2">
                                     <a href="#"
-                                        className="mx-2 text-cta-text transition-colors duration-300  hover:text-blue-500 dark:hover:text-blue-400"
+                                        className="mx-2 text-cta-gray transition-colors duration-300  hover:text-blue-500 dark:hover:text-blue-400"
                                         aria-label="Reddit">
                                         <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -41,7 +41,7 @@ export default function Footer() {
                                     </a>
 
                                     <a href="https://www.facebook.com/gdramixcactus"
-                                        className="mx-2 text-cta-text transition-colors duration-300  hover:text-blue-500 dark:hover:text-blue-400"
+                                        className="mx-2 text-cta-gray transition-colors duration-300  hover:text-blue-500 dark:hover:text-blue-400"
                                         aria-label="Facebook">
                                         <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -51,7 +51,7 @@ export default function Footer() {
                                     </a>
 
                                     <a href="https://github.com/BHU23/price_of_astrophytum"
-                                        className="mx-2 ttext-cta-text transition-colors duration-300  hover:text-blue-500 dark:hover:text-blue-400"
+                                        className="mx-2 text-cta-gray transition-colors duration-300  hover:text-blue-500 dark:hover:text-blue-400"
                                         aria-label="Github">
                                         <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -72,17 +72,17 @@ export default function Footer() {
                                         SURANAREE UNIVERSITY OF TECHNOLOGY
                                     </div>
 
-                                    <div className="block text-base text-cta-text ">111 University Avenue Muang</div>
-                                    <div className="block  text-base text-cta-text ">Nakhon Ratchasima 30000 Thailand</div>
-                                    <div className="block  text-base text-cta-text ">0-4422-3000</div>
+                                    <div className="block text-base text-cta-gray ">111 University Avenue Muang</div>
+                                    <div className="block  text-base text-cta-gray ">Nakhon Ratchasima 30000 Thailand</div>
+                                    <div className="block  text-base text-cta-gray ">0-4422-3000</div>
                                 </div>
 
                                 <div className="mr-2">
                                     <h3 className="text-gray-700 uppercase dark:text-white mb-5 text-lg">Advisor</h3>
-                                    <div className="block text-base text-cta-text">ผู้ช่วยศาสตราจารย์ ดร. ศรัญญา
+                                    <div className="block text-base text-cta-gray">ผู้ช่วยศาสตราจารย์ ดร. ศรัญญา
                                         กาญจนวัฒนา</div>
-                                    <div className="block  text-base text-cta-text ">044-224447</div>
-                                    <div className="block  text-base text-cta-text "> sarunya.k@sut.ac.th , sarunya.k@g.sut.ac.th</div>
+                                    <div className="block  text-base text-cta-gray ">044-224447</div>
+                                    <div className="block  text-base text-cta-gray "> sarunya.k@sut.ac.th , sarunya.k@g.sut.ac.th</div>
                                 </div>
 
 
@@ -91,14 +91,14 @@ export default function Footer() {
                                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-1">
                                 
                                         <div className="flex flex-col">
-                                            <div className="block text-base text-cta-text">นายพีรณัฐ สังขวาสี</div>
-                                            <span className="block text-base text-cta-text hover:underline">+66 88 476 4656</span>
-                                            <span className=" text-base text-cta-text hover:underline">b6403218@g.sut.ac.th</span>
+                                            <div className="block text-base text-cta-gray">นายพีรณัฐ สังขวาสี</div>
+                                            <span className="block text-base text-cta-gray hover:underline">+66 88 476 4656</span>
+                                            <span className=" text-base text-cta-gray hover:underline">b6403218@g.sut.ac.th</span>
                                         </div>
                                         <div>
-                                            <div className="block text-base text-cta-text">นายภูวดล ศรีธร</div>
-                                            <span className="block  text-base text-cta-text hover:underline">+66 88 476 4656</span>
-                                            <span className="block text-base text-cta-text hover:underline">b6419455@g.sut.ac.th</span>
+                                            <div className="block text-base text-cta-gray">นายภูวดล ศรีธร</div>
+                                            <span className="block  text-base text-cta-gray hover:underline">+66 88 476 4656</span>
+                                            <span className="block text-base text-cta-gray hover:underline">b6419455@g.sut.ac.th</span>
                                         </div>
                                     </div>
 
@@ -110,7 +110,7 @@ export default function Footer() {
                     <hr className="h-px my-6 bg-gray-200 border-none dark:bg-gray-700" />
 
                     <div>
-                        <p className="text-center text-gray-500 dark:text-gray-400">© Brand 2024 - All rights reserved</p>
+                        <p className="text-center text-cta-gray">© Brand 2024 - All rights reserved</p>
                     </div>
                 </div>
             </footer>
