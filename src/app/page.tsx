@@ -4,9 +4,9 @@ import Footer from "@/components/footer";
 
 export default function Home() {
   return (
-    <main className="h-screen">
-      <div className="w-full h-[90%] flex flex-col justify-center items-center gap-4">
-        <div className="flex flex-row items-center justify-between">
+    <main className="h-screen ">
+      <div className="w-full h-[90%] flex flex-col justify-center items-center gap-4 px-5">
+        <div className="flex flex-row items-center justify-between ">
           <img
             className="w-auto h-20"
             src={

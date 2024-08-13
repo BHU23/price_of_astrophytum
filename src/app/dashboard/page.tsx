@@ -1,6 +1,6 @@
 "use client";
 import Breadcrumb from "@/components/breadcrumbs";
-import generateBreadcrumbLinks from "./hook";
+import generateBreadcrumbLinks from "../hook/hook";
 import { usePathname } from "next/navigation";
 export default function Home() {
   const path = usePathname();
