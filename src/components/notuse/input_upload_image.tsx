@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import ButtonUpload from "./button_upload";
-import ButtonReload from "./button_reload";
+import ButtonUpload from "../button_upload";
+import ButtonReload from "../button_reload";
 import { useRouter } from "next/navigation";
 import { useGlobal } from "@/context/useGoble";
 import { FiCamera, FiCrosshair, FiX, FiXCircle } from "react-icons/fi";
@@ -27,7 +27,7 @@ export default function InputUploadImage({
       const reader = new FileReader();
       reader.onloadend = () => {
         if (typeof reader.result === "string") {
-          console.log("reader.result"+reader.result);
+          console.log("reader.result" + reader.result);
           setImagePreview(reader.result); // This will be the Base64 string
           setVideoStatus(false);
         }
@@ -35,7 +35,6 @@ export default function InputUploadImage({
       reader.readAsDataURL(file);
     }
   };
-
 
   const handleUpload = async () => {
     if (!imagePreview) return;
@@ -48,13 +47,11 @@ export default function InputUploadImage({
     }
   };
 
-
   const openCamera = async () => {
     setVideoStatus(true);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       if (videoRef.current) {
-        
         videoRef.current.srcObject = stream;
         videoRef.current.play();
       }
@@ -69,15 +66,15 @@ export default function InputUploadImage({
     }
     setVideoStatus(false);
   };
- const [isTooltipVisible, setTooltipVisible] = useState(false);
+  const [isTooltipVisible, setTooltipVisible] = useState(false);
 
- const handleMouseEnter = () => {
-   setTooltipVisible(true);
- };
+  const handleMouseEnter = () => {
+    setTooltipVisible(true);
+  };
 
- const handleMouseLeave = () => {
-   setTooltipVisible(false);
- };
+  const handleMouseLeave = () => {
+    setTooltipVisible(false);
+  };
 
   const captureImage = () => {
     if (videoRef.current && canvasRef.current) {
@@ -95,13 +92,12 @@ export default function InputUploadImage({
         );
         const dataUrl = canvasRef.current.toDataURL("image/png");
         console.log(dataUrl);
-        setImagePreview(dataUrl); 
+        setImagePreview(dataUrl);
         setVideoStatus(false);
       }
     }
     closeCamera();
   };
-
 
   useEffect(() => {
     return () => {
@@ -198,10 +194,10 @@ export default function InputUploadImage({
 
       <div className="flex flex-row gap-4 items-center justify-center w-full">
         <ButtonUpload name={nameButton} onClick={handleUpload} />
-        <ButtonReload name={"Reload"} setImage={setImagePreview} />
+        {/* <ButtonReload name={"Reload"} setImage={setImagePreview} /> */}
         <button
           onClick={openCamera}
-          className="py-3 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer flex items-center"
+          className="flex items-center justify-center py-3 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer"
         >
           <FiCamera />
         </button>

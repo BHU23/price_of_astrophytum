@@ -1,15 +1,25 @@
+import { MdInfoOutline } from "react-icons/md";
+
 interface BoxTypeProp {
   typeName: string;
   price_min: number;
   price_max: number;
 }
-export default function BoxType({ typeName, price_min, price_max }: BoxTypeProp) {
+export default function BoxType({
+  typeName,
+  price_min,
+  price_max,
+}: BoxTypeProp) {
   return (
-    <div className="flex flex-row justify-between">
-      <div className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800 min-w-32 text-center">
-        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 min-w-32">
-          {typeName}
-        </span>
+    <div className="flex flex-row justify-between flex-wrap gap-5">
+      <div className="relative inline-flex items-center justify-between p-2 text-sm font-medium text-cta-text rounded-lg  min-w-48 h-10 text-center border border-border">
+        {typeName}
+        <div className="relative group">
+          <MdInfoOutline className="w-4 h-4" />
+          <div className="absolute hidden group-hover:block bg-background text-white text-sm rounded py-2 px-4 bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-10">
+            <p className="m-0">Info text</p>
+          </div>
+        </div>
       </div>
       <div className="flex items-center justify-center">
         ฿{price_min}-{price_max}/ต้น

@@ -1,22 +1,23 @@
 "use client";
-
-import { useEffect, useState } from "react";
-import BoxType from "@/components/box_type";
-import Line from "@/components/line";
-import TitlePage from "@/components/title_page";
-import TitleTopic from "@/components/title_topic";
-import TotalPrice from "@/components/total_price";
-import UploadImages from "@/components/upload_images";
-import { useGlobal } from "@/context/useGoble";
-import { DiVim } from "react-icons/di";
-import Sidebar from "@/components/sidebar";
-
-
+import Breadcrumb from "@/components/breadcrumbs";
+import generateBreadcrumbLinks from "../hook/hook";
+import { usePathname } from "next/navigation";
+import UploadImage from "@/components/upload_image/upload_image";
+import ResultClasscification from "@/components/upload_image/result_classcification";
 export default function UseAI() {
-  
+  const path = usePathname();
+  const breadcrumbLinks = generateBreadcrumbLinks(path);
   return (
-    <div className="w-full h-auto lg:h-screen">
-      
-    </div>
+    <main className="h-auto lg:h-[calc(100vh-6rem)] w-full flex flex-col gap-5 rounded-lg border border-border overflow-hidden">
+      <Breadcrumb links={breadcrumbLinks} />
+      {/* <div className="w-full h-16 px-5 text-cta-text ">hi</div> */}
+      <div className="flex flex-wrap lg:flex-nowrap w-full h-full p-5 pt-0 gap-5">
+        <UploadImage />
+        <div className="w-[1px] bg-border text-cta hidden lg:block"> </div>
+        <div className="w-full h-full p-5 bg-card rounded-lg">
+          <ResultClasscification></ResultClasscification>
+        </div>
+      </div>
+    </main>
   );
 }

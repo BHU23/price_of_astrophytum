@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import BoxType from "@/components/box_type";
 import Line from "@/components/line";
-import TitlePage from "@/components/title_page";
-import TitleTopic from "@/components/title_topic";
+import TitlePage from "@/components/notuse/title_page";
+import TitleTopic from "@/components/notuse/title_topic";
 import TotalPrice from "@/components/total_price";
-import UploadImages from "@/components/upload_images";
+import UploadImages from "@/components/notuse/upload_images";
 import { useGlobal } from "@/context/useGoble";
 import { DiVim } from "react-icons/di";
 
@@ -41,7 +41,7 @@ export default function UseAI() {
   const handleFileChange = (previewUrl: string) => {
     setImages((prev) => [previewUrl, ...prev]);
     if (images.length > 0) {
-      console.log("handleUpload"+images.length);
+      console.log("handleUpload" + images.length);
       handleUpload(previewUrl);
     }
   };
@@ -61,7 +61,7 @@ export default function UseAI() {
     setImagePredictionHistory(predictionHistorys[index]);
   };
 
-  const handleUpload = async (image :string) => {
+  const handleUpload = async (image: string) => {
     if (!image) return;
 
     try {
@@ -118,10 +118,9 @@ export default function UseAI() {
     if (images.length > 0) {
       handleUpload(images[images.length - 1]);
     }
-    
   }, [predictions]);
 
-  console.log()
+  console.log();
   return (
     <div className="w-full h-auto lg:h-screen">
       <div className="flex justify-center items-center">
@@ -195,39 +194,7 @@ export default function UseAI() {
             </label>
           )}
         </div>
-        <div className="w-full lg:w-[46%] flex flex-col justify-start h-[100%]">
-          <div className="flex flex-col h-full">
-            <div className="flex-none h-[10%]">
-              <TitleTopic name="Types" />
-              <Line />
-            </div>
-            {loading && <div>loading...</div>}
-            {!loading && (
-              <>
-                <div className="flex flex-col h-auto lg:h-min-80 py-4 justify-start">
-                  {/* {imagePredictionHistory?.class.map(() => {})} */}
-                  <BoxType
-                    key={imagePredictionHistory?.class.className}
-                    typeName={imagePredictionHistory?.class.className ?? ""}
-                    price_min={imagePredictionHistory?.class.total_min ?? 0}
-                    price_max={imagePredictionHistory?.class.total_max ?? 0}
-                  />
-                  {/* <BoxType key="rensri" typeName="rensri" price={100} />
-              <BoxType key="starshape" typeName="starshape" price={100} />
-              <BoxType key="v_type" typeName="v_type" price={200} /> */}
-                </div>
-                <div className="flex-none h-[10%]">
-                  <Line />
-                  <TotalPrice
-                    total="800"
-                    price_min={imagePredictionHistory?.class.total_min ?? 0}
-                    price_max={imagePredictionHistory?.class.total_max ?? 0}
-                  />
-                </div>{" "}
-              </>
-            )}
-          </div>
-        </div>
+        
       </div>
     </div>
   );

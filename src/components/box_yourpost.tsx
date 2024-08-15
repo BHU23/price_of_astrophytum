@@ -4,7 +4,7 @@ interface BoxPostInt {
 
 export default function BoxPost({ img }: BoxPostInt) {
   return (
-    <div className="flex flex-col bg-pear rounded-md mr-5 mb-5 w-auto ">
+    <div className="flex flex-col bg-pear rounded-md  w-auto ">
       <div className="flex justify-center items-center">
         <img className="rounded-md object-contain " src={img} />
       </div>
