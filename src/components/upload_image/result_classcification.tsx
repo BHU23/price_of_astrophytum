@@ -28,8 +28,7 @@ interface ResultClassificationProp {}
 
 export default function ResultClassification({}: ResultClassificationProp) {
   const { predictions } = useGlobal();
-  const [predictionHistory, setPredictionHistory] =
-    useState<PredictionHistorysInterface | null>(null);
+ 
   const [loading, setLoading] = useState(false);
   const newPrediction: PredictionHistorysInterface = {
     image: predictions || "",
@@ -37,7 +36,7 @@ export default function ResultClassification({}: ResultClassificationProp) {
       {
         id: 1,
         name: "Example Class",
-        example_image: predictions || "",
+        example_image: predictions,
         extra_value: 0, 
         description: "Example Description",
         price_max: 20000,
@@ -47,7 +46,8 @@ export default function ResultClassification({}: ResultClassificationProp) {
     total_min: 1000,
     total_max: 20000,
   };
-
+  const [predictionHistory, setPredictionHistory] =
+  useState<PredictionHistorysInterface | null>(newPrediction);
 
   const handleUpload = async (image: string) => {
     if (!image) return;
@@ -117,9 +117,11 @@ export default function ResultClassification({}: ResultClassificationProp) {
             <Line />
             <div className="flex flex-col h-auto lg:h-min-80 gap-5 justify-start">
               {predictionHistory?.class.map(
-                ({ name, price_max, price_min }, index) => (
+                ({ name,example_image,description, price_max, price_min }, index) => (
                   <BoxType
                     key={index}
+                    image={predictions}
+                    description={description}
                     typeName={name ?? ""}
                     price_min={price_min}
                     price_max={price_max}

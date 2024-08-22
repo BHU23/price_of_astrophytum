@@ -8,7 +8,7 @@ export default function UseAI() {
   const path = usePathname();
   const breadcrumbLinks = generateBreadcrumbLinks(path);
   return (
-    <main className="h-auto lg:h-[calc(100vh-6rem)] w-full flex flex-col gap-5 rounded-lg border border-border overflow-hidden">
+    <main className="h-auto lg:h-[calc(100vh-6rem)] w-full flex flex-col gap-5 rounded-lg border border-border">
       <Breadcrumb links={breadcrumbLinks} />
       {/* <div className="w-full h-16 px-5 text-cta-text ">hi</div> */}
       <div className="flex flex-wrap lg:flex-nowrap w-full h-full p-5 pt-0 gap-5">
