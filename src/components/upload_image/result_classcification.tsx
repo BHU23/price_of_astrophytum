@@ -13,8 +13,12 @@ interface ClassesInterface {
   example_image: string;
   extra_value: number;
   description: string;
-  price_max: number;
-  price_min: number;
+  price: PriceInterface;
+}
+interface PriceInterface {
+  id: number;
+  value_min: number;
+  value_max: number;
 }
 
 interface PredictionHistorysInterface {
@@ -39,8 +43,11 @@ export default function ResultClassification({}: ResultClassificationProp) {
         example_image: predictions,
         extra_value: 0, 
         description: "Example Description",
-        price_max: 20000,
-        price_min: 1000,
+        price: {
+          id: 1,
+          value_min: 1000,
+          value_max: 20000,
+        },
       },
     ],
     total_min: 1000,
@@ -72,15 +79,18 @@ export default function ResultClassification({}: ResultClassificationProp) {
       console.log("data:", data);
 
       const newPrediction: PredictionHistorysInterface = {
-        image: image, 
+        image: image,
         class: data.classes.map((cls: any) => ({
           id: cls.id,
           name: cls.name,
           example_image: cls.example_image,
           extra_value: cls.extra_value,
           description: cls.description,
-          price_max: cls.price_max,
-          price_min: cls.price_min,
+          price: {
+            id: 1,
+            value_min: cls.price.value_min,
+            value_max: cls.price.value_max,
+          },
         })),
         total_min: data.total_min,
         total_max: data.total_max,
@@ -117,14 +127,14 @@ export default function ResultClassification({}: ResultClassificationProp) {
             <Line />
             <div className="flex flex-col h-auto lg:h-min-80 gap-5 justify-start">
               {predictionHistory?.class.map(
-                ({ name,example_image,description, price_max, price_min }, index) => (
+                ({ name, example_image, description, price }, index) => (
                   <BoxType
                     key={index}
-                    image={predictions}
+                    image={example_image} // Use example_image here
                     description={description}
                     typeName={name ?? ""}
-                    price_min={price_min}
-                    price_max={price_max}
+                    price_min={price.value_min} // Access the nested value
+                    price_max={price.value_max} // Access the nested value
                   />
                 )
               )}
