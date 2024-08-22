@@ -32,8 +32,7 @@ interface ResultClassificationProp {}
 
 export default function ResultClassification({}: ResultClassificationProp) {
   const { predictions } = useGlobal();
-  const [predictionHistory, setPredictionHistory] =
-    useState<PredictionHistorysInterface | null>(null);
+ 
   const [loading, setLoading] = useState(false);
   const newPrediction: PredictionHistorysInterface = {
     image: predictions || "",
@@ -41,8 +40,8 @@ export default function ResultClassification({}: ResultClassificationProp) {
       {
         id: 1,
         name: "Example Class",
-        example_image: predictions || "",
-        extra_value: 0,
+        example_image: predictions,
+        extra_value: 0, 
         description: "Example Description",
         price: {
           id: 1,
@@ -54,6 +53,8 @@ export default function ResultClassification({}: ResultClassificationProp) {
     total_min: 1000,
     total_max: 20000,
   };
+  const [predictionHistory, setPredictionHistory] =
+  useState<PredictionHistorysInterface | null>(newPrediction);
 
   const handleUpload = async (image: string) => {
     if (!image) return;
@@ -125,14 +126,18 @@ export default function ResultClassification({}: ResultClassificationProp) {
             <TitleTopic name="Types" />
             <Line />
             <div className="flex flex-col h-auto lg:h-min-80 gap-5 justify-start">
-              {predictionHistory?.class.map((cls, index) => (
-                <BoxType
-                  key={index}
-                  typeName={cls.name ?? ""}
-                  price_min={cls.price.value_min}
-                  price_max={cls.price.value_max}
-                />
-              ))}
+              {predictionHistory?.class.map(
+                ({ name, example_image, description, price }, index) => (
+                  <BoxType
+                    key={index}
+                    image={example_image} // Use example_image here
+                    description={description}
+                    typeName={name ?? ""}
+                    price_min={price.value_min} // Access the nested value
+                    price_max={price.value_max} // Access the nested value
+                  />
+                )
+              )}
             </div>
             <Line />
             <div className="flex-none h-[10%] ">

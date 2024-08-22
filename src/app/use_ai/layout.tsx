@@ -22,7 +22,7 @@ export default function RootLayout({
       <aside
         className={`fixed top-16 left-0 h-[calc(100vh-4rem)] transition-all ${
           isSidebarOpen ? "w-72" : "w-5"
-        } hidden sm:block overflow-hidden`}
+        } hidden sm:block `}
       >
         {isSidebarOpen && <Sidebar />}
         
