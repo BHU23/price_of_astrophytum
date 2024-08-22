@@ -23,9 +23,10 @@ export default function Home() {
             alt=""
           />
         </div>
-        <div className="text-cta-text font-medium text-lg">
+        <div className="text-cta-text font-medium text-lg overflow-hidden border-r-2 border-cta-text whitespace-nowrap animate-typing">
           <h1>This is AI for your Astrophytum asterias nudum.</h1>
         </div>
+
         <div className="text-cta-text  text-center">
           <span>
             Upload photos of Astrophytum Asterias Nudum to this website for

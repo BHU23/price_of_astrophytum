@@ -5,6 +5,7 @@ import "../globals.css";
 import Footer from "@/components/footer";
 import Sidebar from "@/components/sidebar";
 import { IoCodeOutline } from "react-icons/io5";
+import { useGlobal } from "@/context/useGoble";
 
 export default function RootLayout({
   children,
@@ -12,6 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { isOpen, setIsOpen } = useGlobal();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -20,14 +22,16 @@ export default function RootLayout({
   return (
     <div className="flex flex-1">
       <aside
-        className={`fixed top-16 left-0 h-[calc(100vh-4rem)] transition-all ${
-          isSidebarOpen ? "w-72" : "w-5"
-        } hidden sm:block `}
+        className={`fixed top-14 sm:top-16 left-0 sm:h-[calc(100vh-4rem)] h-[calc(100vh-3.5rem)] transition-all
+          ${isOpen ? "bg-black w-72 block" : "hidden sm:block"}
+          ${isSidebarOpen ? "w-72 " : "w-5 "} 
+         `}
+        
       >
         {isSidebarOpen && <Sidebar />}
-        
+
         <button
-          className={`absolute right-2 top-1/2 w-6 h-6 border border-border rounded-lg flex items-center justify-center text-xs bg-background hover:bg-card transition-all `}
+          className={`absolute right-2 top-1/2 w-6 h-6 border border-border rounded-lg sm:flex items-center justify-center text-xs bg-background hover:bg-card transition-all hidden`}
           onClick={toggleSidebar}
         >
           <IoCodeOutline />

@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import ThemeSwitch from "./ThemeSwitch";
+import { useGlobal } from "@/context/useGoble";
 export default function Header() {
-  // const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen } = useGlobal();
 
   return (
     <div>
@@ -10,29 +11,11 @@ export default function Header() {
         <div className=" py-1 pl-2 flex justify-between items-center">
           {/* <div className=" py-1 md:flex md:justify-between md:items-center"> */}
           <div className="flex flex-row items-center justify-between">
-            <a href="/">
-              <img
-                className="w-auto h-12 sm:h-14"
-                src={
-                  "https://img2.pic.in.th/pic/Minimalist_Mascot_Camera_Logo-removebg-preview2c.png"
-                }
-                alt="Logo"
-              />
-            </a>
-            <a href="/">
-              <img
-                className="w-auto h-12 sm:h-14"
-                src={
-                  "https://img5.pic.in.th/file/secure-sv1/Remove-bg.ai_172319125922822.png"
-                }
-                alt=""
-              />
-            </a>
-            {/* <div className="flex md:hidden">
+            <div className="flex md:hidden gap-2">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400"
+                className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-8 h-8  hover:text-tan ml-3 mr-1 md:my-0"
                 aria-label="toggle menu"
               >
                 {isOpen ? (
@@ -67,12 +50,29 @@ export default function Header() {
                   </svg>
                 )}
               </button>
-            </div> */}
+            </div>
+            <a href="/">
+              <img
+                className="w-auto h-12 sm:h-14"
+                src={
+                  "https://img2.pic.in.th/pic/Minimalist_Mascot_Camera_Logo-removebg-preview2c.png"
+                }
+                alt="Logo"
+              />
+            </a>
+            <a href="/">
+              <img
+                className="w-auto h-12 sm:h-14"
+                src={
+                  "https://img5.pic.in.th/file/secure-sv1/Remove-bg.ai_172319125922822.png"
+                }
+                alt=""
+              />
+            </a>
           </div>
           <div className="flex items-center justify-center ">
-            
             <div className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0">
-             <a href="./dashboard">Sign in</a>
+              <a href="./dashboard">Sign in</a>
             </div>
             <div className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-8 h-8  hover:text-tan ml-1 mr-5 md:my-0">
               <ThemeSwitch />
@@ -84,9 +84,9 @@ export default function Header() {
                 ? "translate-x-0 opacity-100"
                 : "opacity-0 -translate-x-full"
             }`}
-          >
-            <div className="flex flex-col md:flex-row md:mx-6"> */}
-          {/* <a
+          > */}
+          {/* <div className="flex flex-col md:flex-row md:mx-6">
+              <a
                 className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
                 href="/"
               >
@@ -109,11 +109,11 @@ export default function Header() {
                 href="#"
               >
                 About
-              </a> 
-            </div>*/}
+              </a>
+            </div> */}
 
-          {/* <div className="flex flex-col md:flex-row "> */}
-          {/* <a
+          {/* <div className="flex flex-col md:flex-row ">
+              <a
                 className="relative text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300"
                 href="#"
               >
@@ -134,11 +134,11 @@ export default function Header() {
 
                 <span className="absolute top-0 left-0 p-1 text-xs text-white bg-blue-500 rounded-full"></span>
               </a> */}
-          {/*<div className="my-2 transition-colors duration-300 transform text-cta-text  hover:text-tan md:mx-4 md:my-0">
+          {/* <div className="my-2 transition-colors duration-300 transform text-cta-text  hover:text-tan md:mx-4 md:my-0">
                 <ThemeSwitch />
-              </div> 
-             </div>
-          </div> */}
+              </div>  
+            </div>
+          </div>*/}
         </div>
       </nav>
     </div>

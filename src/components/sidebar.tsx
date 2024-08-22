@@ -6,10 +6,11 @@ import { RiFileTextLine } from "react-icons/ri";
 import { HiOutlineSparkles } from "react-icons/hi2";
 import { RiBitCoinLine } from "react-icons/ri";
 import { IoPersonOutline } from "react-icons/io5";
+import { useGlobal } from "@/context/useGoble";
 
 export default function Sidebar() {
   const pathname = usePathname();
-  
+  const { isOpen, setIsOpen } = useGlobal();
   const getLinkClassName = (path:string) => {
     return `flex items-center w-full p-3 transition-all rounded-lg outline-none text-start ${
       pathname === path
@@ -19,12 +20,15 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="px-5 py-4 h-full w-full">
+    <div className="px-5 py-5 sm:py-4 h-full w-full">
       <div className="relative flex h-full w-full max-w-[20rem] flex-col rounded-xl border border-border p-4 ">
         <div className="px-4 pt-2">
           <h5 className="block font-sans text-xs antialiased text-cta">MAIN</h5>
         </div>
-        <nav className="flex flex-col gap-1 p-2 font-sans text-base font-normal">
+        <nav
+          className="flex flex-col gap-1 p-2 font-sans text-base font-normal"
+          onClick={() => setIsOpen(false)}
+        >
           <Link href="/dashboard" className={getLinkClassName("/dashboard")}>
             <div className="grid mr-4 place-items-center">
               <AiOutlineHome />

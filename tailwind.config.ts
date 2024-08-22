@@ -36,6 +36,21 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+
+      keyframes: {
+        typing: {
+          "0%": { width: "0%" },
+          "50%": { width: "422px" },
+          "80%": { width: "422px" }, // Pause at the end of the sentence
+          "100%": { width: "0%" }, // Erase the text
+        },
+        blink: {
+          "50%": { borderColor: "transparent" },
+        },
+      },
+      animation: {
+        typing: "typing 5s steps(40, end) infinite, blink 1s step-end infinite",
+      },
     },
   },
   plugins: [],

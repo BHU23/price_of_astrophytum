@@ -34,27 +34,27 @@ export default function ResultClassification({}: ResultClassificationProp) {
   const { predictions } = useGlobal();
  
   const [loading, setLoading] = useState(false);
-  const newPrediction: PredictionHistorysInterface = {
-    image: predictions || "",
-    class: [
-      {
-        id: 1,
-        name: "Example Class",
-        example_image: predictions,
-        extra_value: 0, 
-        description: "Example Description",
-        price: {
-          id: 1,
-          value_min: 1000,
-          value_max: 20000,
-        },
-      },
-    ],
-    total_min: 1000,
-    total_max: 20000,
-  };
+  // const newPrediction: PredictionHistorysInterface = {
+  //   image: predictions || "",
+  //   class: [
+  //     {
+  //       id: 1,
+  //       name: "Example Class",
+  //       example_image: predictions,
+  //       extra_value: 0, 
+  //       description: "Example Description",
+  //       price: {
+  //         id: 1,
+  //         value_min: 1000,
+  //         value_max: 20000,
+  //       },
+  //     },
+  //   ],
+  //   total_min: 1000,
+  //   total_max: 20000,
+  // };
   const [predictionHistory, setPredictionHistory] =
-  useState<PredictionHistorysInterface | null>(newPrediction);
+  useState<PredictionHistorysInterface | null>();
 
   const handleUpload = async (image: string) => {
     if (!image) return;
@@ -116,9 +116,13 @@ export default function ResultClassification({}: ResultClassificationProp) {
         Result of prediction image
       </span>
       <div className="flex flex-col h-full gap-5">
-        {loading && (
+        {loading ? (
           <div className="transition-all text-center text-cta-gray">
             Loading...
+          </div>
+        ) : (
+          <div className="transition-all text-center text-cta-gray">
+            Please upload the Nudum image.
           </div>
         )}
         {!loading && predictionHistory && (

@@ -20,13 +20,18 @@ export default function BoxType({
         {typeName}
         <div className="relative group">
           <MdInfoOutline className="w-4 h-4" />
-          <div className="absolute hidden group-hover:block h-auto w-64 bg-background rounded-lg left-40 -top-3 transform -translate-x-1/2 ">
-            <div className="max-w-sm rounded overflow-hidden shadow-lg">
-              <img className="w-full rounded-lg " src={image} alt="image"/>
-              <div className="text-start p-5 pt-2">
+          {/* <div className="absolute hidden group-hover:block h-auto w-64 bg-background rounded-lg left-40 -top-3 transform -translate-x-1/2 "> */}
+          <div className="absolute hidden group-hover:block h-auto w-64 bg-background rounded-lg left-4 transform -translate-x-1/2 z-50">
+            <div className="max-w-sm rounded overflow-hidden shadow-lg flex justify-center items-center flex-col p-5">
+              <img
+                className="w-auto h-40 rounded-lg "
+                src={image}
+                alt="image"
+              />
+              <div className="text-start pt-2">
                 <div className="font-bold text-lg my-2">{typeName}</div>
                 <p className="text-cta ">
-                  {description}เกิดจากการผิดรูปด้วยธรรมชาติ เป็นความผิดปกติในการเจริญเติบโตบริเวณยอด โดยมีการโตออกทางด้านข้าง ทำให้มีลักษณะคล้ายพัดหรือหงอนไก่          
+                  {description}
                 </p>
               </div>
               {/* <div className="px-6 pt-4 pb-2">
