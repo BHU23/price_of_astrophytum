@@ -13,8 +13,12 @@ interface ClassesInterface {
   example_image: string;
   extra_value: number;
   description: string;
-  price_max: number;
-  price_min: number;
+  price: PriceInterface;
+}
+interface PriceInterface {
+  id: number;
+  value_min: number;
+  value_max: number;
 }
 
 interface PredictionHistorysInterface {
@@ -38,16 +42,18 @@ export default function ResultClassification({}: ResultClassificationProp) {
         id: 1,
         name: "Example Class",
         example_image: predictions || "",
-        extra_value: 0, 
+        extra_value: 0,
         description: "Example Description",
-        price_max: 20000,
-        price_min: 1000,
+        price: {
+          id: 1,
+          value_min: 1000,
+          value_max: 20000,
+        },
       },
     ],
     total_min: 1000,
     total_max: 20000,
   };
-
 
   const handleUpload = async (image: string) => {
     if (!image) return;
@@ -72,15 +78,18 @@ export default function ResultClassification({}: ResultClassificationProp) {
       console.log("data:", data);
 
       const newPrediction: PredictionHistorysInterface = {
-        image: image, 
+        image: image,
         class: data.classes.map((cls: any) => ({
           id: cls.id,
           name: cls.name,
           example_image: cls.example_image,
           extra_value: cls.extra_value,
           description: cls.description,
-          price_max: cls.price_max,
-          price_min: cls.price_min,
+          price: {
+            id: 1,
+            value_min: cls.price.value_min,
+            value_max: cls.price.value_max,
+          },
         })),
         total_min: data.total_min,
         total_max: data.total_max,
@@ -116,16 +125,14 @@ export default function ResultClassification({}: ResultClassificationProp) {
             <TitleTopic name="Types" />
             <Line />
             <div className="flex flex-col h-auto lg:h-min-80 gap-5 justify-start">
-              {predictionHistory?.class.map(
-                ({ name, price_max, price_min }, index) => (
-                  <BoxType
-                    key={index}
-                    typeName={name ?? ""}
-                    price_min={price_min}
-                    price_max={price_max}
-                  />
-                )
-              )}
+              {predictionHistory?.class.map((cls, index) => (
+                <BoxType
+                  key={index}
+                  typeName={cls.name ?? ""}
+                  price_min={cls.price.value_min}
+                  price_max={cls.price.value_max}
+                />
+              ))}
             </div>
             <Line />
             <div className="flex-none h-[10%] ">
