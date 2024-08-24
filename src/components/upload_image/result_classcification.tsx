@@ -56,53 +56,55 @@ export default function ResultClassification({}: ResultClassificationProp) {
   const [predictionHistory, setPredictionHistory] =
   useState<PredictionHistorysInterface | null>();
 
-  const handleUpload = async (image: string) => {
-    if (!image) return;
+ const handleUpload = async (image: string) => {
+   if (!image) return;
 
-    try {
-      setLoading(true);
-      const apiUrl = "http://127.0.0.1:8000/api/history-predictions/";
+   try {
+     const token = localStorage.getItem("token");
+     console.log("Token:", token); // Ensure the token is not null or undefined
 
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ image: image }),
-      });
+     setLoading(true);
+     const apiUrl = "http://127.0.0.1:8000/api/history-predictions/";
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+     const response = await fetch(apiUrl, {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+         Authorization: `Token ${token}`,
+       },
+       body: JSON.stringify({ image: image }),
+     });
 
-      const data = await response.json();
-      console.log("data:", data);
+     console.log(response);
 
-      const newPrediction: PredictionHistorysInterface = {
-        image: image,
-        class: data.classes.map((cls: any) => ({
-          id: cls.id,
-          name: cls.name,
-          example_image: cls.example_image,
-          extra_value: cls.extra_value,
-          description: cls.description,
-          price: {
-            id: 1,
-            value_min: cls.price.value_min,
-            value_max: cls.price.value_max,
-          },
-        })),
-        total_min: data.total_min,
-        total_max: data.total_max,
-      };
+     const data = await response.json();
+     console.log("data:", data);
 
-      setPredictionHistory(newPrediction);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      setLoading(false);
-    }
-  };
+     const newPrediction: PredictionHistorysInterface = {
+       image: image,
+       class: data.classes.map((cls: any) => ({
+         id: cls.id,
+         name: cls.name,
+         example_image: cls.example_image,
+         extra_value: cls.extra_value,
+         description: cls.description,
+         price: {
+           id: 1,
+           value_min: cls.price.value_min,
+           value_max: cls.price.value_max,
+         },
+       })),
+       total_min: data.total_min,
+       total_max: data.total_max,
+     };
+
+     setPredictionHistory(newPrediction);
+     setLoading(false);
+   } catch (error) {
+     console.error("Error uploading image:", error);
+     setLoading(false);
+   }
+ };
 
   useEffect(() => {
     if (predictions) {

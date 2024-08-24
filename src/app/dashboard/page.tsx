@@ -12,14 +12,14 @@ export default function Home() {
       <Breadcrumb links={breadcrumbLinks} />
       <div className="flex pl-5 pr-5 pb-5 w-full flex-col h-full">
         <div className="bg-card w-full flex flex-wrap rounded-lg ">
-          <div className="px-5 py-5 md:w-full xl:w-1/2">
+          <div className="px-5 py-5 w-full md:w-1/2">
             <div className="border-2 border-pear flex-col rounded-md">
               <div className="flex flex-row justify-between p-4">
-                <div>Your Classification</div>
+                <div>Classification</div>
 
                 <div>
                   <svg
-                    className="h-5 w-5 fill-current text-cta-gray transition-colors duration-300"
+                    className="h-5 w-5 fill-current text-tan transition-colors duration-300"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -36,13 +36,13 @@ export default function Home() {
               <div className="flex justify-center pb-8 text-5xl">10</div>
             </div>
           </div>
-          <div className="px-5 py-5 md:w-full xl:w-1/2 ">
+          <div className="px-5 py-5 w-full md:w-1/2 ">
             <div className="border-2 border-pear flex-col rounded-lg">
               <div className="flex flex-row justify-between p-4">
-                <div>Your Posts</div>
+                <div>Posts</div>
                 <div>
                   <a
-                    className=" text-cta-gray transition-colors duration-300 "
+                    className=" text-tan transition-colors duration-300 "
                     aria-label="Facebook"
                   >
                     <svg
@@ -63,7 +63,7 @@ export default function Home() {
         <div className="h-auto w-full bg-card mt-5 rounded-md ">
           <div className="pt-5 pl-5">Your Image Predict</div>
           <hr className="h-px my-6 bg-gray-200 border-none dark:bg-gray-700" />
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 m-5 ">
+          <div className="grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 m-5 ">
             <BoxPost img={imglink} />
             <BoxPost img={imglink} />
             <BoxPost img={imglink} />

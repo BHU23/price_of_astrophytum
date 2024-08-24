@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobal } from "@/context/useGoble";
 
-
 export default function useUploadImage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [videoStatus, setVideoStatus] = useState<boolean>(false);

@@ -1,8 +1,9 @@
-import BoxLogin from "@/components/Box_login";
+import ModelSignInSignUp from "@/components/login/model_signIn_signUp";
 
 export default function Login() {
-  
-  return (  
-    <BoxLogin/>
+  return (
+    <main>
+      <ModelSignInSignUp />
+    </main>
   );
 }

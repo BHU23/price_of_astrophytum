@@ -1,9 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import ThemeSwitch from "./ThemeSwitch";
+import useHeader from "./hook/header.hook";
 import { useGlobal } from "@/context/useGoble";
+import ModelSignInSignUp from "./login/model_signIn_signUp";
 export default function Header() {
-  const { isOpen, setIsOpen } = useGlobal();
+  const { headerItems } = useHeader();
+  const { token,isOpenModel,toggleIsOpenModel } = useGlobal();
 
   return (
     <div>
@@ -11,14 +14,14 @@ export default function Header() {
         <div className=" py-1 pl-2 flex justify-between items-center">
           {/* <div className=" py-1 md:flex md:justify-between md:items-center"> */}
           <div className="flex flex-row items-center justify-between">
-            <div className="flex md:hidden gap-2">
+            <div className="flex sm:hidden gap-2">
               <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => headerItems.setIsOpen(!headerItems.isOpen)}
                 type="button"
                 className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-8 h-8  hover:text-tan ml-3 mr-1 md:my-0"
                 aria-label="toggle menu"
               >
-                {isOpen ? (
+                {headerItems.isOpen ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-6 h-6"
@@ -70,10 +73,13 @@ export default function Header() {
               />
             </a>
           </div>
+
           <div className="flex items-center justify-center ">
-            <div className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0">
-              <a href="./dashboard">Sign in</a>
-            </div>
+            {!token && (
+              <div className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0">
+                <div onClick={() => toggleIsOpenModel()}>Sign in/up</div>
+              </div>
+            )}
             <div className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-8 h-8  hover:text-tan ml-1 mr-5 md:my-0">
               <ThemeSwitch />
             </div>
@@ -111,7 +117,6 @@ export default function Header() {
                 About
               </a>
             </div> */}
-
           {/* <div className="flex flex-col md:flex-row ">
               <a
                 className="relative text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300"
@@ -141,6 +146,11 @@ export default function Header() {
           </div>*/}
         </div>
       </nav>
+      {isOpenModel && (
+        <div className="fixed h-full w-full bg-transparent">
+          <ModelSignInSignUp />
+        </div>
+      )}
     </div>
   );
 }
