@@ -30,6 +30,7 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
   });
   const [token, setToken] = useState(false);
   const [isOpenModel, setIsOpenModel] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpenModel = () => {
     setIsOpenModel(!isOpenModel);
@@ -63,6 +64,8 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
         toggleToken,
         toggleIsOpenModel,
         isOpenModel,
+        setIsOpen,
+        isOpen
       }}
     >
       {children}

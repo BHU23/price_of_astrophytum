@@ -75,12 +75,17 @@ export default function Header() {
           </div>
 
           <div className="flex items-center justify-center ">
-            {!token && (
-              <div className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0">
-                <div onClick={() => toggleIsOpenModel()}>Sign in/up</div>
+            {!token ? (
+              <div
+                onClick={() => toggleIsOpenModel()}
+                className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0"
+              >
+                <div>Sign in/up</div>
               </div>
+            ) : (
+              ""
             )}
-            <div className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-8 h-8  hover:text-tan ml-1 mr-5 md:my-0">
+            <div className="flex items-center justify-center cursor-pointer  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-8 h-8  hover:text-tan ml-1 mr-5 md:my-0">
               <ThemeSwitch />
             </div>
           </div>
