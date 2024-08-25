@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import BoxType from "@/components/box_type";
+import BoxType from "@/components/use_ai/box_type";
 import Line from "@/components/line";
 import TitlePage from "@/components/notuse/title_page";
 import TitleTopic from "@/components/notuse/title_topic";
-import TotalPrice from "@/components/total_price";
+import TotalPrice from "@/components/use_ai/total_price";
 import UploadImages from "@/components/notuse/upload_images";
 import { useGlobal } from "@/context/useGoble";
 import { DiVim } from "react-icons/di";
@@ -194,7 +194,6 @@ export default function UseAI() {
             </label>
           )}
         </div>
-        
       </div>
     </div>
   );

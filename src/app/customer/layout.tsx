@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import "../globals.css";
-import Footer from "@/components/footer";
-import Sidebar from "@/components/sidebar";
+import Footer from "@/components/layout/footer";
+import Sidebar from "@/components/layout/sidebar";
 import { IoCodeOutline } from "react-icons/io5";
 import { useGlobal } from "@/context/useGoble";
 
@@ -14,9 +14,9 @@ export default function RootLayout({
 }>) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { isOpen, setIsOpen } = useGlobal();
-
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+    setIsOpen(false);
   };
 
   return (
@@ -26,7 +26,6 @@ export default function RootLayout({
           ${isOpen ? "bg-black w-72 block" : "hidden sm:block"}
           ${isSidebarOpen ? "w-72 " : "w-5 "} 
          `}
-        
       >
         {isSidebarOpen && <Sidebar />}
 

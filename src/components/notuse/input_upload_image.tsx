@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import ButtonUpload from "../button_upload";
-import ButtonReload from "../button_reload";
+import ButtonUpload from "../button_items";
+import ButtonReload from "../use_ai/button_reload";
 import { useRouter } from "next/navigation";
 import { useGlobal } from "@/context/useGoble";
 import { FiCamera, FiCrosshair, FiX, FiXCircle } from "react-icons/fi";

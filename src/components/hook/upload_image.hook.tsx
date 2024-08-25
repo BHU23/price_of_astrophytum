@@ -3,119 +3,99 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobal } from "@/context/useGoble";
+import { PredictionHistorysInterface } from "@/interface/predictionHistorys.interface";
 
 export default function useUploadImage() {
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [videoStatus, setVideoStatus] = useState<boolean>(false);
-  const { setPredictions } = useGlobal();
-  const router = useRouter();
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+   const { predictions } = useGlobal();
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          console.log("reader.result: " + reader.result);
-          setImagePreview(reader.result); 
-          setVideoStatus(false);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+   const [loading, setLoading] = useState(false);
+   // const newPrediction: PredictionHistorysInterface = {
+   //   image: predictions || "",
+   //   class: [
+   //     {
+   //       id: 1,
+   //       name: "Example Class",
+   //       example_image: predictions,
+   //       extra_value: 0,
+   //       description: "Example Description",
+   //       price: {
+   //         id: 1,
+   //         value_min: 1000,
+   //         value_max: 20000,
+   //       },
+   //     },
+   //   ],
+   //   total_min: 1000,
+   //   total_max: 20000,
+   // };
+   const [predictionHistory, setPredictionHistory] =
+     useState<PredictionHistorysInterface  | null>();
 
-  const handleUpload = async () => {
-    if (!imagePreview) return;
+   const handleUpload = async (image: string) => {
+     if (!image) return;
 
-    try {
-      setPredictions(imagePreview);
-      router.push("/use_ai");
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
+     try {
+       const token = localStorage.getItem("token");
+       console.log("Token:", token); // Ensure the token is not null or undefined
 
-  const openCamera = async () => {
-    setVideoStatus(true);
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-      });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
-      }
-    } catch (error) {
-      console.error("Error accessing camera:", error);
-    }
-  };
+       setLoading(true);
+       const apiUrl = "http://127.0.0.1:8000/api/history-predictions/";
 
-  const closeCamera = () => {
-    if (videoRef.current?.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
-      stream.getTracks().forEach((track) => track.stop());
-    }
-    setVideoStatus(false);
-  };
+       const response = await fetch(apiUrl, {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json",
+           Authorization: `Token ${token}`,
+         },
+         body: JSON.stringify({ image: image }),
+       });
 
-  const [isTooltipVisible, setTooltipVisible] = useState(false);
+       console.log(response);
 
-  const handleMouseEnter = () => {
-    setTooltipVisible(true);
-  };
+       const data = await response.json();
+       console.log("data:", data);
 
-  const handleMouseLeave = () => {
-    setTooltipVisible(false);
-  };
+       const newPrediction: PredictionHistorysInterface = {
+         image: image,
+         class: data.classes.map((cls: any) => ({
+           id: cls.id,
+           name: cls.name,
+           example_image: cls.example_image,
+           extra_value: cls.extra_value,
+           description: cls.description,
+           price: {
+             id: 1,
+             value_min: cls.price.value_min,
+             value_max: cls.price.value_max,
+           },
+         })),
+         total_min: data.total_min,
+         total_max: data.total_max,
+       };
 
-  const captureImage = () => {
-    if (videoRef.current && canvasRef.current) {
-      const context = canvasRef.current.getContext("2d");
-      if (context) {
-        const video = videoRef.current;
-        canvasRef.current.width = video.videoWidth;
-        canvasRef.current.height = video.videoHeight;
-        context.drawImage(
-          video,
-          0,
-          0,
-          canvasRef.current.width,
-          canvasRef.current.height
-        );
-        const dataUrl = canvasRef.current.toDataURL("image/png");
-        console.log(dataUrl);
-        setImagePreview(dataUrl);
-        setVideoStatus(false);
-      }
-    }
-    closeCamera();
-  };
+       setPredictionHistory(newPrediction);
+       setLoading(false);
+     } catch (error) {
+       console.error("Error uploading image:", error);
+       setLoading(false);
+     }
+   };
 
-  useEffect(() => {
-    return () => {
-      const stream = videoRef.current?.srcObject as MediaStream;
-      stream?.getTracks().forEach((track) => track.stop());
-    };
-  }, []);
+   useEffect(() => {
+     if (predictions) {
+       handleUpload(predictions);
+     }
+   }, [predictions]);
+   console.log(predictionHistory);
 
     return {
       uploadImageItem: {
-        imagePreview,
-        videoStatus,
-        videoRef,
-        canvasRef,
-        isTooltipVisible,
-        handleFileChange,
+        predictions,
+        loading,
+        setLoading,
+        predictionHistory,
+        setPredictionHistory,
         handleUpload,
-        openCamera,
-        closeCamera,
-        captureImage,
-        handleMouseEnter,
-        handleMouseLeave,
-        setImagePreview,
       },
     };
 }

@@ -46,7 +46,7 @@ export default function useSignUp() {
         setUserProfile(data.user_profile);
 
         toggleIsOpenModel();
-        router.push("/dashboard");
+        router.push("/customer/dashboard");
         toggleToken(true);
       } else {
         const errorData = await response.json();

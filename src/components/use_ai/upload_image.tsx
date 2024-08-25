@@ -1,12 +1,10 @@
 import { FiCamera, FiXCircle } from "react-icons/fi";
-import ButtonUpload from "../button_upload";
-import ButtonReload from "../button_reload";
-import useUploadImage from "../hook/upload_image.hook";
+import ButtonItems from "../button_items";
+import ButtonReload from "./button_reload";
+import useFormUploadImage from "../hook/form_upload_image.hook";
 
 export default function UploadImage() {
-
-  const { uploadImageItem } = useUploadImage();
-
+  const { useFormUploadImageItem } = useFormUploadImage();
 
   return (
     <div className="w-full lg:min-w-[350px] lg:w-[350px] h-full p-5 pt-2 bg-card text-cta-text rounded-lg">
@@ -31,17 +29,20 @@ export default function UploadImage() {
           Add new image of Nudum
         </span>
         <div>
-          {uploadImageItem.videoStatus ? (
+          {useFormUploadImageItem.videoStatus ? (
             <div className="flex relative flex-col items-center justify-center w-full h-auto border-2 border-border border-dashed rounded-lg cursor-pointer hover:bg-border">
               <video
-                ref={uploadImageItem.videoRef}
+                ref={useFormUploadImageItem.videoRef}
                 className="w-full h-full"
                 autoPlay
                 muted
               />
-              <canvas ref={uploadImageItem.canvasRef} className="hidden" />
+              <canvas
+                ref={useFormUploadImageItem.canvasRef}
+                className="hidden"
+              />
               <button
-                onClick={uploadImageItem.closeCamera}
+                onClick={useFormUploadImageItem.closeCamera}
                 className="absolute top-1 right-1 p-1 bg-gray-200 rounded-full text-gray-700 hover:bg-gray-300"
               >
                 <FiXCircle />
@@ -49,15 +50,15 @@ export default function UploadImage() {
               <button
                 type="button"
                 className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-2.5 bg-gray-100 group rounded-full hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:bg-gray-600 dark:hover:bg-gray-800"
-                onClick={uploadImageItem.captureImage}
-                onMouseEnter={uploadImageItem.handleMouseEnter}
-                onMouseLeave={uploadImageItem.handleMouseLeave}
+                onClick={useFormUploadImageItem.captureImage}
+                onMouseEnter={useFormUploadImageItem.handleMouseEnter}
+                onMouseLeave={useFormUploadImageItem.handleMouseLeave}
                 aria-label="Capture Image"
               >
                 <FiCamera className="w-6 h-6 text-gray-500 dark:text-gray-300" />
                 <span className="sr-only">Capture image</span>
               </button>
-              {uploadImageItem.isTooltipVisible && (
+              {useFormUploadImageItem.isTooltipVisible && (
                 <div
                   role="tooltip"
                   className="absolute z-10 px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm tooltip dark:bg-gray-700"
@@ -72,7 +73,8 @@ export default function UploadImage() {
                 </div>
               )}
             </div>
-          ) : !uploadImageItem.imagePreview && !uploadImageItem.videoStatus ? (
+          ) : !useFormUploadImageItem.imagePreview &&
+            !useFormUploadImageItem.videoStatus ? (
             <div className="flex flex-col items-center justify-center w-full h-56 border-2 border-border border-dashed rounded-lg cursor-pointer hover:bg-border">
               <label
                 htmlFor="dropzone-file"
@@ -108,7 +110,7 @@ export default function UploadImage() {
                   id="dropzone-file"
                   type="file"
                   className="hidden"
-                  onChange={uploadImageItem.handleFileChange}
+                  onChange={useFormUploadImageItem.handleFileChange}
                   accept="image/*"
                 />
               </label>
@@ -116,7 +118,7 @@ export default function UploadImage() {
           ) : (
             <div className="flex flex-col items-center justify-center w-full h-56 border-2 border-border border-dashed rounded-lg cursor-pointer hover:bg-border">
               <img
-                src={uploadImageItem.imagePreview ?? ""}
+                src={useFormUploadImageItem.imagePreview ?? ""}
                 alt="Preview"
                 className="max-h-full max-w-full object-contain"
               />
@@ -137,17 +139,20 @@ export default function UploadImage() {
         </label>
         <ButtonReload
           name={"Reload"}
-          handleFileChange={uploadImageItem.handleFileChange}
+          handleFileChange={useFormUploadImageItem.handleFileChange}
         />
         <div className="flex flex-row gap-5 items-center justify-center w-full">
           <button
-            onClick={uploadImageItem.openCamera}
+            onClick={useFormUploadImageItem.openCamera}
             className="w-full py-3 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center"
           >
             <FiCamera />
           </button>
         </div>
-        <ButtonUpload name={"Upload"} onClick={uploadImageItem.handleUpload} />
+        <ButtonItems
+          name={"Upload"}
+          onClick={useFormUploadImageItem.handleUpload}
+        />
       </div>
     </div>
   );

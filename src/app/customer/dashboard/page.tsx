@@ -1,12 +1,13 @@
 "use client";
-import Breadcrumb from "@/components/breadcrumbs";
+import Breadcrumb from "@/components/layout/breadcrumbs";
 import BoxPost from "@/components/box_yourpost";
-import generateBreadcrumbLinks from "../hook/hook";
+import generateBreadcrumbLinks from "../hook/breadcrum.hook";
 import { usePathname } from "next/navigation";
 export default function Home() {
   const path = usePathname();
   const breadcrumbLinks = generateBreadcrumbLinks(path);
-  const imglink = "https://planetdesert.com/cdn/shop/products/astrophytumasteriasnudum_8_1400x.jpg?v=1659472694";
+  const imglink =
+    "https://planetdesert.com/cdn/shop/products/astrophytumasteriasnudum_8_1400x.jpg?v=1659472694";
   return (
     <main className="min-h-[calc(100vh-6rem)] h-auto w-full flex flex-col gap-5 rounded-lg border border-border overflow-hidden">
       <Breadcrumb links={breadcrumbLinks} />

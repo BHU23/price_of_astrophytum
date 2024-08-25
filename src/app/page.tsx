@@ -1,6 +1,5 @@
 import BoxLanding from "@/components/box_landing";
-import Footer from "@/components/footer";
-
+import Footer from "@/components/layout/footer";
 
 export default function Home() {
   return (
@@ -37,17 +36,17 @@ export default function Home() {
         <div className="flex justify-between flex-col sm:flex-row">
           <BoxLanding
             Name="Classification"
-            LinkTo="/use_ai"
+            LinkTo="/customer/use_ai"
             Description="Prediction of Price Astrophytum of Nudun."
           />
           <BoxLanding
             Name="Prompt"
-            LinkTo="/use_ai"
+            LinkTo="/customer/use_ai"
             Description="Prompt for texts to help your write posts sale cactus."
           />
           <BoxLanding
             Name="Posts"
-            LinkTo="/posts"
+            LinkTo="/customer/posts"
             Description="You can automated create posts to yours Facebook."
           />
         </div>

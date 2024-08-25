@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import ThemeSwitch from "./ThemeSwitch";
-import useHeader from "./hook/header.hook";
+import useHeader from "../hook/header.hook";
 import { useGlobal } from "@/context/useGoble";
-import ModelSignInSignUp from "./login/model_signIn_signUp";
+import ModelSignInSignUp from "../login/model_signIn_signUp";
 export default function Header() {
   const { headerItems } = useHeader();
-  const { token,isOpenModel,toggleIsOpenModel } = useGlobal();
+  const { token, isOpenModel, toggleIsOpenModel } = useGlobal();
 
   return (
     <div>

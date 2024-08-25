@@ -1,6 +1,6 @@
 "use client";
 
-import InputUploadImages from "../input_upload_images";
+import InputUploadImages from "../use_ai/input_upload_images";
 import HistoryUploadImages from "./history_upload_image";
 
 interface UploadImagesProps {

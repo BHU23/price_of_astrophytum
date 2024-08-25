@@ -1,9 +1,9 @@
-interface ButtonUploadProps {
+interface ButtonItemsProps {
   name: string;
   onClick: () => void; // Add onClick prop
 }
 
-export default function ButtonUpload({ name, onClick }: ButtonUploadProps) {
+export default function ButtonItems({ name, onClick }: ButtonItemsProps) {
   return (
     <button
       type="button"
