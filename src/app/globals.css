@@ -20,6 +20,7 @@
   --cta-gray: #a09f9f;
   --cta-active: 124, 58, 237;
   --cta-text: 255, 255, 255;
+  --ring-gray: #000;
 
   background: rgba(var(--background));
 }
@@ -41,6 +42,7 @@
     --cta-gray: #d6d1d1;
     --cta-active: #161A23;
     --cta-text: 255, 255, 255;
+    --ring-gray: #374151;
   
     background: rgba(var(--background));
 }

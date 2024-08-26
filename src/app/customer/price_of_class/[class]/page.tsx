@@ -106,7 +106,7 @@ export default function Class() {
             Description
           </label>
           <textarea
-            className="block w-full h-auto pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer p-2 font-semibold bg-card mr-2 dark:hover:text-white dark:hover:bg-gray-700  dark:focus:ring-gray-700 focus:outline-none focus:z-10 focus:ring-4"
+            className="block w-full h-auto pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer p-2 font-semibold bg-card mr-2 dark:hover:text-white   dark:focus:ring-gray-700 focus:outline-none focus:z-10 focus:ring-4"
             id="description"
             rows={4}
           ></textarea>
@@ -122,7 +122,7 @@ export default function Class() {
             Extra Value:
           </label>
           <input
-            className="block w-full h-10 pr-2 text-sm text-cta-text border border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  dark:placeholder-gray-400 dark:hover:bg-gray-700  dark:focus:ring-gray-700 focus:outline-none focus:z-10 focus:ring-4"
+            className="block w-full h-10 pr-2 text-sm text-cta-text border bg-background border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  placeholder-gray-400  focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
             placeholder="e.g. 60.5"
             required
             type="number"
@@ -168,7 +168,7 @@ export default function Class() {
           </div>
           {!useClassItems.newPriceState ? (
             <input
-              className="block w-full h-10 pr-2 text-sm text-cta-text border border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  dark:placeholder-gray-400 dark:hover:bg-gray-700  dark:focus:ring-gray-700 focus:outline-none focus:z-10 focus:ring-4"
+              className="block w-full h-10 pr-2 text-sm text-cta-text border bg-background border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  placeholder-gray-400  focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
               placeholder="e.g. 60.5"
               required
               type="number"
@@ -183,7 +183,7 @@ export default function Class() {
               >
                 Min Value:
                 <input
-                  className="block w-full h-10 pr-2 text-sm text-cta-text border border-border rounded-lg cursor-pointer corder-gray-300 focus:ring-blue-500 focus:border-blue-500 p-2.5  dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block w-full h-10 pr-2 text-sm text-cta-text border bg-background border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  placeholder-gray-400  focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
                   placeholder="e.g. 60.5"
                   required
                   type="number"
@@ -197,7 +197,7 @@ export default function Class() {
               >
                 Max Value:
                 <input
-                  className="block w-full h-10 pr-2 text-sm text-cta-text border border-border rounded-lg cursor-pointer corder-gray-300 focus:ring-blue-500 focus:border-blue-500 p-2.5  dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block w-full h-10 pr-2 text-sm text-cta-text border bg-background border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  placeholder-gray-400  focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
                   placeholder="e.g. 60.5"
                   required
                   type="number"

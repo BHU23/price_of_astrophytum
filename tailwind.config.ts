@@ -30,6 +30,7 @@ const config: Config = {
         pear: "var(--pear)",
         tan: "var(--tan)",
         btn: "var(--btn)",
+        ring_gray: "var(--ring-gray)",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
