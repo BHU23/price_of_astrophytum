@@ -1,5 +1,6 @@
 "use client";
 import { HiChevronRight } from "react-icons/hi";
+import ButtonReturn from "../button_retrun";
 
 interface BreadcrumbProps {
   links: { href: string; label: string }[];
@@ -9,10 +10,10 @@ interface BreadcrumbProps {
 export default function Breadcrumb({ links }: BreadcrumbProps) {
   return (
     <nav
-      className="w-full h-16 flex justify-start items-center gap-4 rounded-t-lg  border border-border p-5"
+      className="w-full h-16 flex justify-between items-center gap-4 rounded-t-lg  border border-border p-5"
       aria-label="Breadcrumb"
     >
-      <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+      <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse flex-wrap sm:flex-wrap">
         <li className="inline-flex items-center">
           <a
             href={"/"}
@@ -54,6 +55,7 @@ export default function Breadcrumb({ links }: BreadcrumbProps) {
         ))}
         <li aria-current="page"></li>
       </ol>
+      <ButtonReturn></ButtonReturn>
     </nav>
   );
 }
