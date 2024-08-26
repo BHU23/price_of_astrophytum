@@ -24,7 +24,7 @@ export default function UploadImage() {
           alt=""
         />
       </div>
-      <div className="flex flex-col gap-5 pt-2">
+      <div className="flex flex-col gap-5">
         <span className="text-cta-text font-semibold text-sm">
           Add new image of Nudum
         </span>

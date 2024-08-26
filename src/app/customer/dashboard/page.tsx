@@ -1,16 +1,10 @@
-"use client";
-import Breadcrumb from "@/components/layout/breadcrumbs";
 import BoxPost from "@/components/box_yourpost";
-import generateBreadcrumbLinks from "../hook/breadcrum.hook";
-import { usePathname } from "next/navigation";
-export default function Home() {
-  const path = usePathname();
-  const breadcrumbLinks = generateBreadcrumbLinks(path);
+export default function DeashBoard() {
+  
   const imglink =
     "https://planetdesert.com/cdn/shop/products/astrophytumasteriasnudum_8_1400x.jpg?v=1659472694";
   return (
-    <main className="min-h-[calc(100vh-6rem)] h-auto w-full flex flex-col gap-5 rounded-lg border border-border overflow-hidden">
-      <Breadcrumb links={breadcrumbLinks} />
+    
       <div className="flex pl-5 pr-5 pb-5 w-full flex-col h-full">
         <div className="bg-card w-full flex flex-wrap rounded-lg ">
           <div className="px-5 py-5 w-full md:w-1/2">
@@ -78,6 +72,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </main>
+
   );
 }

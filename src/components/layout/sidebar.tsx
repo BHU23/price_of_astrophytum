@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -11,9 +12,10 @@ import { useGlobal } from "@/context/useGoble";
 export default function Sidebar() {
   const pathname = usePathname();
   const { isOpen, setIsOpen } = useGlobal();
-  const getLinkClassName = (path:string) => {
+  const getLinkClassName = (path: string) => {
+    const isSupPath = pathname.includes(path);
     return `flex items-center w-full p-3 transition-all rounded-lg outline-none text-start ${
-      pathname === path
+      isSupPath
         ? "text-cta-text bg-card"
         : "text-cta hover:text-cta-text hover:bg-card"
     }`;
@@ -29,19 +31,28 @@ export default function Sidebar() {
           className="flex flex-col gap-1 p-2 font-sans text-base font-normal"
           onClick={() => setIsOpen(false)}
         >
-          <Link href="/dashboard" className={getLinkClassName("/dashboard")}>
+          <Link
+            href="/customer/dashboard"
+            className={getLinkClassName("/customer/dashboard")}
+          >
             <div className="grid mr-4 place-items-center">
               <AiOutlineHome />
             </div>
             Dashboard
           </Link>
-          <Link href="/use_ai" className={getLinkClassName("/use_ai")}>
+          <Link
+            href="/customer/use_ai"
+            className={getLinkClassName("/customer/use_ai")}
+          >
             <div className="grid mr-4 place-items-center">
               <HiOutlineSparkles />
             </div>
             AI
           </Link>
-          <Link href="/posts" className={getLinkClassName("/posts")}>
+          <Link
+            href="/customer/posts"
+            className={getLinkClassName("/customer/posts")}
+          >
             <div className="flex justify-between items-center w-full transition-all rounded-lg outline-none text-start">
               <div className="flex ">
                 <div className="grid mr-4 place-items-center">
@@ -60,15 +71,18 @@ export default function Sidebar() {
         </div>
         <nav className="flex flex-col gap-1 p-2 font-sans text-base font-normal">
           <Link
-            href="/price_of_class"
-            className={getLinkClassName("/price_of_class")}
+            href="/customer/price_of_class"
+            className={getLinkClassName("/customer/price_of_class")}
           >
             <div className="grid mr-4 place-items-center">
               <RiBitCoinLine />
             </div>
             Price Of Class
           </Link>
-          <Link href="/profile" className={getLinkClassName("/profile")}>
+          <Link
+            href="/customer/profile"
+            className={getLinkClassName("/customer/profile")}
+          >
             <div className="grid mr-4 place-items-center">
               <IoPersonOutline />
             </div>
@@ -78,4 +92,4 @@ export default function Sidebar() {
       </div>
     </div>
   );
-};
+}

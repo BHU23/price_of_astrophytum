@@ -6,8 +6,7 @@ import { useGlobal } from "@/context/useGoble";
 import ModelSignInSignUp from "../login/model_signIn_signUp";
 export default function Header() {
   const { headerItems } = useHeader();
-  const { token, isOpenModel, toggleIsOpenModel } = useGlobal();
-
+  const { token, isOpenModel, toggleIsOpenModel,isOpen, setIsOpen  } = useGlobal();
   return (
     <div>
       <nav className="w-full fixed bg-card shadow ">
@@ -16,7 +15,7 @@ export default function Header() {
           <div className="flex flex-row items-center justify-between">
             <div className="flex sm:hidden gap-2">
               <button
-                onClick={() => headerItems.setIsOpen(!headerItems.isOpen)}
+                onClick={() => setIsOpen(!isOpen)}
                 type="button"
                 className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-8 h-8  hover:text-tan ml-3 mr-1 md:my-0"
                 aria-label="toggle menu"
@@ -78,14 +77,14 @@ export default function Header() {
             {!token ? (
               <div
                 onClick={() => toggleIsOpenModel()}
-                className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0"
+                className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text  border border-transparent hover:border-black hover:border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0"
               >
                 <div>Sign in/up</div>
               </div>
             ) : (
               ""
             )}
-            <div className="flex items-center justify-center cursor-pointer  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-8 h-8  hover:text-tan ml-1 mr-5 md:my-0">
+            <div className="flex items-center justify-center cursor-pointer  my-2 transition-colors duration-300 transform text-cta-text  border border-transparent hover:border-black hover:border-border rounded-md w-8 h-8  hover:text-tan ml-1 mr-5 md:my-0">
               <ThemeSwitch />
             </div>
           </div>

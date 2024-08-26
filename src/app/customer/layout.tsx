@@ -1,24 +1,18 @@
 "use client";
-
-import { useState } from "react";
 import "../globals.css";
 import Footer from "@/components/layout/footer";
 import Sidebar from "@/components/layout/sidebar";
 import { IoCodeOutline } from "react-icons/io5";
-import { useGlobal } from "@/context/useGoble";
+import Breadcrumb from "@/components/layout/breadcrumbs";
+import useCustumer from "./hook";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const { isOpen, setIsOpen } = useGlobal();
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-    setIsOpen(false);
-  };
-
+  const { isOpen, isSidebarOpen, toggleSidebar, breadcrumbLinks } =
+    useCustumer().custumerItems;
   return (
     <div className="flex flex-1">
       <aside
@@ -41,7 +35,10 @@ export default function RootLayout({
           isSidebarOpen ? "sm:ml-72 ml-5" : "ml-5 pb-0"
         }`}
       >
-        {children}
+        <div className="min-h-[calc(100vh-6rem)] h-auto w-full flex flex-col gap-5 rounded-lg border border-border overflow-hidden">
+          <Breadcrumb links={breadcrumbLinks} />
+          {children}
+        </div>
         <div className={`py-5 ${isSidebarOpen ? "" : "-pl-5"}`}>
           <Footer />
         </div>
