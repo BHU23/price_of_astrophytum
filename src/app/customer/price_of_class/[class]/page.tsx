@@ -117,16 +117,16 @@ export default function Class() {
         <div className="w-full flex flex-col justify-start h-[100%] gap-5">
           <label
             className="text-cta-text font-semibold text-sm"
-            htmlFor="small_size"
+            htmlFor="extra_value"
           >
             Extra Value:
           </label>
           <input
-            className="block w-full h-10 pr-2 text-sm text-cta-text border border-border rounded-lg cursor-pointer corder-gray-300 focus:ring-blue-500 focus:border-blue-500 p-2.5  dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full h-10 pr-2 text-sm text-cta-text border border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  dark:placeholder-gray-400 dark:hover:bg-gray-700  dark:focus:ring-gray-700 focus:outline-none focus:z-10 focus:ring-4"
             placeholder="e.g. 60.5"
             required
             type="number"
-            id="number-input"
+            id="extra_value"
             aria-describedby="helper-text-explanation"
           ></input>
           <Line />
@@ -135,7 +135,7 @@ export default function Class() {
             <div className="flex justify-between flex-row gap-5">
               <label
                 className="text-cta-text font-semibold text-sm gap-5 w-1/2"
-                htmlFor="small_size"
+                htmlFor="price_range"
               >
                 Value:
               </label>
@@ -168,18 +168,18 @@ export default function Class() {
           </div>
           {!useClassItems.newPriceState ? (
             <input
-              className="block w-full h-10 pr-2 text-sm text-cta-text border border-border rounded-lg cursor-pointer corder-gray-300 focus:ring-blue-500 focus:border-blue-500 p-2.5  dark:placeholder-gray-400 dark:hover:bg-gray-700  dark:focus:ring-gray-700 focus:outline-none focus:z-10 focus:ring-4"
+              className="block w-full h-10 pr-2 text-sm text-cta-text border border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  dark:placeholder-gray-400 dark:hover:bg-gray-700  dark:focus:ring-gray-700 focus:outline-none focus:z-10 focus:ring-4"
               placeholder="e.g. 60.5"
               required
               type="number"
-              id="number-input"
+              id="price_range"
               aria-describedby="helper-text-explanation"
             ></input>
           ) : (
             <div className="flex justify-between gap-5">
               <label
                 className="text-cta-text font-semibold text-sm flex  gap-5 w-1/2"
-                htmlFor="small_size"
+                htmlFor="min_value"
               >
                 Min Value:
                 <input
@@ -187,13 +187,13 @@ export default function Class() {
                   placeholder="e.g. 60.5"
                   required
                   type="number"
-                  id="number-input"
+                  id="min_value"
                   aria-describedby="helper-text-explanation"
                 ></input>
               </label>
               <label
                 className="text-cta-text font-semibold text-sm flex gap-5 w-1/2"
-                htmlFor="small_size"
+                htmlFor="max_value"
               >
                 Max Value:
                 <input
@@ -201,7 +201,7 @@ export default function Class() {
                   placeholder="e.g. 60.5"
                   required
                   type="number"
-                  id="number-input"
+                  id="max_value"
                   aria-describedby="helper-text-explanation"
                 ></input>
               </label>
