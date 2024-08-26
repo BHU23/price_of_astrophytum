@@ -8,28 +8,33 @@ import { useState } from "react";
 import Image from "next/image";
 export default function ModelSignInSignUp() {
   const [activeTab, setActiveTab] = useState("sign-in");
-  const { toggleIsOpenModel } = useGlobal();
+  const { toggleIsOpenModel, isOpen, setIsOpen } = useGlobal();
   
-    const [isOpen, setIsOpen] = useState(true);
-  
-    const handleClose = () => {
-      setIsOpen(false);
-      window.location.reload();
-    }
-  
-    if (!isOpen) return null; // If not open, don't render anything
+ 
   return (
     <div className="flex flex-col items-center justify-center p-5 mx-auto h-full sm:pt-16 pt-14">
-      <div className="w-full rounded-xl shadow border border-border md:mt-0 sm:max-w-md xl:p-0 bg-card">
-        <div className="pt-2 pr-3 flex justify-end">
-        <button
+      <div className="relative w-full rounded-xl shadow border border-border md:mt-0 sm:max-w-md xl:p-0 bg-card">
+        <div className="absolute  right-0">
+          <button
             type="button"
-            className=" rounded-md p-2 inline-flex items-center justify-center text-btn hover:text-border focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-            onClick={handleClose}
+            className=" rounded-md p-2 inline-flex items-center justify-center text-btn hover:text-tan focus:outline-none "
+            onClick={toggleIsOpenModel}
           >
             <span className="sr-only">Close menu</span>
-            <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -65,10 +70,11 @@ export default function ModelSignInSignUp() {
             <li className="z-30 flex-auto text-center pr-2">
               <a
                 onClick={() => setActiveTab("sign-in")}
-                className={`z-30 flex items-center justify-center py-4  transition-all ease-in-out border-0 rounded-xl cursor-pointer ${activeTab === "sign-in"
+                className={`z-30 flex items-center justify-center py-4  transition-all ease-in-out border-0 rounded-xl cursor-pointer ${
+                  activeTab === "sign-in"
                     ? "bg-tan text-white "
                     : "bg-btn text-black"
-                  }`}
+                }`}
                 role="tab"
                 aria-selected={activeTab === "sign-in"}
                 aria-controls="sign-in"
@@ -79,10 +85,11 @@ export default function ModelSignInSignUp() {
             <li className="z-30 flex-auto text-center">
               <a
                 onClick={() => setActiveTab("sign-up")}
-                className={`z-30 flex items-center justify-center  py-4 mb-0 transition-all ease-in-out border-0 rounded-xl cursor-pointer ${activeTab === "sign-up"
+                className={`z-30 flex items-center justify-center  py-4 mb-0 transition-all ease-in-out border-0 rounded-xl cursor-pointer ${
+                  activeTab === "sign-up"
                     ? "bg-tan text-white"
                     : "bg-btn text-black"
-                  }`}
+                }`}
                 role="tab"
                 aria-selected={activeTab === "sign-up"}
                 aria-controls="sign-up"
