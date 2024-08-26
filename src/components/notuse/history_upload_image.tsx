@@ -26,7 +26,9 @@ export default function HistoryUploadImages({
     >
       {imagePreview ? (
         <>
-          <img
+          <Image
+            width={500}
+            height={500}
             src={imagePreview}
             alt="Preview"
             className="w-16 h-16 border-2 border-gray-300 rounded-lg object-cover"

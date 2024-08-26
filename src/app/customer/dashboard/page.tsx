@@ -1,8 +1,7 @@
 import BoxPost from "@/components/box_yourpost";
+import img_mock from "../../../../public/nudum.png";
 export default function DeashBoard() {
   
-  const imglink =
-    "https://planetdesert.com/cdn/shop/products/astrophytumasteriasnudum_8_1400x.jpg?v=1659472694";
   return (
     
       <div className="flex pl-5 pr-5 pb-5 w-full flex-col h-full">
@@ -59,16 +58,16 @@ export default function DeashBoard() {
           <div className="pt-5 pl-5">Your Image Predict</div>
           <hr className="h-px my-6 bg-gray-200 border-none dark:bg-gray-700" />
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 m-5 ">
-            <BoxPost img={imglink} />
-            <BoxPost img={imglink} />
-            <BoxPost img={imglink} />
-            <BoxPost img={imglink} />
-            <BoxPost img={imglink} />
-            {/* <BoxPost img={imglink} />
-            <BoxPost img={imglink} /> */}
-            {/* <BoxPost img={imglink} />
-            <BoxPost img={imglink} />
-            <BoxPost img={imglink} /> */}
+            <BoxPost img={img_mock} />
+            <BoxPost img={img_mock} />
+            <BoxPost img={img_mock} />
+            <BoxPost img={img_mock} />
+            <BoxPost img={img_mock} />
+            {/* <BoxPost img={img_mock} />
+            <BoxPost img={img_mock} /> */}
+            {/* <BoxPost img={img_mock} />
+            <BoxPost img={img_mock} />
+            <BoxPost img={img_mock} /> */}
           </div>
         </div>
       </div>

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function PriceOfclass() {
   return (
     <div className="relative overflow-x-auto shadow-md rounded-xl m-5 mt-0 p-5  bg-card ">
@@ -147,7 +149,9 @@ export default function PriceOfclass() {
               scope="row"
               className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
             >
-              <img
+              <Image
+                width={500}
+                height={500}
                 className="w-10 h-10 rounded-full"
                 src="/docs/images/people/profile-picture-1.jpg"
                 alt="Neil Sims image"
@@ -171,7 +175,7 @@ export default function PriceOfclass() {
                 href="/customer/price_of_class/1"
                 className="font-medium text-tan hover:underline"
               >
-                Edit user
+                Edit class
               </a>
             </td>
           </tr>

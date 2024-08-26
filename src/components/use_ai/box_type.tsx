@@ -23,16 +23,16 @@ export default function BoxType({
           {/* <div className="absolute hidden group-hover:block h-auto w-64 bg-background rounded-lg left-40 -top-3 transform -translate-x-1/2 "> */}
           <div className="absolute hidden group-hover:block h-auto w-64 bg-background rounded-lg left-4 transform -translate-x-1/2 z-50">
             <div className="max-w-sm rounded overflow-hidden shadow-lg flex justify-center items-center flex-col p-5">
-              <img
+              <Image
+                width={500}
+                height={500}
                 className="w-auto h-40 rounded-lg "
                 src={image}
                 alt="image"
               />
               <div className="text-start pt-2">
                 <div className="font-bold text-lg my-2">{typeName}</div>
-                <p className="text-cta ">
-                  {description}
-                </p>
+                <p className="text-cta ">{description}</p>
               </div>
               {/* <div className="px-6 pt-4 pb-2">
                 <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>

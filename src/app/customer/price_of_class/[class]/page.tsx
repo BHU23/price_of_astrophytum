@@ -5,6 +5,9 @@ import useClass from "./hook";
 import Line from "@/components/line";
 import { FiPlus } from "react-icons/fi";
 import InputItems from "@/components/input_items";
+import Image from "next/image";
+import Logo from "../../../../../public/logo.png";
+import LogoName from "../../../../../public/LogoName.png";
 export default function Class() {
   const { useClassItems } = useClass();
 
@@ -12,18 +15,18 @@ export default function Class() {
     <form className="flex flex-wrap lg:flex-nowrap w-full h-full p-5 pt-0 gap-5">
       <div className="w-full h-full lg:min-w-[350px] lg:w-[350px] p-5 pt-2 bg-card text-cta-text rounded-lg">
         <div className="pr-2 flex flex-row items-center justify-center">
-          <img
-            className="w-auto h-20"
-            src={
-              "https://img2.pic.in.th/pic/Minimalist_Mascot_Camera_Logo-removebg-preview2c.png"
-            }
+          <Image
+            width={500}
+            height={500}
+            className="w-auto h-20 "
+            src={Logo}
             alt="Logo"
           />
-          <img
+          <Image
+            width={500}
+            height={500}
             className="w-auto h-20"
-            src={
-              "https://img5.pic.in.th/file/secure-sv1/Remove-bg.ai_172319125922822.png"
-            }
+            src={LogoName}
             alt=""
           />
         </div>

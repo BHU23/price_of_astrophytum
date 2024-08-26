@@ -184,7 +184,9 @@ export default function InputUploadImage({
         </div>
       ) : (
         <div className="flex items-center justify-center w-full h-72 sm:h-96 md:h-96 border-2 border-gray-300 cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 rounded-lg">
-          <img
+          <Image
+            width={500}
+            height={500}
             src={imagePreview ?? ""}
             alt="Preview"
             className="max-h-full max-w-full object-contain"

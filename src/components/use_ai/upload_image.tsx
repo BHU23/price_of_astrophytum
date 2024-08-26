@@ -2,25 +2,27 @@ import { FiCamera, FiXCircle } from "react-icons/fi";
 import ButtonItems from "../button_items";
 import ButtonReload from "./button_reload";
 import useFormUploadImage from "../hook/form_upload_image.hook";
-
+import Image from "next/image";
+import Logo from "../../../public/logo.png";
+import LogoName from "../../../public/LogoName.png";
 export default function UploadImage() {
   const { useFormUploadImageItem } = useFormUploadImage();
 
   return (
     <div className="w-full lg:min-w-[350px] lg:w-[350px] h-full p-5 pt-2 bg-card text-cta-text rounded-lg">
       <div className="pr-2 flex flex-row items-center justify-center">
-        <img
-          className="w-auto h-20"
-          src={
-            "https://img2.pic.in.th/pic/Minimalist_Mascot_Camera_Logo-removebg-preview2c.png"
-          }
+        <Image
+          width={500}
+          height={500}
+          className="w-auto h-20 "
+          src={Logo}
           alt="Logo"
         />
-        <img
+        <Image
+          width={500}
+          height={500}
           className="w-auto h-20"
-          src={
-            "https://img5.pic.in.th/file/secure-sv1/Remove-bg.ai_172319125922822.png"
-          }
+          src={LogoName}
           alt=""
         />
       </div>
@@ -117,7 +119,9 @@ export default function UploadImage() {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center w-full h-56 border-2 border-border border-dashed rounded-lg cursor-pointer hover:bg-border">
-              <img
+              <Image
+                width={500}
+                height={500}
                 src={useFormUploadImageItem.imagePreview ?? ""}
                 alt="Preview"
                 className="max-h-full max-w-full object-contain"

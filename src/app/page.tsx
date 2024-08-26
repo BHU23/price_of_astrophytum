@@ -1,24 +1,25 @@
 import BoxLanding from "@/components/box_landing";
 import Footer from "@/components/layout/footer";
-
+import Image from "next/image";
+import Logo from "../../public/logo.png";
+import LogoName from "../../public/LogoName.png";
 export default function Home() {
   return (
     <main className="h-screen ">
       <div className="w-full h-[90%] flex flex-col justify-center items-center gap-4 px-5">
         <div className="flex flex-row items-center justify-between ">
-          <img
-            className="w-auto h-20"
-            src={
-              "https://img2.pic.in.th/pic/Minimalist_Mascot_Camera_Logo-removebg-preview2c.png"
-            }
+          <Image
+            width={500}
+            height={500}
+            className="w-auto h-20 "
+            src={Logo}
             alt="Logo"
           />
-
-          <img
+          <Image
+            width={500}
+            height={500}
             className="w-auto h-20"
-            src={
-              "https://img5.pic.in.th/file/secure-sv1/Remove-bg.ai_172319125922822.png"
-            }
+            src={LogoName}
             alt=""
           />
         </div>

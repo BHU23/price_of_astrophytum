@@ -2,8 +2,10 @@
 import { useGlobal } from "@/context/useGoble";
 import LoginFrom from "./login_from";
 import RegisterFrom from "./register_from";
-
+import Logo from "../../../public/logo.png";
+import LogoName from "../../../public/LogoName.png";
 import { useState } from "react";
+import Image from "next/image";
 export default function ModelSignInSignUp() {
   const [activeTab, setActiveTab] = useState("sign-in");
   const { toggleIsOpenModel } = useGlobal();
@@ -15,18 +17,18 @@ export default function ModelSignInSignUp() {
             className="flex flex-row items-center h-full justify-center"
             onClick={() => toggleIsOpenModel()}
           >
-            <img
+            <Image
+              width={500}
+              height={500}
               className="w-auto h-20 "
-              src={
-                "https://img2.pic.in.th/pic/Minimalist_Mascot_Camera_Logo-removebg-preview2c.png"
-              }
+              src={Logo}
               alt="Logo"
             />
-            <img
+            <Image
+              width={500}
+              height={500}
               className="w-auto h-20"
-              src={
-                "https://img5.pic.in.th/file/secure-sv1/Remove-bg.ai_172319125922822.png"
-              }
+              src={LogoName}
               alt=""
             />
           </div>

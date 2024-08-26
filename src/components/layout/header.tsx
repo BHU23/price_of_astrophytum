@@ -4,6 +4,9 @@ import ThemeSwitch from "./ThemeSwitch";
 import useHeader from "../hook/header.hook";
 import { useGlobal } from "@/context/useGoble";
 import ModelSignInSignUp from "../login/model_signIn_signUp";
+import Image from "next/image";
+import Logo from "../../../public/logo.png";
+import LogoName from "../../../public/LogoName.png";
 export default function Header() {
   const { headerItems } = useHeader();
   const { token, isOpenModel, toggleIsOpenModel,isOpen, setIsOpen  } = useGlobal();
@@ -54,19 +57,24 @@ export default function Header() {
               </button>
             </div>
             <a href="/">
-              <img
+              
+              <Image
+                width={500}
+                height={500}
                 className="w-auto h-12 sm:h-14"
                 src={
-                  "https://img2.pic.in.th/pic/Minimalist_Mascot_Camera_Logo-removebg-preview2c.png"
+                  Logo
                 }
                 alt="Logo"
               />
             </a>
             <a href="/">
-              <img
+              <Image
+                width={500}
+                height={500}
                 className="w-auto h-12 sm:h-14"
                 src={
-                  "https://img5.pic.in.th/file/secure-sv1/Remove-bg.ai_172319125922822.png"
+                  LogoName
                 }
                 alt=""
               />
