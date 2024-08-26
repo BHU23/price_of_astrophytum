@@ -1,4 +1,5 @@
 
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useLogIn from "../hook/login.hook";
 
 export default function LoginFrom() {
@@ -49,7 +50,7 @@ export default function LoginFrom() {
             onClick={useLogInItems.togglePasswordVisibility}
             className="absolute inset-y-0 right-0 flex items-center px-3 text-sm font-medium text-gray-900 dark:text-white"
           >
-            {useLogInItems.showPassword ? "Hide" : "Show"}
+            {useLogInItems.showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
       </div>
