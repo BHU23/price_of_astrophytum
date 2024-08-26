@@ -20,7 +20,6 @@ export default function ModelSignInSignUp() {
             className=" rounded-md p-2 inline-flex items-center justify-center text-btn hover:text-tan focus:outline-none "
             onClick={toggleIsOpenModel}
           >
-            <span className="sr-only">Close menu</span>
             <svg
               className="h-6 w-6"
               xmlns="http://www.w3.org/2000/svg"
