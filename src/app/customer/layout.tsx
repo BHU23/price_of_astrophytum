@@ -17,12 +17,13 @@ export default function RootLayout({
     <div className="flex flex-1">
       <aside
         className={`fixed top-14 sm:top-16 left-0 sm:h-[calc(100vh-4rem)] h-[calc(100vh-3.5rem)] transition-all
-          ${isOpen ? "bg-black w-72 block" : "hidden sm:block"}
-          ${isSidebarOpen ? "w-72 " : "w-5 "} 
+          ${isOpen ? "bg-black w-72" : "hidden sm:block"}
+          ${isSidebarOpen ? "w-72" : "w-5"} 
+          ${isOpen || isSidebarOpen ? "w-72" : "w-5"} 
          `}
       >
         {isSidebarOpen && <Sidebar />}
-
+        {isOpen && <Sidebar />}
         <button
           className={`absolute right-2 top-1/2 w-6 h-6 border border-border rounded-lg sm:flex items-center justify-center text-xs bg-background hover:bg-card transition-all hidden`}
           onClick={toggleSidebar}
