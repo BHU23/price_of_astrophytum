@@ -4,6 +4,7 @@ import ButtonItems from "@/components/button_items";
 import useClass from "./hook";
 import Line from "@/components/line";
 import { FiPlus } from "react-icons/fi";
+import InputItems from "@/components/input_items";
 export default function Class() {
   const { useClassItems } = useClass();
 
@@ -115,29 +116,21 @@ export default function Class() {
       <div className="w-[1px] bg-border text-cta hidden lg:block"> </div>
       <div className="w-full h-full p-5 bg-card rounded-lg">
         <div className="w-full flex flex-col justify-start h-[100%] gap-5">
-          <label
-            className="text-cta-text font-semibold text-sm"
-            htmlFor="extra_value"
-          >
-            Extra Value:
-          </label>
-          <input
-            className="block w-full h-10 pr-2 text-sm text-cta-text border bg-background border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  placeholder-gray-400  focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
+          <InputItems
+            name={"Extra Value (฿):"}
+            htmlFor={"extra_value"}
+            type={"number"}
             placeholder="e.g. 60.5"
-            required
-            type="number"
-            id="extra_value"
-            aria-describedby="helper-text-explanation"
-          ></input>
+            handleChange={useClassItems.handleFileChange}
+          ></InputItems>
           <Line />
-
           <div className="flex flex-col gap-5">
             <div className="flex justify-between flex-row gap-5">
               <label
                 className="text-cta-text font-semibold text-sm gap-5 w-1/2"
                 htmlFor="price_range"
               >
-                Value:
+                Value (฿):
               </label>
               <div
                 onClick={() =>
@@ -169,42 +162,27 @@ export default function Class() {
           {!useClassItems.newPriceState ? (
             <input
               className="block w-full h-10 pr-2 text-sm text-cta-text border bg-background border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  placeholder-gray-400  focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
-              placeholder="e.g. 60.5"
+              placeholder="100-500"
               required
               type="number"
               id="price_range"
-              aria-describedby="helper-text-explanation"
             ></input>
           ) : (
             <div className="flex justify-between gap-5">
-              <label
-                className="text-cta-text font-semibold text-sm flex  gap-5 w-1/2"
-                htmlFor="min_value"
-              >
-                Min Value:
-                <input
-                  className="block w-full h-10 pr-2 text-sm text-cta-text border bg-background border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  placeholder-gray-400  focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
-                  placeholder="e.g. 60.5"
-                  required
-                  type="number"
-                  id="min_value"
-                  aria-describedby="helper-text-explanation"
-                ></input>
-              </label>
-              <label
-                className="text-cta-text font-semibold text-sm flex gap-5 w-1/2"
-                htmlFor="max_value"
-              >
-                Max Value:
-                <input
-                  className="block w-full h-10 pr-2 text-sm text-cta-text border bg-background border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  placeholder-gray-400  focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
-                  placeholder="e.g. 60.5"
-                  required
-                  type="number"
-                  id="max_value"
-                  aria-describedby="helper-text-explanation"
-                ></input>
-              </label>
+              <InputItems
+                name={"min Value:"}
+                htmlFor={"min_value"}
+                type={"number"}
+                placeholder="0"
+                handleChange={useClassItems.handleFileChange}
+              ></InputItems>
+              <InputItems
+                name={"Max Value:"}
+                htmlFor={"max_value"}
+                type={"number"}
+                placeholder="99999"
+                handleChange={useClassItems.handleFileChange}
+              ></InputItems>
               {/* <div className="flex flex-row gap-5 items-center justify-center w-full"></div> */}
             </div>
           )}
