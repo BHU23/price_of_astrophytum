@@ -1,12 +1,7 @@
 "use client";
-import Breadcrumb from "@/components/layout/breadcrumbs";
-import generateBreadcrumbLinks from "../hook/breadcrum.hook";
-import { usePathname } from "next/navigation";
 import UploadImage from "@/components/use_ai/upload_image";
 import ResultClasscification from "@/components/use_ai/result_classcification";
 export default function UseAI() {
-  const path = usePathname();
-  const breadcrumbLinks = generateBreadcrumbLinks(path);
   return (
     <>
       {/* <div className="w-full h-16 px-5 text-cta-text ">hi</div> */}

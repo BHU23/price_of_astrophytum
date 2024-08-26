@@ -1,4 +1,5 @@
 "use client";
+import { usePathname } from "next/navigation";
 import React, {
   createContext,
   useContext,
@@ -39,6 +40,7 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
     setToken(event);
   };
 
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedToken = localStorage.getItem("token");
@@ -53,6 +55,20 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
     console.log("Updated userProfile", userProfile);
   }, [userProfile]);
 
+  const generateBreadcrumbLinks = (path: string) => {
+    const segments = path.split("/").filter((segment) => segment);
+
+    const links = segments.map((segment, index) => {
+      const href = `/${segments.slice(0, index + 1).join("/")}`;
+      return { href, label: segment };
+    });
+
+    return [...links];
+  };
+
+  const path = usePathname();
+  const breadcrumbLinks = generateBreadcrumbLinks(path);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -65,7 +81,8 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
         toggleIsOpenModel,
         isOpenModel,
         setIsOpen,
-        isOpen
+        isOpen,
+        breadcrumbLinks,
       }}
     >
       {children}
