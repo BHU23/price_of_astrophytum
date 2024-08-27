@@ -1,6 +1,9 @@
 interface InputItemsProps {
+  id: string;
   name: string;
   type: string;
+  autoComplete: string;
+  value: string;
   htmlFor: string;
   placeholder: string;
   handleChange: (e: any) => void;

@@ -120,7 +120,10 @@ export default function Class() {
       <div className="w-full h-full p-5 bg-card rounded-lg">
         <div className="w-full flex flex-col justify-start h-[100%] gap-5">
           <InputItems
+            id="extra_value"
+            autoComplete=""
             name={"Extra Value (฿):"}
+            value=""
             htmlFor={"extra_value"}
             type={"number"}
             placeholder="e.g. 60.5"
@@ -173,13 +176,19 @@ export default function Class() {
           ) : (
             <div className="flex justify-between gap-5">
               <InputItems
+                id="min_value"
+                autoComplete=""
                 name={"min Value:"}
                 htmlFor={"min_value"}
                 type={"number"}
+                value=""
                 placeholder="0"
                 handleChange={useClassItems.handleFileChange}
               ></InputItems>
               <InputItems
+                id="max_value"
+                autoComplete=""
+                value=""
                 name={"Max Value:"}
                 htmlFor={"max_value"}
                 type={"number"}

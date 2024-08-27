@@ -6,6 +6,19 @@ import { useRouter } from "next/navigation";
 export default function useClass() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [newPriceState, setnewPriceState] = useState(false);
+  const [formDataClass, setFormDataClass] = useState({
+    name: "",
+    about: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    country: "United States",
+    streetAddress: "",
+    city: "",
+    region: "",
+    postalCode: "",
+    file: null as File | null,
+  });
 
   
   const router = useRouter();
