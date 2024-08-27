@@ -40,7 +40,6 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
     setToken(event);
   };
 
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedToken = localStorage.getItem("token");

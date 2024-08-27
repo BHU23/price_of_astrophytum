@@ -22,16 +22,6 @@ export default function EditProfile() {
       [name]: value,
     });
   };
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const files = event.target.files;
-  //   const { name, value } = event.target;
-  //   if (files) {
-  //     setFormData({
-  //     ...formData,
-  //     [name]: files,
-  //   });
-  // };
-
   const handleFileUpload  = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {

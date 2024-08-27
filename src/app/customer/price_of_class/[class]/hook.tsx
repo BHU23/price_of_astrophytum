@@ -42,7 +42,7 @@ export default function useClass() {
     if (!imagePreview) return;
     try {
       //  xxxxxxxxxx
-      router.push("/use_ai");
+      router.push("/customer/use_ai");
     } catch (error) {
       console.error("Error uploading image:", error);
     }
