@@ -62,17 +62,17 @@ export default function ModelSignInSignUp() {
           </div>
 
           <ul
-            className="flex flex-wrap mb-2 mr-5 ml-5 list-none rounded-md outline outline-1 outline-offset-8 outline-border "
+            className="flex flex-wrap mb-2 mr-7 ml-7 list-none rounded-md outline outline-1 outline-offset-8 outline-border "
             data-tabs="tabs"
             role="list"
           >
             <li className="z-30 flex-auto text-center pr-2">
               <a
                 onClick={() => setActiveTab("sign-in")}
-                className={`z-30 flex items-center justify-center py-4  transition-all ease-in-out border-0 rounded-xl cursor-pointer ${
+                className={`z-30 flex items-center justify-center p-2 transition-all ease-in-out border-0 rounded-xl cursor-pointer ${
                   activeTab === "sign-in"
                     ? "bg-tan text-white "
-                    : "bg-btn text-black"
+                    : "bg-btn text-black hover:bg-border"
                 }`}
                 role="tab"
                 aria-selected={activeTab === "sign-in"}
@@ -84,10 +84,10 @@ export default function ModelSignInSignUp() {
             <li className="z-30 flex-auto text-center">
               <a
                 onClick={() => setActiveTab("sign-up")}
-                className={`z-30 flex items-center justify-center  py-4 mb-0 transition-all ease-in-out border-0 rounded-xl cursor-pointer ${
+                className={`z-30 flex items-center justify-center p-2 mb-0 transition-all ease-in-out border-0 rounded-xl cursor-pointer ${
                   activeTab === "sign-up"
                     ? "bg-tan text-white"
-                    : "bg-btn text-black"
+                    : "bg-btn text-black hover:bg-border"
                 }`}
                 role="tab"
                 aria-selected={activeTab === "sign-up"}
