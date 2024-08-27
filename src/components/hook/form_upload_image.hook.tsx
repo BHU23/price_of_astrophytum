@@ -32,7 +32,7 @@ export default function useFormUploadImage() {
 
     try {
       setPredictions(imagePreview);
-      router.push("/use_ai");
+      router.push("/customer/use_ai");
     } catch (error) {
       console.error("Error uploading image:", error);
     }

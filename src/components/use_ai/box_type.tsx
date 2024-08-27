@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { MdInfoOutline } from "react-icons/md";
 
 interface BoxTypeProp {

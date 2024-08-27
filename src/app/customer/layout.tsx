@@ -36,7 +36,7 @@ export default function RootLayout({
           isSidebarOpen ? "sm:ml-72 ml-5" : "ml-5 pb-0"
         }`}
       >
-        <div className="min-h-[calc(100vh-6rem)] h-auto w-full flex flex-col gap-5 rounded-lg border border-border overflow-hidden">
+        <div className="min-h-[calc(100vh-6rem)] h-auto w-full flex flex-col gap-5 rounded-lg border border-border">
           <Breadcrumb links={breadcrumbLinks} />
           {children}
         </div>
