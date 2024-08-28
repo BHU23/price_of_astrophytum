@@ -9,17 +9,11 @@ import React, {
   useEffect,
 } from "react";
 import Cookies from "js-cookie";
+import { UserProfileInterface } from "@/interface/user.interface";
 const GlobalContext = createContext<any>(undefined);
 
 interface GlobalProviderProps {
   children: ReactNode;
-}
-
-interface ProfileInterface {
-  first_name: string;
-  last_name: string;
-  email: string;
-  role: string;
 }
 
 export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
@@ -32,11 +26,14 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
       total_max: 0,
     });
   const [loading, setLoading] = useState(false);
-  const [userProfile, setUserProfile] = useState<ProfileInterface>({
+  const [userProfile, setUserProfile] = useState<UserProfileInterface>({
+    username: "",
+    avatar: "",
     first_name: "",
     last_name: "",
     email: "",
     role: "",
+    fackbook_name: "",
   });
   const [token, setToken] = useState(false);
   const [isOpenModel, setIsOpenModel] = useState(false);
