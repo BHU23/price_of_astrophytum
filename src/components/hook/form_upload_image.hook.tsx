@@ -3,11 +3,23 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobal } from "@/context/useGoble";
-
+import { PredictionHistorysInterface } from "@/interface/predictionHistorys.interface";
+import Cookies from "js-cookie";
 export default function useFormUploadImage() {
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  
+  const {
+    predictionHistoryGlobal,
+    setPredictionHistoryGlobal,
+    setLoading,
+    loading
+  } = useGlobal();
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    predictionHistoryGlobal?.image || null
+  );
+  const [imagePreviewOld, setImagePreviewOld] = useState<string | null>(
+    predictionHistoryGlobal?.image || null
+  );
   const [videoStatus, setVideoStatus] = useState<boolean>(false);
-  const { setPredictions } = useGlobal();
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -28,13 +40,55 @@ export default function useFormUploadImage() {
   };
 
   const handleUpload = async () => {
-    if (!imagePreview) return;
+    if (!imagePreview || loading) return;
+    if (imagePreview == imagePreviewOld) return;
 
     try {
-      setPredictions(imagePreview);
-      router.push("/customer/use_ai");
+      const token = Cookies.get("token");
+      console.log("Token:", token); // Ensure the token is not null or undefined
+
+      setLoading(true);
+      const apiUrl = "http://127.0.0.1:8000/api/history-predictions/";
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+        body: JSON.stringify({ image: imagePreview }),
+      });
+
+      console.log(response);
+
+      const data = await response.json();
+      console.log("data:", data);
+
+      const newPrediction: PredictionHistorysInterface = {
+        image: imagePreview,
+        class: data.classes.map((cls: any) => ({
+          id: cls.id,
+          name: cls.name,
+          example_image: cls.example_image,
+          extra_value: cls.extra_value,
+          description: cls.description,
+          price: {
+            id: 1,
+            value_min: cls.price.value_min,
+            value_max: cls.price.value_max,
+          },
+        })),
+        total_min: data.total_min,
+        total_max: data.total_max,
+      };
+
+      //  setPredictionHistory(newPrediction);
+      setImagePreviewOld(imagePreview);
+      setPredictionHistoryGlobal(newPrediction);
+      setLoading(false);
     } catch (error) {
       console.error("Error uploading image:", error);
+      setLoading(false);
     }
   };
 

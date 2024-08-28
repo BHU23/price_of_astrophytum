@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobal } from "@/context/useGoble";
-
+import Cookies from "js-cookie";
 export default function useSignUp() {
   const [formData, setFormData] = useState({
     email: "",
@@ -41,7 +41,9 @@ export default function useSignUp() {
         const data = await response.json();
 
         // Handle successful registration
-        localStorage.setItem("token", data.token);
+        Cookies.set("token", data.token, { secure: true });
+
+        console.log("token", Cookies.get("token"));
         console.log("data.user_profile", data.user_profile);
         setUserProfile(data.user_profile);
 

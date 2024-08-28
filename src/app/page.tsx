@@ -3,8 +3,11 @@ import Footer from "@/components/layout/footer";
 import Image from "next/image";
 import Logo from "../../public/logo.png";
 import LogoName from "../../public/LogoName.png";
+
 export default function Home() {
+  
   return (
+
     <main className="h-screen ">
       <div className="w-full h-[90%] flex flex-col justify-center items-center gap-4 px-5">
         <div className="flex flex-row items-center justify-between ">

@@ -1,4 +1,5 @@
 "use client";
+import { PredictionHistorysInterface } from "@/interface/predictionHistorys.interface";
 import { usePathname } from "next/navigation";
 import React, {
   createContext,
@@ -7,7 +8,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-
+import Cookies from "js-cookie";
 const GlobalContext = createContext<any>(undefined);
 
 interface GlobalProviderProps {
@@ -23,6 +24,14 @@ interface ProfileInterface {
 
 export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
   const [predictions, setPredictions] = useState<string>();
+  const [predictionHistoryGlobal, setPredictionHistoryGlobal] =
+    useState<PredictionHistorysInterface | null>({
+      image: "",
+      class: [],
+      total_min: 0,
+      total_max: 0,
+    });
+  const [loading, setLoading] = useState(false);
   const [userProfile, setUserProfile] = useState<ProfileInterface>({
     first_name: "",
     last_name: "",
@@ -36,13 +45,13 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
   const toggleIsOpenModel = () => {
     setIsOpenModel(!isOpenModel);
   };
-  const toggleToken = (event:any) => {
+  const toggleToken = (event: any) => {
     setToken(event);
   };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedToken = localStorage.getItem("token");
+      const storedToken = Cookies.get("token");
       if (storedToken) {
         setToken(true);
         console.log("Updated token", token);
@@ -71,8 +80,10 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
-        predictions,
-        setPredictions,
+        predictionHistoryGlobal,
+        setPredictionHistoryGlobal,
+        loading,
+        setLoading,
         userProfile,
         setUserProfile,
         token,

@@ -139,7 +139,7 @@ export default function UploadImage() {
           className="text-cta-text font-semibold text-sm"
           htmlFor="small_size"
         >
-          Import from URL
+          Import your Nudum image
         </label>
         <ButtonReload
           name={"Reload"}

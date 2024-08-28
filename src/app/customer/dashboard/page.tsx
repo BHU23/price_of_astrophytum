@@ -1,14 +1,71 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import BoxPost from "@/components/box_yourpost";
-import img_mock from "../../../../public/nudum.png";
 import { useGlobal } from "@/context/useGoble";
 import { useFetchPredictions } from "./api";
+import { PredictionHistorysInterface } from "@/interface/predictionHistorys.interface";
+import Cookies from "js-cookie";
+import { HistoryPredicstionInterface } from "@/interface/historyPredictions.interface";
 export default function DeashBoard() {
-  const { predictions, loading, error } = useFetchPredictions();
+  const router = useRouter();
+  const { historyPredictions, loading, error } = useFetchPredictions();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  const { predictionHistoryGlobal, setPredictionHistoryGlobal } = useGlobal();
+
+  const classificationCount = historyPredictions?.length;
+
+  const handleGetPrediction = async (prediction:HistoryPredicstionInterface) => {
+    
+    if (!prediction.id) return;
+
+    const apiUrl = `http://127.0.0.1:8000/predictions/${prediction.id}/`;
+
+    try {
+      const token = Cookies.get("token");
+      const response = await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("data", data);
+      const newPrediction: PredictionHistorysInterface = {
+        image: prediction.image,
+        class: data.map((item:any) => item.class_name),
+        total_min: prediction.total_min,
+        total_max: prediction.total_max,
+      };
+      await setPredictionHistoryGlobal(newPrediction);
+      
+      console.log(newPrediction);
+      console.log("predictionHistoryGlobal1", predictionHistoryGlobal);
+      router.push("/customer/use_ai");
+      
+    } catch (error) {
+      console.error("Error fetching prediction details:", error);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (predictionHistoryGlobal) {
+  //     router.push("/customer/use_ai");
+  //   }
+  // }, [predictionHistoryGlobal, router]);
+
+  // Handling loading and error states
+  if (loading) return (
+    <p className="flex pl-5 pr-5 pb-5 w-full flex-col h-full">Loading...</p>
+  );
+  if (error) return (
+    <p className="flex pl-5 pr-5 pb-5 w-full flex-col h-full">Error: {error}</p>
+  );
   return (
     <div className="flex pl-5 pr-5 pb-5 w-full flex-col h-full">
       <div className="bg-card w-full flex flex-wrap rounded-lg ">
@@ -33,7 +90,9 @@ export default function DeashBoard() {
                 </svg>
               </div>
             </div>
-            <div className="flex justify-center pb-8 text-5xl">10</div>
+            <div className="flex justify-center pb-8 text-5xl">
+              {classificationCount}
+            </div>
           </div>
         </div>
         <div className="px-5 py-5 w-full md:w-1/2 ">
@@ -60,21 +119,27 @@ export default function DeashBoard() {
           </div>
         </div>
       </div>
-      <div className="h-auto w-full bg-card mt-5 rounded-md ">
+      <div className="h-auto w-full bg-card mt-5 rounded-md">
         <div className="pt-5 pl-5">Your Image Predict</div>
         <hr className="h-px my-6 bg-gray-200 border-none dark:bg-gray-700" />
-        <div className="grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 m-5 ">
-          <BoxPost img={img_mock} />
-          <BoxPost img={img_mock} />
-          <BoxPost img={img_mock} />
-          <BoxPost img={img_mock} />
-          <BoxPost img={img_mock} />
-          {/* <BoxPost img={img_mock} />
-            <BoxPost img={img_mock} /> */}
-          {/* <BoxPost img={img_mock} />
-            <BoxPost img={img_mock} />
-            <BoxPost img={img_mock} /> */}
-        </div>
+        {classificationCount !== 0 ? (
+          <div className="grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 m-5">
+            {historyPredictions?.map((prediction, index) => (
+              <BoxPost
+                key={index}
+                img={prediction.image}
+                onClick={() => handleGetPrediction(prediction)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex text-cta-gray w-full p-5 pt-0">
+            Prediction Now{" "}
+            <a href="/customer/use_ai" className="ml-1 text-pear hover:text-tan hover:underline">
+              click
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

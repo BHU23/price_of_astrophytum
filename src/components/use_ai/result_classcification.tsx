@@ -3,25 +3,25 @@ import Line from "@/components/line";
 import TitleTopic from "@/components/notuse/title_topic";
 import TotalPrice from "@/components/use_ai/total_price";
 import useUploadImage from "../hook/upload_image.hook";
+import { useGlobal } from "@/context/useGoble";
+import { ClassesInterface } from "@/interface/classes.interface";
 
 interface ResultClassificationProp {}
 
 export default function ResultClassification({}: ResultClassificationProp) {
-  const {
-    predictions,
-    loading,
-    setLoading,
-    predictionHistory,
-    setPredictionHistory,
-    handleUpload,
-  } = useUploadImage().uploadImageItem;
+  // const {
+  //   loading,
+  // } = useUploadImage().uploadImageItem;
+  const { predictionHistoryGlobal ,loading} = useGlobal();
+   console.log("predictionHistoryGlobal3", predictionHistoryGlobal);
+   console.log("class3", predictionHistoryGlobal.class);
   return (
     <div className="w-full flex flex-col justify-start h-[100%] gap-5">
       <span className="text-cta-text font-semibold text-sm">
         Result of prediction image
       </span>
       <div className="flex flex-col h-full gap-5">
-        {loading && !predictionHistory ? (
+        {loading ? (
           <div className="transition-all text-center text-cta-gray">
             <svg
               aria-hidden="true"
@@ -42,17 +42,19 @@ export default function ResultClassification({}: ResultClassificationProp) {
             </svg>
             Loading...
           </div>
+        ) : predictionHistoryGlobal.image ? (
+          ""
         ) : (
           <div className="transition-all text-center text-cta-gray">
             Please upload the Nudum image.
           </div>
         )}
-        {!loading && predictionHistory && (
+        {!loading && predictionHistoryGlobal.image && (
           <>
             <TitleTopic name="Types" />
             <Line />
             <div className="flex flex-col h-auto lg:h-min-80 gap-5 justify-start">
-              {predictionHistory?.class.map(
+              {/* {predictionHistoryGlobal?.class?.map(
                 ({ name, example_image, description, price }, index) => (
                   <BoxType
                     key={index}
@@ -63,14 +65,28 @@ export default function ResultClassification({}: ResultClassificationProp) {
                     price_max={price.value_max} // Access the nested value
                   />
                 )
-              )}
+              )} */}
+              {predictionHistoryGlobal?.class &&
+                Array.isArray(predictionHistoryGlobal.class) &&
+                predictionHistoryGlobal.class.map(
+                  (e: ClassesInterface, index: number) => (
+                    <BoxType
+                      key={index}
+                      image={e.example_image}
+                      description={e.description}
+                      typeName={e.name ?? ""}
+                      price_min={e.price.value_min}
+                      price_max={e.price.value_max}
+                    />
+                  )
+                )}
             </div>
             <Line />
             <div className="flex-none h-[10%] ">
               <TotalPrice
                 total="800"
-                price_min={predictionHistory.total_min}
-                price_max={predictionHistory.total_max}
+                price_min={predictionHistoryGlobal.total_min}
+                price_max={predictionHistoryGlobal.total_max}
               />
             </div>
           </>
