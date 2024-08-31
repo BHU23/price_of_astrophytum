@@ -206,11 +206,11 @@ export default function Class({ params }: { params: { class: string } }) {
               </select> */}
               {!newPriceState ? (
                 <div className="relative">
-                  <button
+                  <div
                     id="dropdownActionButton"
                     data-dropdown-toggle="dropdownAction"
                     className="inline-flex items-center justify-between w-full h-10 p-2 text-sm text-cta-text border bg-card border-border rounded-lg cursor-pointer placeholder-gray-400 hover:bg-ring_gray focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
-                    type="button"
+                    // type="button"
                     onClick={() => {
                       const dropdown =
                         document.getElementById("dropdownAction");
@@ -238,7 +238,7 @@ export default function Class({ params }: { params: { class: string } }) {
                         d="M1 1l4 4 4-4"
                       />
                     </svg>
-                  </button>
+                  </div>
 
                   {/* Dropdown menu */}
                   <div
@@ -251,7 +251,7 @@ export default function Class({ params }: { params: { class: string } }) {
                     >
                       {prices.map((price) => (
                         <li key={price.id}>
-                          <button
+                          <div
                             onClick={() => {
                               setFormDataClass((prev) => ({
                                 ...prev,
@@ -274,7 +274,7 @@ export default function Class({ params }: { params: { class: string } }) {
                             }`}
                           >
                             {price.value_min} - {price.value_max}
-                          </button>
+                          </div>
                         </li>
                       ))}
                     </ul>

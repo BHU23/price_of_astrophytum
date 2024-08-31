@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { ClassesInterface } from "@/interface/classes.interface";
+import { ClassesInterface, UpdateClassesInterface } from "@/interface/classes.interface";
+import { PriceInterface } from "@/interface/prices.interface";
 
 export function useClasses() {
   const [classes, setClasses] = useState<ClassesInterface[]>([]);
@@ -27,6 +28,7 @@ export function useClasses() {
 
         const data = await response.json();
         setClasses(data);
+        console.log("class:",data);
       } catch (err) {
         setError("Error fetching classes" + err);
       } finally {
@@ -128,5 +130,43 @@ export const GetPrice = async () => {
     return data;
   } catch (error) {
     console.error("Error fetching user data:", error);
+  }
+};
+
+export const createPrice = async (
+  newPriceData: Partial<PriceInterface>
+): Promise<PriceInterface | null> => {
+  const apiUrl = "http://127.0.0.1:8000/api/prices/";
+
+  try {
+    const token = Cookies.get("token");
+    if (!token) {
+      throw new Error("Token not found");
+    }
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(newPriceData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        `Network response was not ok: ${
+          errorData.message || response.statusText
+        }`
+      );
+    }
+
+    const data: PriceInterface = await response.json();
+    console.log("Created price data:", data);
+    return data;
+  } catch (error) {
+    console.error("Error creating price data:", error);
+    return null;
   }
 };

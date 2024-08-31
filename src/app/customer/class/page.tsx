@@ -180,7 +180,7 @@ export default function Class() {
               </th>
               <td className="px-6 py-4">{cls.extra_value}</td>
               <td className="px-6 py-4">
-                {cls.price.value_min} - {cls.price.value_max}
+                {cls.price?.value_min} - {cls.price.value_max}
               </td>
               <td className="px-6 py-4">
                 <a

@@ -4,17 +4,16 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ClassesInterface } from "@/interface/classes.interface";
 import Cookies from "js-cookie";
-import { GetClass, GetPrice, UpdateClass } from "../hook";
+import { createPrice, GetClass, GetPrice, UpdateClass } from "../hook";
 import { PriceInterface } from "@/interface/prices.interface";
 
 export default function useClass(id: number) {
-  
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const [classes, setClasses] = useState<ClassesInterface | null>(null);
   const [newPriceState, setNewPriceState] = useState(false);
-  const [prices,SetPrices] = useState<PriceInterface[]>([])
+  const [prices, SetPrices] = useState<PriceInterface[]>([]);
   const [formDataClass, setFormDataClass] = useState<ClassesInterface>({
     id,
     name: "",
@@ -75,10 +74,29 @@ export default function useClass(id: number) {
     event.preventDefault();
 
     try {
+      let priceId = formDataClass.price.id;
+
+      // Check if a new price needs to be created
+      if (newPriceState) {
+        const newPriceData: Partial<PriceInterface> = {
+          value_min: formDataClass.price.value_min,
+          value_max: formDataClass.price.value_max,
+        };
+
+        const createdPrice = await createPrice(newPriceData);
+
+        if (createdPrice) {
+          priceId = createdPrice.id; 
+        } else {
+          throw new Error("Failed to create a new price");
+        }
+      }
+
+      // Now, update the class with the (newly) created price ID
       const updatedData: Partial<ClassesInterface> = {
         ...formDataClass,
         price: {
-          id: formDataClass.price.id,
+          id: priceId,
           value_min: formDataClass.price.value_min,
           value_max: formDataClass.price.value_max,
         },
@@ -99,7 +117,6 @@ export default function useClass(id: number) {
   };
 
   useEffect(() => {
-    
     const fetchClass = async () => {
       try {
         const data = await GetClass(id);
@@ -120,20 +137,19 @@ export default function useClass(id: number) {
         if (!data) {
           throw new Error(`Error: ${data}`);
         }
-        
-         if (Array.isArray(data)) {
-           const sortedPrices = data.sort((a, b) => a.value_max - b.value_max);
-           SetPrices(sortedPrices);
-         } else {
-           throw new Error("Data format is not an array");
-         }
+
+        if (Array.isArray(data)) {
+          const sortedPrices = data.sort((a, b) => a.value_max - b.value_max);
+          SetPrices(sortedPrices);
+        } else {
+          throw new Error("Data format is not an array");
+        }
       } catch (err) {
         setError("Error fetching class: " + (err as Error).message);
       } finally {
         setLoading(false);
       }
     };
-
 
     fetchClass();
     fetchPrices();

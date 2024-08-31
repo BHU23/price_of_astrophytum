@@ -6,5 +6,13 @@ export interface ClassesInterface {
   example_image: string;
   extra_value: number;
   description: string;
-  price: PriceInterface;
+  price: PriceInterface ;
+}
+export interface UpdateClassesInterface {
+  id: number;
+  name: string;
+  example_image: string;
+  extra_value: number;
+  description: string;
+  price: number;
 }
