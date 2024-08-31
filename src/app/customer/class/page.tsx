@@ -1,8 +1,16 @@
+"use client";
+import React from "react";
+import { useClasses } from "./hook";
 import Image from "next/image";
 
-export default function PriceOfclass() {
+export default function Class() {
+  const { classes, loading, error } = useClasses();
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
-    <div className="relative overflow-x-auto shadow-md rounded-xl m-5 mt-0 p-5  bg-card ">
+    <div className="relative overflow-x-scroll shadow-md rounded-xl m-5 mt-0 p-5  bg-card ">
       <div className="flex items-center justify-between flex-wrap md:flex-nowrap space-y-4 md:space-y-0 pb-4 ">
         <div>
           <button
@@ -121,10 +129,10 @@ export default function PriceOfclass() {
               Name
             </th>
             <th scope="col" className="px-6 py-3">
-              Description
+              Extra Value
             </th>
             <th scope="col" className="px-6 py-3">
-              Extra Value
+              Price
             </th>
             <th scope="col" className="px-6 py-3">
               Action
@@ -132,53 +140,58 @@ export default function PriceOfclass() {
           </tr>
         </thead>
         <tbody>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <td className="w-4 p-4">
-              <div className="flex items-center">
-                <input
-                  id="checkbox-table-search-1"
-                  type="checkbox"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label htmlFor="checkbox-table-search-1" className="sr-only">
-                  checkbox
-                </label>
-              </div>
-            </td>
-            <th
-              scope="row"
-              className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+          {classes.map((cls) => (
+            <tr
+              key={cls.id}
+              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
-              <Image
-                width={500}
-                height={500}
-                className="w-10 h-10 rounded-full"
-                src="/docs/images/people/profile-picture-1.jpg"
-                alt="Neil Sims image"
-              />
-              <div className="pl-3">
-                <div className="text-base font-semibold">Neil Sims</div>
-                <div className="font-normal text-gray-500">
-                  neil.sims@flowbite.com
+              <td className="w-4 p-4">
+                <div className="flex items-center">
+                  <input
+                    id={`checkbox-table-search-${cls.id}`}
+                    type="checkbox"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor={`checkbox-table-search-${cls.id}`}
+                    className="sr-only"
+                  >
+                    checkbox
+                  </label>
                 </div>
-              </div>
-            </th>
-            <td className="px-6 py-4">React Developer</td>
-            <td className="px-6 py-4">
-              <div className="flex items-center">
-                <div className="h-2.5 w-2.5 rounded-full bg-pear mr-2"></div>{" "}
-                Online
-              </div>
-            </td>
-            <td className="px-6 py-4">
-              <a
-                href="/customer/price_of_class/1"
-                className="font-medium text-tan hover:underline"
+              </td>
+              <th
+                scope="row"
+                className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
               >
-                Edit class
-              </a>
-            </td>
-          </tr>
+                <Image
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 rounded-full"
+                  src={cls.example_image}
+                  alt={`${cls.name} image`}
+                />
+                <div className="pl-3 ">
+                  <div className="text-base font-semibold">{cls.name}</div>
+                  <p className="font-normal text-gray-500 h-auto text-start w-20  md:w-60 truncate">
+                    {cls.description}
+                  </p>
+                </div>
+              </th>
+              <td className="px-6 py-4">{cls.extra_value}</td>
+              <td className="px-6 py-4">
+                {cls.price.value_min} - {cls.price.value_max}
+              </td>
+              <td className="px-6 py-4">
+                <a
+                  href={`/customer/class/${cls.id}`}
+                  className="font-medium text-tan hover:underline"
+                >
+                  Edit class
+                </a>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

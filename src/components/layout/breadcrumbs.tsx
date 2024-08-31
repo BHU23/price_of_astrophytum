@@ -1,6 +1,6 @@
 "use client";
 import { HiChevronRight } from "react-icons/hi";
-import ButtonReturn from "../button_retrun";
+import ButtonReturn from "./button_next_retrun";
 
 interface BreadcrumbProps {
   links: { href: string; label: string }[];

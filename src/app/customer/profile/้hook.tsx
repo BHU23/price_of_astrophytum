@@ -27,7 +27,6 @@ export const GetUserProfile = async () => {
     };
 }
 
-// Function to update user profile
 export const UpdateUserProfile = async (
   updatedData: Partial<UserProfileInterface>
 ): Promise<UserProfileInterface | null> => {

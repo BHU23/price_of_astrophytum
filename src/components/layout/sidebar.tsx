@@ -71,6 +71,15 @@ export default function Sidebar() {
         </div>
         <nav className="flex flex-col gap-1 p-2 font-sans text-base font-normal">
           <Link
+            href="/customer/class"
+            className={getLinkClassName("/customer/class")}
+          >
+            <div className="grid mr-4 place-items-center">
+              <RiBitCoinLine />
+            </div>
+            Class
+          </Link>
+          {/* <Link
             href="/customer/price_of_class"
             className={getLinkClassName("/customer/price_of_class")}
           >
@@ -78,7 +87,7 @@ export default function Sidebar() {
               <RiBitCoinLine />
             </div>
             Price Of Class
-          </Link>
+          </Link> */}
           <Link
             href="/customer/profile"
             className={getLinkClassName("/customer/profile")}

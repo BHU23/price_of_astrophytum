@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 
-export default function ButtonReturn() {
+export default function ButtonNextReturn() {
   const router = useRouter();
 
   const handleReturn = () => {

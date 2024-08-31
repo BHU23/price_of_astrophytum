@@ -27,16 +27,16 @@ export default function Profile() {
         <div className="w-full lg:w-[350px] h-full text-cta-text flex flex-col justify-start items-center  gap-5 ">
           <Image
             className="w-64 h-64 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-            src={userProfile.avatar}
+            src={userProfile.avatar?? ""}
             alt="Bordered avatar"
             width={500}
             height={500}
           />
-          <p className="text-lg font-semibold"> {userProfile.username}</p>
+          <p className="text-lg font-semibold"> {userProfile?.username}</p>
           <p className=" flex gap-5">
             <FaFacebook className="text-2xl"></FaFacebook>{" "}
             <a href="#" className="hover:text-tan hover:underline">
-              {userProfile.fackbook_name}
+              {userProfile?.fackbook_name}
             </a>
           </p>
           <ButtonPushPathItems
@@ -48,12 +48,12 @@ export default function Profile() {
             <div className="w-full flex flex-col px-5 py-1 rounded-lg border border-border bg-background hover:bg-gray-50 dark:hover:bg-gray-600 ">
               <div className="w-full flex flex-row justify-between h-10 items-center py-5 ">
                 <p>FristName</p>
-                <span>{userProfile.first_name}</span>
+                <span>{userProfile?.first_name}</span>
               </div>
               <Line />
               <div className="w-full flex flex-row justify-between h-10 items-center py-5">
                 <p>LastName</p>
-                <span>{userProfile.last_name}</span>
+                <span>{userProfile?.last_name}</span>
               </div>
             </div>
 
@@ -66,7 +66,7 @@ export default function Profile() {
             <div className="w-full flex flex-col px-5 py-1 rounded-lg border border-border bg-background hover:bg-gray-50 dark:hover:bg-gray-600 ">
               <div className="w-full flex flex-row justify-between h-10 items-center py-5">
                 <p>Facbook</p>
-                <span> {userProfile.fackbook_name}</span>
+                <span> {userProfile?.fackbook_name}</span>
               </div>
             </div>
           </div>
