@@ -24,7 +24,7 @@ input::-ms-clear {
   --cta-gray: #a09f9f;
   --cta-active: 124, 58, 237;
   --cta-text: 255, 255, 255;
-  --ring-gray: #000;
+  --ring-gray: #f3f4f6;
 
   background: rgba(var(--background));
 }

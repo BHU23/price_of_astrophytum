@@ -18,12 +18,25 @@ export default function useSignUp() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     
+
+    // if (
+    //   e.target.name == "email" &&
+    //   e.target.value &&
+    //   !e.target.value.includes("@")
+    // ) {
+    //   const emailValue = e.target.value + "@gmail.com";
+    //   setFormData({ ...formData, email: emailValue });
+    // } else {
+     
+    // }
+
     setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
     console.log("formData handleChange", formData);
   };
+
 
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,6 +80,7 @@ export default function useSignUp() {
   return {
     useSignUpItems: {
       handleChange,
+      formData,
       handleSignUpSubmit,
       showPassword,
       togglePasswordVisibility,

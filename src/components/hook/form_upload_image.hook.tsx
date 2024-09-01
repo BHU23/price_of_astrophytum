@@ -81,7 +81,7 @@ export default function useFormUploadImage() {
         total_min: data.total_min,
         total_max: data.total_max,
       };
-
+      // if newPrediction.class.name is Vtype-High and Vtype-High newPrediction.total_min = newPrediction.total_min/2 ,  newPrediction.total_max = newPrediction.total_mmax/2
       //  setPredictionHistory(newPrediction);
       setImagePreviewOld(imagePreview);
       setPredictionHistoryGlobal(newPrediction);

@@ -121,8 +121,10 @@ export default function EditProfile() {
                     htmlFor="username"
                     placeholder="janesmith"
                     value={formData.username}
-                    autoComplete="username"
+                    autoComplete="on"
                     handleChange={handleChange}
+                    pattern="[\u0E00-\u0E7Fa-zA-Z0-9' ]{6,}|^'|'$|''"
+                    textError="User name must be at least 6 characters long"
                   />
                 </div>
 
@@ -187,6 +189,8 @@ export default function EditProfile() {
                   value={formData.first_name}
                   autoComplete="given-name"
                   handleChange={handleChange}
+                  pattern="[\u0E00-\u0E7Fa-zA-Z0-9' ]+|^'|'$|''"
+                  textError="First name must be to text."
                 />
               </div>
 
@@ -200,6 +204,8 @@ export default function EditProfile() {
                   value={formData.last_name}
                   autoComplete="family-name"
                   handleChange={handleChange}
+                  pattern="[\u0E00-\u0E7Fa-zA-Z0-9' ]+|^'|'$|''"
+                  textError="Last name must be to text."
                 />
               </div>
 
@@ -213,6 +219,8 @@ export default function EditProfile() {
                   value={formData.email}
                   autoComplete="email"
                   handleChange={handleChange}
+                  pattern="[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  textError=" Please enter a valid email address."
                 />
               </div>
             </div>

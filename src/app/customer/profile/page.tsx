@@ -24,14 +24,29 @@ export default function Profile() {
   return (
     <div className="flex flex-wrap lg:flex-nowrap w-full h-full p-5 pt-0 gap-5">
       <div className="flex justify-center items-center w-full h-full p-5 gap-5 bg-card rounded-xl">
-        <div className="w-full lg:w-[350px] h-full text-cta-text flex flex-col justify-start items-center  gap-5 ">
-          <Image
-            className="w-64 h-64 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-            src={userProfile.avatar?? ""}
-            alt="Bordered avatar"
-            width={500}
-            height={500}
-          />
+        <div className="w-full lg:w-[350px] h-full text-cta-text flex flex-col justify-start items-center  gap-5  ">
+          {userProfile.avatar ? (
+            <Image
+              className="w-64 h-64 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+              src={userProfile.avatar ?? ""}
+              alt="Bordered avatar"
+              width={500}
+              height={500}
+            />
+          ) : (
+            <svg
+              className="w-64 h-64 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 dark:bg-gray-600"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          )}
           <p className="text-lg font-semibold"> {userProfile?.username}</p>
           <p className=" flex gap-5">
             <FaFacebook className="text-2xl"></FaFacebook>{" "}

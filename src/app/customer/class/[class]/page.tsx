@@ -55,6 +55,8 @@ export default function Class({ params }: { params: { class: string } }) {
               htmlFor="name"
               placeholder="Enter class name"
               handleChange={handleInputChange}
+              pattern="[a-zA-Z]{1,}"
+              textError="Class name must be at least 1 characters long and EN language."
             />
             <div>
               {!formDataClass.example_image ? (
@@ -153,6 +155,8 @@ export default function Class({ params }: { params: { class: string } }) {
               type={"number"}
               placeholder="e.g. 60.5"
               handleChange={handleInputChange}
+              pattern="^[1-9]\d*$"
+              textError="Value can't null."
             ></InputItems>
             <div className="flex flex-col gap-2">
               <div className="flex justify-between flex-row gap-2">
@@ -267,7 +271,7 @@ export default function Class({ params }: { params: { class: string } }) {
                                 dropdown.classList.add("hidden");
                               }
                             }}
-                            className={`block px-4 py-2 w-full text-left rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white ${
+                            className={`block px-4 py-2 w-full text-left rounded-lg hover:bg-white dark:hover:bg-gray-600 dark:hover:text-white ${
                               price.id == formDataClass.price.id
                                 ? "bg-card text-cta-text"
                                 : "text-gray-700 dark:text-gray-200"
@@ -299,6 +303,8 @@ export default function Class({ params }: { params: { class: string } }) {
                         },
                       }))
                     }
+                    pattern="^[1-9]\d*$"
+                    textError="Value can't null."
                   />
                   <InputItems
                     id="value_max"
@@ -317,6 +323,8 @@ export default function Class({ params }: { params: { class: string } }) {
                         },
                       }))
                     }
+                    pattern="^[1-9]\d*$"
+                    textError="Value can't null."
                   />
                 </div>
               )}
