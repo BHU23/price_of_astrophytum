@@ -40,17 +40,17 @@ export default function Home() {
         <div className="flex justify-between flex-col sm:flex-row">
           <BoxLanding
             Name="Classification"
-            LinkTo="/customer/use_ai"
+            LinkTo="/use_ai"
             Description="Prediction of Price Astrophytum of Nudun."
           />
           <BoxLanding
             Name="Prompt"
-            LinkTo="/customer/use_ai"
+            LinkTo="/use_ai"
             Description="Prompt for texts to help your write posts sale cactus."
           />
           <BoxLanding
             Name="Posts"
-            LinkTo="/customer/posts"
+            LinkTo="/posts"
             Description="You can automated create posts to yours Facebook."
           />
         </div>

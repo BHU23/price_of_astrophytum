@@ -4,11 +4,12 @@ import Image from "next/image";
 import { FaFacebook } from "react-icons/fa";
 import ButtonPushPathItems from "@/components/button_pushpath_items";
 import Line from "@/components/line";
-import { useGlobal } from "@/context/useGoble";
+import { useGlobal } from "@/context/useGlobal";
 import { useEffect } from "react";
 import { GetUserProfile } from "./้hook";
+import FetchingState from "@/components/fetching_state";
 export default function Profile() {
-  const { userProfile, setUserProfile } = useGlobal();
+  const { userProfile, setUserProfile,role } = useGlobal();
   const handleGetUserProfile = async () => {
     const data = await GetUserProfile();
     setUserProfile(data);
@@ -19,7 +20,7 @@ export default function Profile() {
   }, []);
 
   if (!userProfile) {
-    return <div>Loading...</div>;
+    return <FetchingState state="Loading..." />;
   }
   return (
     <div className="flex flex-wrap lg:flex-nowrap w-full h-full p-5 pt-0 gap-5">
@@ -56,7 +57,7 @@ export default function Profile() {
           </p>
           <ButtonPushPathItems
             name="Edit profile"
-            path="/customer/profile/edit"
+            path={`/${role?.toLowerCase()}/profile/edit`}
           ></ButtonPushPathItems>
 
           <div className="w-full flex flex-col justify-start h-[100%] gap-5">
@@ -75,7 +76,7 @@ export default function Profile() {
             <div className="w-full flex flex-col px-5 py-1 rounded-lg border border-border bg-background hover:bg-gray-50 dark:hover:bg-gray-600 ">
               <div className="w-full flex flex-row justify-between h-10 items-center py-5 ">
                 <p>Password</p>
-                <span>********</span>
+                <span>••••••••</span>
               </div>
             </div>
             <div className="w-full flex flex-col px-5 py-1 rounded-lg border border-border bg-background hover:bg-gray-50 dark:hover:bg-gray-600 ">

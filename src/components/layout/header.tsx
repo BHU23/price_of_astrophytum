@@ -2,14 +2,15 @@
 import React, { useState } from "react";
 import ThemeSwitch from "./ThemeSwitch";
 import useHeader from "../hook/header.hook";
-import { useGlobal } from "@/context/useGoble";
+import { useGlobal } from "@/context/useGlobal";
 import ModelSignInSignUp from "../login/model_signIn_signUp";
 import Image from "next/image";
 import Logo from "../../../public/logo.png";
 import LogoName from "../../../public/LogoName.png";
 export default function Header() {
   const { headerItems } = useHeader();
-  const { token, isOpenModel, toggleIsOpenModel,isOpen, setIsOpen  } = useGlobal();
+  const { token, isOpenModel, toggleIsOpenModel, isOpen, setIsOpen } =
+    useGlobal();
   return (
     <div>
       <nav className="w-full fixed bg-card shadow z-0">

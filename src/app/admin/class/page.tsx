@@ -2,12 +2,14 @@
 import React from "react";
 import { useClasses } from "./hook";
 import Image from "next/image";
+import { useGlobal } from "@/context/useGlobal";
+import FetchingState from "@/components/fetching_state";
 
 export default function Class() {
   const { classes, loading, error } = useClasses();
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  const { role } = useGlobal();
+  if (loading) return <FetchingState state={`Error: ${error}`} />;
+  if (error) return <FetchingState state={`Error: ${error}`} />;
 
   return (
     <div className="relative overflow-x-scroll shadow-md rounded-xl m-5 mt-0 p-5  bg-card ">
@@ -184,7 +186,7 @@ export default function Class() {
               </td>
               <td className="px-6 py-4">
                 <a
-                  href={`/customer/class/${cls.id}`}
+                  href={`/${role?.toLowerCase()}/class/${cls.id}`}
                   className="font-medium text-tan hover:underline"
                 >
                   Edit class

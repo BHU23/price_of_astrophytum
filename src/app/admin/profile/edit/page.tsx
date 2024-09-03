@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import ButtonReturn from "@/components/button_return";
 import ButtonItems from "@/components/button_items";
 import InputItems from "@/components/input_items";
+import FetchingState from "@/components/fetching_state";
 
 export default function EditProfile() {
   const router = useRouter();
@@ -92,7 +93,7 @@ export default function EditProfile() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <FetchingState  state="Loading..." />;
   }
 
   return (

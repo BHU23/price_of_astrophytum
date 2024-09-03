@@ -2,8 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { useGlobal } from "@/context/useGoble";
-import Cookies from "js-cookie";
+import { useGlobal } from "@/context/useGlobal";
 
 const LogoutButton: React.FC = () => {
   const router = useRouter();
@@ -11,22 +10,16 @@ const LogoutButton: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      const token = Cookies.get("token");
-      if (!token) {
-        console.warn("No token found. User might already be logged out.");
-        return;
-      }
-
       const response = await fetch("http://127.0.0.1:8000/api/logout/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`, // Include the token in the Authorization header
+          Authorization: `Token ${localStorage.getItem("token")}`, // Include the token in the Authorization header
         },
       });
 
       if (response.ok) {
-        Cookies.remove("token");
+        localStorage.removeItem("token");
         toggleToken(false);
         router.push("/");
       } else {

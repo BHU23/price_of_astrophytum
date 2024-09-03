@@ -26,7 +26,7 @@ export default function Class({ params }: { params: { class: string } }) {
     error,
   } = useClass(classId);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <FetchingState state={`Error: ${error}`} />;
   if (error) return <p>{error}</p>;
 
   return (

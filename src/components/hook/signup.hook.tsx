@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useGlobal } from "@/context/useGoble";
+import { useGlobal } from "@/context/useGlobal";
 import Cookies from "js-cookie";
 export default function useSignUp() {
   const [formData, setFormData] = useState({
@@ -13,12 +13,10 @@ export default function useSignUp() {
 
   const [error, setError] = useState("");
   const router = useRouter();
-  const { setUserProfile, toggleIsOpenModel, toggleToken } = useGlobal();
+  const { setUserProfile, toggleIsOpenModel, toggleToken ,role} = useGlobal();
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    
-
     // if (
     //   e.target.name == "email" &&
     //   e.target.value &&
@@ -27,16 +25,15 @@ export default function useSignUp() {
     //   const emailValue = e.target.value + "@gmail.com";
     //   setFormData({ ...formData, email: emailValue });
     // } else {
-     
+
     // }
 
     setFormData({
-        ...formData,
-        [e.target.name]: e.target.value,
-      });
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
     console.log("formData handleChange", formData);
   };
-
 
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,7 +66,7 @@ export default function useSignUp() {
         setUserProfile(data.user_profile);
 
         toggleIsOpenModel();
-        router.push("/customer/dashboard");
+        router.push(`/${role?.toLowerCase()}/dashboard`);
         toggleToken(true);
       } else {
         const errorData = await response.json();

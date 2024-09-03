@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
 
       if (role === "Admin" && url.pathname.startsWith("/customer")) {
         console.log("Redirecting Admin from Customer path");
-        url.pathname = "/unauthorized";
+        url.pathname = "/";
         return NextResponse.redirect(url);
       }
 

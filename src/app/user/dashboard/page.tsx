@@ -2,21 +2,25 @@
 
 import { useRouter } from "next/navigation";
 import BoxPost from "@/components/box_yourpost";
-import { useGlobal } from "@/context/useGoble";
+import { useGlobal } from "@/context/useGlobal";
 import { useFetchPredictions } from "./api";
 import { PredictionHistorysInterface } from "@/interface/predictionHistorys.interface";
 import Cookies from "js-cookie";
 import { HistoryPredicstionInterface } from "@/interface/historyPredictions.interface";
+import ButtonReturn from "@/components/fetching_state";
+import FetchingState from "@/components/fetching_state";
 export default function DeashBoard() {
   const router = useRouter();
   const { historyPredictions, loading, error } = useFetchPredictions();
 
-  const { predictionHistoryGlobal, setPredictionHistoryGlobal } = useGlobal();
+  const { predictionHistoryGlobal, setPredictionHistoryGlobal, role } =
+    useGlobal();
 
   const classificationCount = historyPredictions?.length;
 
-  const handleGetPrediction = async (prediction:HistoryPredicstionInterface) => {
-    
+  const handleGetPrediction = async (
+    prediction: HistoryPredicstionInterface
+  ) => {
     if (!prediction.id) return;
 
     const apiUrl = `http://127.0.0.1:8000/predictions/${prediction.id}/`;
@@ -38,16 +42,15 @@ export default function DeashBoard() {
       console.log("data", data);
       const newPrediction: PredictionHistorysInterface = {
         image: prediction.image,
-        class: data.map((item:any) => item.class_name),
+        class: data.map((item: any) => item.class_name),
         total_min: prediction.total_min,
         total_max: prediction.total_max,
       };
       await setPredictionHistoryGlobal(newPrediction);
-      
+
       console.log(newPrediction);
       console.log("predictionHistoryGlobal1", predictionHistoryGlobal);
-      router.push("/customer/use_ai");
-      
+      router.push(`/${role?.toLowerCase()}/use_ai`);
     } catch (error) {
       console.error("Error fetching prediction details:", error);
     }
@@ -60,12 +63,12 @@ export default function DeashBoard() {
   // }, [predictionHistoryGlobal, router]);
 
   // Handling loading and error states
-  if (loading) return (
-    <p className="flex pl-5 pr-5 pb-5 w-full flex-col h-full">Loading...</p>
-  );
-  if (error) return (
-    <p className="flex pl-5 pr-5 pb-5 w-full flex-col h-full">Error: {error}</p>
-  );
+  if (loading)
+    return <FetchingState state="Loading..." />;
+  if (error)
+    return (
+      <FetchingState state={ `Error: ${error}`} />
+    );
   return (
     <div className="flex pl-5 pr-5 pb-5 w-full flex-col h-full">
       <div className="bg-card w-full flex flex-wrap rounded-lg ">
@@ -135,7 +138,10 @@ export default function DeashBoard() {
         ) : (
           <div className="flex text-cta-gray w-full p-5 pt-0">
             Prediction Now{" "}
-            <a href="/customer/use_ai" className="ml-1 text-pear hover:text-tan hover:underline">
+            <a
+              href={`/${role?.toLowerCase()}/use_ai`}
+              className="ml-1 text-pear hover:text-tan hover:underline"
+            >
               click
             </a>
           </div>

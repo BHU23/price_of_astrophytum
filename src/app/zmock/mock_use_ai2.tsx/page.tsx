@@ -7,7 +7,7 @@ import TitlePage from "@/components/notuse/title_page";
 import TitleTopic from "@/components/notuse/title_topic";
 import TotalPrice from "@/components/use_ai/total_price";
 import UploadImages from "@/components/notuse/upload_images";
-import { useGlobal } from "@/context/useGoble";
+import { useGlobal } from "@/context/useGlobal";
 import { DiVim } from "react-icons/di";
 
 interface ClassesInterface {

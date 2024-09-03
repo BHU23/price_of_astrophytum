@@ -2,16 +2,15 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useGlobal } from "@/context/useGoble";
+import { useGlobal } from "@/context/useGlobal";
 import { PredictionHistorysInterface } from "@/interface/predictionHistorys.interface";
 import Cookies from "js-cookie";
 export default function useFormUploadImage() {
-  
   const {
     predictionHistoryGlobal,
     setPredictionHistoryGlobal,
     setLoading,
-    loading
+    loading,
   } = useGlobal();
   const [imagePreview, setImagePreview] = useState<string | null>(
     predictionHistoryGlobal?.image || null
@@ -31,7 +30,7 @@ export default function useFormUploadImage() {
       reader.onloadend = () => {
         if (typeof reader.result === "string") {
           console.log("reader.result: " + reader.result);
-          setImagePreview(reader.result); 
+          setImagePreview(reader.result);
           setVideoStatus(false);
         }
       };
@@ -81,7 +80,7 @@ export default function useFormUploadImage() {
         total_min: data.total_min,
         total_max: data.total_max,
       };
-      
+
       const hasVtypeHigh = newPrediction.class.some(
         (cls) => cls.name === "Vtype-High"
       );
@@ -166,21 +165,21 @@ export default function useFormUploadImage() {
     };
   }, []);
 
-    return {
-      useFormUploadImageItem: {
-        imagePreview,
-        videoStatus,
-        videoRef,
-        canvasRef,
-        isTooltipVisible,
-        handleFileChange,
-        handleUpload,
-        openCamera,
-        closeCamera,
-        captureImage,
-        handleMouseEnter,
-        handleMouseLeave,
-        setImagePreview,
-      },
-    };
+  return {
+    useFormUploadImageItem: {
+      imagePreview,
+      videoStatus,
+      videoRef,
+      canvasRef,
+      isTooltipVisible,
+      handleFileChange,
+      handleUpload,
+      openCamera,
+      closeCamera,
+      captureImage,
+      handleMouseEnter,
+      handleMouseLeave,
+      setImagePreview,
+    },
+  };
 }

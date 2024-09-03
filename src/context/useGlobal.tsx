@@ -36,6 +36,9 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
     fackbook_name: "",
   });
   const [token, setToken] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
+ 
+
   const [isOpenModel, setIsOpenModel] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -55,6 +58,13 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
       }
     }
   }, []);
+   useEffect(() => {
+     const fetchedRole = Cookies.get("role");
+     if (fetchedRole) {
+      setRole(fetchedRole);
+       // console.log("Updated token", token);
+     }
+   }, []);
 
   useEffect(() => {
     // console.log("Updated userProfile", userProfile);
@@ -90,6 +100,8 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
         setIsOpen,
         isOpen,
         breadcrumbLinks,
+        role,
+        setRole,
       }}
     >
       {children}

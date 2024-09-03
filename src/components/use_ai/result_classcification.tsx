@@ -3,7 +3,7 @@ import Line from "@/components/line";
 import TitleTopic from "@/components/notuse/title_topic";
 import TotalPrice from "@/components/use_ai/total_price";
 import useUploadImage from "../hook/upload_image.hook";
-import { useGlobal } from "@/context/useGoble";
+import { useGlobal } from "@/context/useGlobal";
 import { ClassesInterface } from "@/interface/classes.interface";
 
 interface ResultClassificationProp {}
@@ -12,9 +12,9 @@ export default function ResultClassification({}: ResultClassificationProp) {
   // const {
   //   loading,
   // } = useUploadImage().uploadImageItem;
-  const { predictionHistoryGlobal ,loading} = useGlobal();
-   console.log("predictionHistoryGlobal3", predictionHistoryGlobal);
-   console.log("class3", predictionHistoryGlobal.class);
+  const { predictionHistoryGlobal, loading } = useGlobal();
+  console.log("predictionHistoryGlobal3", predictionHistoryGlobal);
+  console.log("class3", predictionHistoryGlobal.class);
   return (
     <div className="w-full flex flex-col justify-start h-[100%] gap-5">
       <span className="text-cta-text font-semibold text-sm">
