@@ -8,7 +8,7 @@ import { HiOutlineSparkles } from "react-icons/hi2";
 import { RiBitCoinLine } from "react-icons/ri";
 import { IoPersonOutline } from "react-icons/io5";
 import { useGlobal } from "@/context/useGoble";
-
+import Cookies from "js-cookie";
 export default function Sidebar() {
   const pathname = usePathname();
   const { isOpen, setIsOpen } = useGlobal();
@@ -20,6 +20,8 @@ export default function Sidebar() {
         : "text-cta hover:text-cta-text hover:bg-card"
     }`;
   };
+
+  const role = Cookies.get("role");
 
   return (
     <div className="px-5 py-5 sm:py-4 h-full w-full">
@@ -40,29 +42,33 @@ export default function Sidebar() {
             </div>
             Dashboard
           </Link>
-          <Link
-            href="/customer/use_ai"
-            className={getLinkClassName("/customer/use_ai")}
-          >
-            <div className="grid mr-4 place-items-center">
-              <HiOutlineSparkles />
-            </div>
-            AI
-          </Link>
-          <Link
-            href="/customer/posts"
-            className={getLinkClassName("/customer/posts")}
-          >
-            <div className="flex justify-between items-center w-full transition-all rounded-lg outline-none text-start">
-              <div className="flex ">
-                <div className="grid mr-4 place-items-center">
-                  <RiFileTextLine />
-                </div>
-                Posts
+          {role == "User" && (
+            <Link
+              href="/customer/use_ai"
+              className={getLinkClassName("/customer/use_ai")}
+            >
+              <div className="grid mr-4 place-items-center">
+                <HiOutlineSparkles />
               </div>
-              <p>4</p>
-            </div>
-          </Link>
+              AI
+            </Link>
+          )}
+          {role == "User" && (
+            <Link
+              href="/customer/posts"
+              className={getLinkClassName("/customer/posts")}
+            >
+              <div className="flex justify-between items-center w-full transition-all rounded-lg outline-none text-start">
+                <div className="flex ">
+                  <div className="grid mr-4 place-items-center">
+                    <RiFileTextLine />
+                  </div>
+                  Posts
+                </div>
+                <p>4</p>
+              </div>
+            </Link>
+          )}
         </nav>
         <div className="px-4 pt-2">
           <h5 className="block font-sans text-xs antialiased text-cta">
@@ -70,15 +76,17 @@ export default function Sidebar() {
           </h5>
         </div>
         <nav className="flex flex-col gap-1 p-2 font-sans text-base font-normal">
-          <Link
-            href="/customer/class"
-            className={getLinkClassName("/customer/class")}
-          >
-            <div className="grid mr-4 place-items-center">
-              <RiBitCoinLine />
-            </div>
-            Class
-          </Link>
+          {role == "Admin" && (
+            <Link
+              href="/customer/class"
+              className={getLinkClassName("/customer/class")}
+            >
+              <div className="grid mr-4 place-items-center">
+                <RiBitCoinLine />
+              </div>
+              Class
+            </Link>
+          )}
           {/* <Link
             href="/customer/price_of_class"
             className={getLinkClassName("/customer/price_of_class")}

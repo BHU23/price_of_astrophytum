@@ -57,14 +57,11 @@ export default function Header() {
               </button>
             </div>
             <a href="/">
-              
               <Image
                 width={500}
                 height={500}
                 className="w-auto h-12 sm:h-14"
-                src={
-                  Logo
-                }
+                src={Logo}
                 alt="Logo"
               />
             </a>
@@ -73,9 +70,7 @@ export default function Header() {
                 width={500}
                 height={500}
                 className="w-auto h-12 sm:h-14"
-                src={
-                  LogoName
-                }
+                src={LogoName}
                 alt=""
               />
             </a>
@@ -160,7 +155,7 @@ export default function Header() {
       </nav>
       {isOpenModel && (
         <div className="fixed h-full w-full bg-transparent">
-          <ModelSignInSignUp />
+          <ModelSignInSignUp canClose={true} />
         </div>
       )}
     </div>

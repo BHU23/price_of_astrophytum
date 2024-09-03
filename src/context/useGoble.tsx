@@ -51,13 +51,13 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
       const storedToken = Cookies.get("token");
       if (storedToken) {
         setToken(true);
-        console.log("Updated token", token);
+        // console.log("Updated token", token);
       }
     }
   }, []);
 
   useEffect(() => {
-    console.log("Updated userProfile", userProfile);
+    // console.log("Updated userProfile", userProfile);
   }, [userProfile]);
 
   const generateBreadcrumbLinks = (path: string) => {

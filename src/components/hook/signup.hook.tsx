@@ -53,8 +53,16 @@ export default function useSignUp() {
       if (response.ok) {
         const data = await response.json();
 
-        // Handle successful registration
-        Cookies.set("token", data.token, { secure: true });
+        const expirationTimeInDays = 6 / 24;
+
+        Cookies.set("token", data.token, {
+          secure: true,
+          expires: expirationTimeInDays,
+        });
+        Cookies.set("role", data.user_profile.role, {
+          secure: true,
+          expires: expirationTimeInDays,
+        });
 
         console.log("token", Cookies.get("token"));
         console.log("data.user_profile", data.user_profile);

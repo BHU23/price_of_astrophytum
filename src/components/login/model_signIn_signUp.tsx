@@ -6,15 +6,18 @@ import Logo from "../../../public/logo.png";
 import LogoName from "../../../public/LogoName.png";
 import { useState } from "react";
 import Image from "next/image";
-export default function ModelSignInSignUp() {
+interface ModelSignInSignUp {
+  canClose: boolean;
+}
+export default function ModelSignInSignUp({ canClose }:ModelSignInSignUp) {
   const [activeTab, setActiveTab] = useState("sign-in");
   const { toggleIsOpenModel, isOpen, setIsOpen } = useGlobal();
-  
- 
+
   return (
-    <div className="flex flex-col items-center justify-center p-5 mx-auto h-full sm:pt-16 pt-14">
+    // <div className="flex flex-col items-center justify-center p-5 mx-auto h-full sm:pt-16 pt-14">
+    <div className="flex flex-col items-center justify-center p-5 mx-auto h-full">
       <div className="relative w-full rounded-xl shadow border border-border md:mt-0 sm:max-w-md xl:p-0 bg-card">
-        <div className="absolute  right-0">
+        {canClose && <div className="absolute  right-0">
           <button
             type="button"
             className=" rounded-md p-2 inline-flex items-center justify-center text-btn hover:text-tan focus:outline-none "
@@ -36,7 +39,7 @@ export default function ModelSignInSignUp() {
               />
             </svg>
           </button>
-        </div>
+        </div>}
         <div className="p-5 ">
           <div
             className="flex flex-row items-center h-full justify-center"

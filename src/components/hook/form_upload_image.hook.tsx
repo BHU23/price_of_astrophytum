@@ -73,7 +73,7 @@ export default function useFormUploadImage() {
           extra_value: cls.extra_value,
           description: cls.description,
           price: {
-            id: 1,
+            id: cls.price.id ?? 1,
             value_min: cls.price.value_min,
             value_max: cls.price.value_max,
           },
@@ -81,7 +81,18 @@ export default function useFormUploadImage() {
         total_min: data.total_min,
         total_max: data.total_max,
       };
-      // if newPrediction.class.name is Vtype-High and Vtype-High newPrediction.total_min = newPrediction.total_min/2 ,  newPrediction.total_max = newPrediction.total_mmax/2
+      
+      const hasVtypeHigh = newPrediction.class.some(
+        (cls) => cls.name === "Vtype-High"
+      );
+      const hasVtypeLow = newPrediction.class.some(
+        (cls) => cls.name === "Vtype-Low"
+      );
+
+      if (hasVtypeHigh && hasVtypeLow) {
+        newPrediction.total_min = newPrediction.total_min / 2;
+        newPrediction.total_max = newPrediction.total_max / 2;
+      }
       //  setPredictionHistory(newPrediction);
       setImagePreviewOld(imagePreview);
       setPredictionHistoryGlobal(newPrediction);

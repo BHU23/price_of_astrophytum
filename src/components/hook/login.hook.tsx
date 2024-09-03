@@ -28,8 +28,16 @@ export default function useLogIn() {
       if (response.ok) {
         const data = await response.json();
 
-        // Save token in cookies using js-cookie
-        Cookies.set("token", data.token, { secure: true });
+        const expirationTimeInDays = 6 / 24;
+
+        Cookies.set("token", data.token, {
+          secure: true,
+          expires: expirationTimeInDays,
+        });
+        Cookies.set("role", data.user_profile.role, {
+          secure: true,
+          expires: expirationTimeInDays,
+        });
 
         console.log("token", Cookies.get("token"));
 
