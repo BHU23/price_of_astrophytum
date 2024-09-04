@@ -10,57 +10,41 @@ export default function useLogIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  const {
-    userProfile,
-    setUserProfile,
-    toggleIsOpenModelBoolean,
-    toggleToken,
-    role,
-  } = useGlobal();
+  const { setUserProfile, toggleIsOpenModelBoolean, toggleToken } =
+    useGlobal();
 
   const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const response = await fetch("http://127.0.0.1:8000/api/login/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-    console.log(response);
-    if (response.ok) {
-      const data = await response.json();
 
-      const expirationTimeInDays = 6 / 24;
+    try {
+      const data = await PostLogIn(username, password);
 
-      await Cookies.set("token", data.token, {
+      const expirationTimeInDays = 6 / 24; // 6 hours
+
+      Cookies.set("token", data.token, {
         secure: true,
         expires: expirationTimeInDays,
       });
-      await Cookies.set("role", data.user_profile.role, {
+      Cookies.set("role", data.user_profile.role, {
         secure: true,
         expires: expirationTimeInDays,
       });
-
-      console.log("token", Cookies.get("token"));
-
-      console.log("user_profile", data.user_profile);
 
       setUserProfile(data.user_profile);
-      console.log("userProfile", userProfile);
       toggleIsOpenModelBoolean(false);
-       const role = data.user_profile.role;
-       console.log("role", role);
-       setTimeout(() => {
-         router.push(`/${role?.toLowerCase()}/dashboard`);
-       }, 1000);
-      
-      toggleToken(true);
-    } else {
-      const errorData = await response.json();
-      setError(errorData.error);
+
+      // toggleToken(true);
+
+      setTimeout(() => {
+        router.push(`/${data.user_profile.role.toLowerCase()}/dashboard`);
+      }, 1000);
+    } catch (error) {
+      setError(
+        "An unexpected error occurred. Please try again."
+      );
     }
   };
+
   const [activeTab, setActiveTab] = useState("sign-in");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -85,3 +69,27 @@ export default function useLogIn() {
     },
   };
 }
+
+export async function PostLogIn(username: string, password: string) {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/login/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      const errorData = await response.json();
+      throw new Error(errorData.error);
+    }
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return null;
+  }
+}
+

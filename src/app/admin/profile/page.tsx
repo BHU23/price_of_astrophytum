@@ -5,11 +5,22 @@ import { FaFacebook } from "react-icons/fa";
 import ButtonPushPathItems from "@/components/button_pushpath_items";
 import Line from "@/components/line";
 import { useGlobal } from "@/context/useGlobal";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GetUserProfile } from "./้hook";
 import FetchingState from "@/components/fetching_state";
+import Cookies from "js-cookie";
 export default function Profile() {
-  const { userProfile, setUserProfile,role } = useGlobal();
+  const { userProfile, setUserProfile } = useGlobal();
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchedRole = Cookies.get("role");
+    if (fetchedRole) {
+      setRole(fetchedRole);
+    } else {
+      console.warn("Role not found in cookies");
+    }
+  }, []);
   const handleGetUserProfile = async () => {
     const data = await GetUserProfile();
     setUserProfile(data);

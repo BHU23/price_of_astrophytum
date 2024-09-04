@@ -19,7 +19,6 @@ export default function BoxLanding({
 }: BoxLandingProp) {
    const [role, setRole] = useState<string | null>(null);
 
-   // Fetch the role from cookies and set it in the local state
    useEffect(() => {
      const fetchedRole = Cookies.get("role");
      if (fetchedRole) {
@@ -30,8 +29,8 @@ export default function BoxLanding({
    }, []);
   return (
     <a
-      href={`${role?.toLowerCase()}${LinkTo}`}
-      className="flex flex-col p-3 pb-4 border-2 border-pear rounded-lg h-32 w-44 m-4 gap-3 hover:bg-card"
+      href={role ? `${role?.toLowerCase()}${LinkTo}` : "/login"}
+      className="flex flex-col p-3 pb-4 border-2 border-pear rounded-lg h-32  sm:w-44 m-4 gap-3 hover:bg-card"
     >
       <div className="w-full flex flex-row justify-between ">
         <p className="text-cta-text font-medium text-lg">{Name}</p>

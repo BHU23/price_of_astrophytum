@@ -25,7 +25,6 @@ export default function RootLayout({
             <div className="flex pt-20 w-full h-auto ">
               <div className="w-full h-auto ">
                 {children}
-                {/* <Footer /> */}
               </div>
             </div>
           </Providers>

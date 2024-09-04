@@ -8,11 +8,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import ButtonPushPathItems from "@/components/button_pushpath_items";
+import { PostLogIn } from "@/components/hook/login.hook";
 
 export default function Home() {
   const [role, setRole] = useState<string | null>(null);
-
-  // Fetch the role from cookies and set it in the local state
   useEffect(() => {
     const fetchedRole = Cookies.get("role");
     if (fetchedRole) {

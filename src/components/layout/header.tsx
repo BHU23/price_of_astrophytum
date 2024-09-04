@@ -1,62 +1,70 @@
 "use client";
 import React, { useState } from "react";
 import ThemeSwitch from "./ThemeSwitch";
-import useHeader from "../hook/header.hook";
+// import useHeader from "../hook/header.hook";
 import { useGlobal } from "@/context/useGlobal";
 import ModelSignInSignUp from "../login/model_signIn_signUp";
 import Image from "next/image";
 import Logo from "../../../public/logo.png";
 import LogoName from "../../../public/LogoName.png";
 export default function Header() {
-  const { headerItems } = useHeader();
-  const { token, isOpenModel, toggleIsOpenModel, isOpen, setIsOpen } =
-    useGlobal();
+  
+  const {
+    token,
+    isOpenModel,
+    toggleIsOpenModel,
+    isOpen,
+    setIsOpen,
+    breadcrumbLinks,
+  } = useGlobal();
+  console.log("breadcrumbLinks",breadcrumbLinks);
   return (
-    <>
-      <nav className="w-full fixed bg-card shadow z-[9999]">
+    <div>
+      <nav className="w-full fixed bg-card shadow z-[999]">
         <div className=" py-1 pl-2 flex justify-between items-center">
-          {/* <div className=" py-1 md:flex md:justify-between md:items-center"> */}
           <div className="flex flex-row items-center justify-between">
-            <div className="flex sm:hidden gap-2">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                type="button"
-                className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-8 h-8  hover:text-tan ml-3 mr-1 md:my-0"
-                aria-label="toggle menu"
-              >
-                {headerItems.isOpen ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M4 8h16M4 16h16"
-                    />
-                  </svg>
-                )}
-              </button>
-            </div>
+            {breadcrumbLinks.length != 0 && (
+              <div className="flex sm:hidden gap-2">
+                <button
+                  onClick={() => setIsOpen((prev: boolean) => !prev)}
+                  type="button"
+                  className="flex items-center justify-center  my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-8 h-8  hover:text-tan ml-3 mr-1 md:my-0"
+                  aria-label="toggle menu"
+                >
+                  {isOpen ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4 8h16M4 16h16"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            )}
             <a href="/">
               <Image
                 width={500}
@@ -78,15 +86,13 @@ export default function Header() {
           </div>
 
           <div className="flex items-center justify-center ">
-            {!token ? (
+            {token ? null : (
               <div
                 onClick={() => toggleIsOpenModel()}
-                className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text  border border-transparent hover:border-black hover:border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0"
+                className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0"
               >
                 <div>Sign in/up</div>
               </div>
-            ) : (
-              ""
             )}
             <div className="flex items-center justify-center cursor-pointer  my-2 transition-colors duration-300 transform text-cta-text  border border-transparent hover:border-black hover:border-border rounded-md w-8 h-8  hover:text-tan ml-1 mr-5 md:my-0">
               <ThemeSwitch />
@@ -155,10 +161,10 @@ export default function Header() {
         </div>
       </nav>
       {isOpenModel && (
-        <div className="fixed h-full w-full bg-transparent">
+        <div className="fixed h-full w-full bg-transparent z-[99]">
           <ModelSignInSignUp canClose={true} />
         </div>
       )}
-    </>
+    </div>
   );
 }

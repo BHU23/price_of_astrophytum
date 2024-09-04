@@ -1,14 +1,14 @@
-"use client";
+// "use client";
 
-import { useState} from "react";
+// import { useState} from "react";
 
-export default function useHeader() {
-  const [isOpen, setIsOpen] = useState(false);
+// export default function useHeader() {
+//   const [isOpen, setIsOpen] = useState(false);
    
-  return {
-    headerItems: {
-      isOpen,
-      setIsOpen,
-    },
-  };
-}
+//   return {
+//     headerItems: {
+//       isOpen,
+//       setIsOpen,
+//     },
+//   };
+// }

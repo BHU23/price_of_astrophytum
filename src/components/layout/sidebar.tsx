@@ -54,7 +54,7 @@ export default function Sidebar() {
       if (response.ok) {
         Cookies.remove("token");
         Cookies.remove("role");
-        toggleToken(false);
+        // toggleToken(false);
         router.push("/");
       } else {
         const errorData = await response.json();

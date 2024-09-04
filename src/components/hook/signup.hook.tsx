@@ -67,13 +67,12 @@ export default function useSignUp() {
         setUserProfile(data.user_profile);
 
         toggleIsOpenModelBoolean(false);
-         const role = data.user_profile.role;
-         console.log("role", role);
-
-         setTimeout(() => {
-           router.push(`/${role?.toLowerCase()}/dashboard`);
-         }, 1000);
-        toggleToken(true);
+        const role = data.user_profile.role;
+        console.log("role", role);
+        // toggleToken(true);
+        setTimeout(() => {
+          router.push(`/${role?.toLowerCase()}/dashboard`);
+        }, 1000);
       } else {
         const errorData = await response.json();
         setError(errorData.error);
