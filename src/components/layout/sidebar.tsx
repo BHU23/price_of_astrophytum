@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
@@ -9,9 +9,23 @@ import { RiBitCoinLine } from "react-icons/ri";
 import { IoPersonOutline } from "react-icons/io5";
 import { useGlobal } from "@/context/useGlobal";
 import Cookies from "js-cookie";
+
 export default function Sidebar() {
   const pathname = usePathname();
-  const { isOpen, setIsOpen } = useGlobal();
+  const router = useRouter();
+  const { isOpen, setIsOpen, toggleToken } = useGlobal();
+  const [role, setRole] = useState<string | null>(null);
+
+  // Fetch the role from cookies and set it in the local state
+  useEffect(() => {
+    const fetchedRole = Cookies.get("role");
+    if (fetchedRole) {
+      setRole(fetchedRole);
+    } else {
+      console.warn("Role not found in cookies");
+    }
+  }, []);
+
   const getLinkClassName = (path: string) => {
     const isSupPath = pathname.includes(path);
     return `flex items-center w-full p-3 transition-all rounded-lg outline-none text-start ${
@@ -20,9 +34,6 @@ export default function Sidebar() {
         : "text-cta hover:text-cta-text hover:bg-card"
     }`;
   };
-
-  const router = useRouter();
-  const { toggleToken, role, setRole } = useGlobal();
 
   const handleLogout = async () => {
     try {
@@ -36,12 +47,13 @@ export default function Sidebar() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`, // Include the token in the Authorization header
+          Authorization: `Token ${token}`,
         },
       });
 
       if (response.ok) {
         Cookies.remove("token");
+        Cookies.remove("role");
         toggleToken(false);
         router.push("/");
       } else {

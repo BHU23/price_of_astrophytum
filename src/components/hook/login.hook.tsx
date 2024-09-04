@@ -10,8 +10,13 @@ export default function useLogIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  const { userProfile, setUserProfile, toggleIsOpenModel, toggleToken,role } =
-    useGlobal();
+  const {
+    userProfile,
+    setUserProfile,
+    toggleIsOpenModelBoolean,
+    toggleToken,
+    role,
+  } = useGlobal();
 
   const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,11 +33,11 @@ export default function useLogIn() {
 
       const expirationTimeInDays = 6 / 24;
 
-      Cookies.set("token", data.token, {
+      await Cookies.set("token", data.token, {
         secure: true,
         expires: expirationTimeInDays,
       });
-      Cookies.set("role", data.user_profile.role, {
+      await Cookies.set("role", data.user_profile.role, {
         secure: true,
         expires: expirationTimeInDays,
       });
@@ -43,10 +48,13 @@ export default function useLogIn() {
 
       setUserProfile(data.user_profile);
       console.log("userProfile", userProfile);
-
-      toggleIsOpenModel();
-
-      router.push(`/${role?.toLowerCase()}/dashboard`);
+      toggleIsOpenModelBoolean(false);
+       const role = data.user_profile.role;
+       console.log("role", role);
+       setTimeout(() => {
+         router.push(`/${role?.toLowerCase()}/dashboard`);
+       }, 1000);
+      
       toggleToken(true);
     } else {
       const errorData = await response.json();

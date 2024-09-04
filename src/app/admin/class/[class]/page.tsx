@@ -6,6 +6,7 @@ import { FiPlus } from "react-icons/fi";
 import InputItems from "@/components/input_items";
 import Image from "next/image";
 import ButtonReturn from "@/components/button_return";
+import FetchingState from "@/components/fetching_state";
 
 export default function Class({ params }: { params: { class: string } }) {
   const classId = parseInt(params.class, 10);
@@ -26,8 +27,8 @@ export default function Class({ params }: { params: { class: string } }) {
     error,
   } = useClass(classId);
 
-  if (loading) return <FetchingState state={`Error: ${error}`} />;
-  if (error) return <p>{error}</p>;
+  if (loading) return <FetchingState state="Loading..." /> ;
+  if (error) return <FetchingState state={`Error: ${error}`} />;
 
   return (
     <form
@@ -55,8 +56,8 @@ export default function Class({ params }: { params: { class: string } }) {
               htmlFor="name"
               placeholder="Enter class name"
               handleChange={handleInputChange}
-              pattern="[a-zA-Z]{1,}"
-              textError="Class name must be at least 1 characters long and EN language."
+              pattern="[a-zA-Z!@#$%^&*_- ]{1,}"
+              textError='Class name must be at least 1 characters long and "!@#$%^&*_-" in EN language.'
             />
             <div>
               {!formDataClass.example_image ? (

@@ -13,7 +13,8 @@ export default function useSignUp() {
 
   const [error, setError] = useState("");
   const router = useRouter();
-  const { setUserProfile, toggleIsOpenModel, toggleToken ,role} = useGlobal();
+  const { setUserProfile, toggleIsOpenModelBoolean, toggleToken, role } =
+    useGlobal();
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,8 +66,13 @@ export default function useSignUp() {
         console.log("data.user_profile", data.user_profile);
         setUserProfile(data.user_profile);
 
-        toggleIsOpenModel();
-        router.push(`/${role?.toLowerCase()}/dashboard`);
+        toggleIsOpenModelBoolean(false);
+         const role = data.user_profile.role;
+         console.log("role", role);
+
+         setTimeout(() => {
+           router.push(`/${role?.toLowerCase()}/dashboard`);
+         }, 1000);
         toggleToken(true);
       } else {
         const errorData = await response.json();

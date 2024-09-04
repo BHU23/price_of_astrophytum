@@ -8,7 +8,7 @@ import FetchingState from "@/components/fetching_state";
 export default function Class() {
   const { classes, loading, error } = useClasses();
   const { role } = useGlobal();
-  if (loading) return <FetchingState state={`Error: ${error}`} />;
+  if (loading) return <FetchingState state="Loading..." />;
   if (error) return <FetchingState state={`Error: ${error}`} />;
 
   return (

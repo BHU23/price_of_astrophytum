@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
     try {
       const url = request.nextUrl.clone();
 
-      if (role === "Admin" && url.pathname.startsWith("/customer")) {
+      if (role === "Admin" && url.pathname.startsWith("/user")) {
         console.log("Redirecting Admin from Customer path");
         url.pathname = "/";
         return NextResponse.redirect(url);
@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
 
       if (role === "User" && url.pathname.startsWith("/admin")) {
         console.log("Redirecting User from Admin path");
-        url.pathname = "/unauthorized";
+        url.pathname = "/";
         return NextResponse.redirect(url);
       }
     } catch (error) {

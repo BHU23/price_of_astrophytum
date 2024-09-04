@@ -1,15 +1,29 @@
+"use client"
 import BoxLanding from "@/components/box_landing";
 import Footer from "@/components/layout/footer";
 import Image from "next/image";
 import Logo from "../../public/logo.png";
 import LogoName from "../../public/LogoName.png";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import ButtonPushPathItems from "@/components/button_pushpath_items";
 
 export default function Home() {
-  
-  return (
+  const [role, setRole] = useState<string | null>(null);
 
+  // Fetch the role from cookies and set it in the local state
+  useEffect(() => {
+    const fetchedRole = Cookies.get("role");
+    if (fetchedRole) {
+      setRole(fetchedRole);
+    } else {
+      console.warn("Role not found in cookies");
+    }
+  }, []);
+  return (
     <main className="h-screen ">
-      <div className="w-full h-[90%] flex flex-col justify-center items-center gap-4 px-5">
+      <div className="w-full h-[100%] relative flex flex-col justify-center items-center gap-4 px-5 -top-5">
         <div className="flex flex-row items-center justify-between ">
           <Image
             width={500}
@@ -53,6 +67,13 @@ export default function Home() {
             LinkTo="/posts"
             Description="You can automated create posts to yours Facebook."
           />
+        </div>
+        <div className="flex gap-5 w-72 items-center">
+          <ButtonPushPathItems
+            name="Let's start"
+            path={`/${role?.toLowerCase()}/dashboard`}
+          ></ButtonPushPathItems>
+          <p className="w-full">Try now.</p>
         </div>
       </div>
       <Footer />

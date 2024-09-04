@@ -45,7 +45,7 @@ export default function ModelSignInSignUp({ canClose }: ModelSignInSignUp) {
         <div className="p-5 ">
           <div
             className="flex flex-row items-center h-full justify-center"
-            onClick={() => toggleIsOpenModel()}
+            onClick={() => toggleIsOpenModel}
           >
             <Image
               width={500}

@@ -6,7 +6,7 @@ export default function Footer() {
       <div>
         <footer className="bg-white dark:bg-card shadow">
           <div className="container p-6  max-w-full">
-            <div className="lg:flex justify-between">
+            <div className="lg:flex justify-between gap-5">
               <div className="-mx-6 lg:w-2/6 h-full">
                 <div className="px-6">
                   <div className="flex flex-row items-center h-full">

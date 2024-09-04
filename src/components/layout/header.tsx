@@ -12,8 +12,8 @@ export default function Header() {
   const { token, isOpenModel, toggleIsOpenModel, isOpen, setIsOpen } =
     useGlobal();
   return (
-    <div>
-      <nav className="w-full fixed bg-card shadow z-0">
+    <>
+      <nav className="w-full fixed bg-card shadow z-[9999]">
         <div className=" py-1 pl-2 flex justify-between items-center">
           {/* <div className=" py-1 md:flex md:justify-between md:items-center"> */}
           <div className="flex flex-row items-center justify-between">
@@ -159,6 +159,6 @@ export default function Header() {
           <ModelSignInSignUp canClose={true} />
         </div>
       )}
-    </div>
+    </>
   );
 }

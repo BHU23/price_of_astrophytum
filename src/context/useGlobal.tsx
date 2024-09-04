@@ -17,7 +17,6 @@ interface GlobalProviderProps {
 }
 
 export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
-  const [predictions, setPredictions] = useState<string>();
   const [predictionHistoryGlobal, setPredictionHistoryGlobal] =
     useState<PredictionHistorysInterface | null>({
       image: "",
@@ -26,49 +25,21 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
       total_max: 0,
     });
   const [loading, setLoading] = useState(false);
-  const [userProfile, setUserProfile] = useState<UserProfileInterface>({
-    username: "",
-    avatar: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    role: "",
-    fackbook_name: "",
-  });
   const [token, setToken] = useState(false);
-  const [role, setRole] = useState<string | null>(null);
  
 
   const [isOpenModel, setIsOpenModel] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  const toggleIsOpenModelBoolean = (b: boolean) => {
+      setIsOpenModel(b);
+  };
   const toggleIsOpenModel = () => {
-    setIsOpenModel(!isOpenModel);
+      setIsOpenModel(!isOpenModel);
   };
   const toggleToken = (event: any) => {
     setToken(event);
   };
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedToken = Cookies.get("token");
-      if (storedToken) {
-        setToken(true);
-        // console.log("Updated token", token);
-      }
-    }
-  }, []);
-   useEffect(() => {
-     const fetchedRole = Cookies.get("role");
-     if (fetchedRole) {
-      setRole(fetchedRole);
-       // console.log("Updated token", token);
-     }
-   }, []);
-
-  useEffect(() => {
-    // console.log("Updated userProfile", userProfile);
-  }, [userProfile]);
 
   const generateBreadcrumbLinks = (path: string) => {
     const segments = path.split("/").filter((segment) => segment);
@@ -91,17 +62,14 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
         setPredictionHistoryGlobal,
         loading,
         setLoading,
-        userProfile,
-        setUserProfile,
         token,
         toggleToken,
         toggleIsOpenModel,
+        toggleIsOpenModelBoolean,
         isOpenModel,
         setIsOpen,
         isOpen,
         breadcrumbLinks,
-        role,
-        setRole,
       }}
     >
       {children}

@@ -8,15 +8,25 @@ import { PredictionHistorysInterface } from "@/interface/predictionHistorys.inte
 import Cookies from "js-cookie";
 import { HistoryPredicstionInterface } from "@/interface/historyPredictions.interface";
 import FetchingState from "@/components/fetching_state";
+import { useState, useEffect } from "react";
 export default function DeashBoard() {
   const router = useRouter();
   const { historyPredictions, loading, error } = useFetchPredictions();
 
-  const { predictionHistoryGlobal, setPredictionHistoryGlobal, role } =
+  const { predictionHistoryGlobal, setPredictionHistoryGlobal } =
     useGlobal();
 
   const classificationCount = historyPredictions?.length;
+   const [role, setRole] = useState<string | null>(null);
 
+   useEffect(() => {
+     const fetchedRole = Cookies.get("role");
+     if (fetchedRole) {
+       setRole(fetchedRole);
+     } else {
+       console.warn("Role not found in cookies");
+     }
+   }, []);
   const handleGetPrediction = async (
     prediction: HistoryPredicstionInterface
   ) => {

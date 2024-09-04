@@ -4,6 +4,8 @@ import { FiAperture } from "react-icons/fi";
 import { FaFacebook } from "react-icons/fa";
 import { PiNoteFill } from "react-icons/pi";
 import { useGlobal } from "@/context/useGlobal";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 interface BoxLandingProp {
   Name: string;
   //   Icon: string;
@@ -15,10 +17,20 @@ export default function BoxLanding({
   LinkTo,
   Description,
 }: BoxLandingProp) {
-  const { role } = useGlobal();
+   const [role, setRole] = useState<string | null>(null);
+
+   // Fetch the role from cookies and set it in the local state
+   useEffect(() => {
+     const fetchedRole = Cookies.get("role");
+     if (fetchedRole) {
+       setRole(fetchedRole);
+     } else {
+       console.warn("Role not found in cookies");
+     }
+   }, []);
   return (
     <a
-      href={`${role?.toLowerCase()}/${LinkTo}`}
+      href={`${role?.toLowerCase()}${LinkTo}`}
       className="flex flex-col p-3 pb-4 border-2 border-pear rounded-lg h-32 w-44 m-4 gap-3 hover:bg-card"
     >
       <div className="w-full flex flex-row justify-between ">
