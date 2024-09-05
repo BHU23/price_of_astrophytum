@@ -156,6 +156,8 @@ export default function UploadImage() {
         <ButtonItems
           name={"Upload"}
           onClick={useFormUploadImageItem.handleUpload}
+          type={"submit"}
+          withs={"full"} 
         />
       </div>
     </div>

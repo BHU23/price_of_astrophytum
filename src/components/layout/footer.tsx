@@ -160,7 +160,7 @@ export default function Footer() {
 
             <div>
               <p className="text-center text-cta-gray">
-                © Brand 2024 - All rights reserved
+                © Catis Ai 2024 - All rights reserved
               </p>
             </div>
           </div>

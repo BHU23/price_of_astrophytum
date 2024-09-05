@@ -36,7 +36,7 @@ export default function Profile() {
   return (
     <div className="flex flex-wrap lg:flex-nowrap w-full h-full p-5 pt-0 gap-5">
       <div className="flex justify-center items-center w-full h-full p-5 gap-5 bg-card rounded-xl">
-        <div className="w-full lg:w-[350px] h-full text-cta-text flex flex-col justify-start items-center  gap-5  ">
+        <div className="w-full lg:w-[350px] h-full text-cta-text flex flex-col justify-start items-center  gap-5">
           {userProfile.avatar ? (
             <Image
               className="w-64 h-64 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"

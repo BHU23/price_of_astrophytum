@@ -49,17 +49,13 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
       setIsOpenModel(!isOpenModel);
   };
 
-  const token = Cookies.get("token");
-
-  // const toggleToken = () => {
-  //   if (token) {
-  //     setIsToken(true);
-  //     console.log("Token exists, setIsToken(true)");
-  //   } else {
-  //     setIsToken(false);
-  //     console.log("No token found, setIsToken(false)");
-  //   }
-  // };
+   const [token, setToken] = useState<string | null>(null);
+   useEffect(() => {
+     const savedToken = Cookies.get("token"); 
+     if (savedToken) {
+       setToken(savedToken);
+     }
+   }, []); 
 
   const generateBreadcrumbLinks = (path: string) => {
     const segments = path.split("/").filter((segment) => segment);

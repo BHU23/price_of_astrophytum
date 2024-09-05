@@ -4,18 +4,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ClassesInterface } from "@/interface/classes.interface";
 import Cookies from "js-cookie";
-import { createPrice, GetClass, GetPrice, UpdateClass } from "../hook";
+import { createPrice, CreateClass, GetPrice } from "../hook";
 import { PriceInterface } from "@/interface/prices.interface";
 
-export default function useClass(id: number) {
-  const [loading, setLoading] = useState<boolean>(true);
+export default function useCreateClass() {
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
   const [classes, setClasses] = useState<ClassesInterface | null>(null);
-  const [newPriceState, setNewPriceState] = useState(false);
-  const [prices, SetPrices] = useState<PriceInterface[]>([]);
+  const [newPriceState, setNewPriceState] = useState<boolean>(false);
+  const [prices, setPrices] = useState<PriceInterface[]>([]);
   const [formDataClass, setFormDataClass] = useState<ClassesInterface>({
-    id,
+    id: 0,
     name: "",
     description: "",
     extra_value: 0,
@@ -35,10 +34,10 @@ export default function useClass(id: number) {
       const reader = new FileReader();
       reader.onloadend = () => {
         if (typeof reader.result === "string") {
-          setFormDataClass({
-            ...formDataClass,
+          setFormDataClass((prev:any) => ({
+            ...prev,
             example_image: reader.result,
-          });
+          }));
         }
       };
       reader.readAsDataURL(file);
@@ -54,10 +53,9 @@ export default function useClass(id: number) {
       [name]: value,
     }));
   };
+
   const handlePriceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
-
-    // Split the selected value into min and max
     const [valueMin, valueMax] = selectedValue.split(" - ").map(Number);
 
     setFormDataClass((prev) => ({
@@ -70,8 +68,9 @@ export default function useClass(id: number) {
     }));
   };
 
-  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleCreataClass = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
 
     try {
       let priceId = formDataClass.price.id;
@@ -86,14 +85,13 @@ export default function useClass(id: number) {
         const createdPrice = await createPrice(newPriceData);
 
         if (createdPrice) {
-          priceId = createdPrice.id; 
+          priceId = createdPrice.id;
         } else {
           throw new Error("Failed to create a new price");
         }
       }
 
-      // Now, update the class with the (newly) created price ID
-      const updatedData: Partial<ClassesInterface> = {
+      const createData: Partial<ClassesInterface> = {
         ...formDataClass,
         price: {
           id: priceId,
@@ -102,35 +100,22 @@ export default function useClass(id: number) {
         },
       };
 
-      console.log("updatedData: ", updatedData);
-
-      const result = await UpdateClass(formDataClass.id, updatedData);
+      const result = await CreateClass(createData);
 
       if (result) {
         router.push("/admin/class");
       } else {
-        console.error("Failed to update the class");
+        console.error("Failed to create the class");
+        setError("Failed to create the class");
       }
     } catch (error) {
-      console.error("Error updating class:", error);
+      console.error("Error creating class:", error);
+      setError("Error creating class: " + (error as Error).message);
+    } finally {
+      setLoading(false);
     }
   };
-
   useEffect(() => {
-    const fetchClass = async () => {
-      try {
-        const data = await GetClass(id);
-        if (!data) {
-          throw new Error(`Error: ${data}`);
-        }
-        setClasses(data);
-        setFormDataClass(data);
-      } catch (err) {
-        setError("Error fetching class: " + (err as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
     const fetchPrices = async () => {
       try {
         const data = await GetPrice();
@@ -140,7 +125,7 @@ export default function useClass(id: number) {
 
         if (Array.isArray(data)) {
           const sortedPrices = data.sort((a, b) => a.value_max - b.value_max);
-          SetPrices(sortedPrices);
+          setPrices(sortedPrices);
         } else {
           throw new Error("Data format is not an array");
         }
@@ -151,10 +136,9 @@ export default function useClass(id: number) {
       }
     };
 
-    fetchClass();
     fetchPrices();
-  }, [id]);
-
+  }, []);
+  console.log("formDataClass", formDataClass);
   return {
     useClassItems: {
       handleFileChange,
@@ -165,7 +149,7 @@ export default function useClass(id: number) {
       setNewPriceState,
       setFormDataClass,
       prices,
-      handleUpdate,
+      handleCreataClass,
     },
     classData: classes,
     loading,

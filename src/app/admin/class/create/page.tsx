@@ -1,7 +1,7 @@
 "use client";
 
 import ButtonItems from "@/components/button_items";
-import useClass from "./hook";
+import useCreateClass from "./hook";
 import { FiPlus } from "react-icons/fi";
 import InputItems from "@/components/input_items";
 import Image from "next/image";
@@ -9,15 +9,12 @@ import ButtonReturn from "@/components/button_return";
 import FetchingState from "@/components/fetching_state";
 import { useState } from "react";
 
-export default function Class({ params }: { params: { class: string } }) {
-  const classId = parseInt(params.class, 10);
-
+export default function CreateClass() {
   const {
     useClassItems: {
       handleFileChange,
       handleInputChange,
-      handlePriceChange,
-      handleUpdate,
+      handleCreataClass,
       newPriceState,
       setNewPriceState,
       formDataClass,
@@ -26,7 +23,7 @@ export default function Class({ params }: { params: { class: string } }) {
     },
     loading,
     error,
-  } = useClass(classId);
+  } = useCreateClass();
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   if (loading) return <FetchingState state="Loading..." /> ;
   if (error) return <FetchingState state={`Error: ${error}`} />;
@@ -34,15 +31,13 @@ export default function Class({ params }: { params: { class: string } }) {
   return (
     <form
       className="flex flex-col w-full h-full p-5 pt-0 gap-5"
-      onSubmit={handleUpdate}
+      onSubmit={handleCreataClass}
     >
       <div className="flex flex-col w-full h-full p-5 bg-card text-cta-text rounded-lg gap-5 ">
         <div className="w-auto h-full lg:w-[500px]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
-              <span className="text-cta-text font-semibold">
-                Editing Class {formDataClass.name}
-              </span>
+              <span className="text-cta-text font-semibold">Create Class</span>
               <span className="text-cta-gray text-sm">
                 This information will be displayed publicly so be careful what
                 you share.
@@ -60,74 +55,75 @@ export default function Class({ params }: { params: { class: string } }) {
               pattern="[a-zA-Z!@#$%^&*\_\- ]{1,}"
               textError='Class name must be at least 1 characters long and "!@#$%^&*_-" in EN language.'
             />
-            <div>
-              {!formDataClass.example_image ? (
-                <div className="flex flex-col items-center justify-center w-full h-56 border-2 border-border border-dashed rounded-lg cursor-pointer hover:bg-border">
-                  <label
-                    htmlFor="dropzone-file"
-                    className="flex flex-col items-center justify-center w-full h-full"
-                  >
-                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                      <svg
-                        className="w-8 h-8 mb-4 text-gray"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 16"
-                      >
-                        <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                        />
-                      </svg>
-                      <p className="mb-2 text-sm tes">
-                        <span className="font-semibold text-pear">
-                          Click to upload
-                        </span>{" "}
-                        or drag and drop
-                      </p>
-                      <p className="text-xs text-cta-gray">
-                        SVG, PNG, JPG or GIF (MAX. 800x400px)
-                      </p>
-                    </div>
-                    <input
-                      id="dropzone-file"
-                      type="file"
-                      className="hidden"
-                      onChange={handleFileChange} // No value attribute
-                      accept="image/*"
-                    />
-                  </label>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center w-full h-56 border-2 border-border border-dashed rounded-lg cursor-pointer hover:bg-border">
-                  <Image
-                    width={500}
-                    height={500}
-                    src={formDataClass.example_image ?? ""}
-                    alt="Preview"
-                    className="max-h-full max-w-full object-contain"
-                  />
-                </div>
-              )}
-            </div>
+            {!formDataClass.example_image ? (
+              <div className="flex flex-col items-center justify-center w-full h-56 border-2 border-border border-dashed rounded-lg cursor-pointer hover:bg-border">
+                <label
+                  htmlFor="example_image_input"
+                  className="flex flex-col items-center justify-center w-full h-full"
+                >
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg
+                      className="w-8 h-8 mb-4 text-gray"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 16"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                      />
+                    </svg>
+                    <p className="mb-2 text-sm tes">
+                      <span className="font-semibold text-pear">
+                        Click to upload
+                      </span>{" "}
+                      or drag and drop
+                    </p>
+                    <p className="text-xs text-cta-gray">
+                      SVG, PNG, JPG or GIF (MAX. 800x400px)
+                    </p>
+                  </div>
+                  {/* <input
+                    id="example_image_upload"
+                    type="file"
+                    className="hidden"
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    value={formDataClass.example_image}
+                    
+                  /> */}
+                </label>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center w-full h-56 border-2 border-border border-dashed rounded-lg cursor-pointer hover:bg-border">
+                <Image
+                  width={500}
+                  height={500}
+                  src={formDataClass.example_image}
+                  alt="Preview"
+                  className="max-h-full max-w-full object-contain"
+                />
+              </div>
+            )}
             <div className="flex flex-col gap-2">
               <label
                 className="text-cta-text font-semibold text-sm"
-                htmlFor="small_size"
+                htmlFor="example_image_input"
               >
                 Upload new Image
               </label>
               <input
                 className="block w-full h-10 pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer file:p-2 file:font-semibold file:h-full file:rounded-md file:border-0 file:bg-gray-800 file:text-pear file:text-sm file:mr-2 dark:hover:text-white dark:hover:bg-gray-700  dark:focus:ring-pear focus:outline-none focus:z-10 focus:ring-1"
-                id="small_size"
+                id="example_image_input"
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
-              ></input>
+                required
+              />
             </div>
 
             <div className="flex flex-col gap-2">
@@ -150,6 +146,7 @@ export default function Class({ params }: { params: { class: string } }) {
                 placeholder="Enter description"
                 onChange={handleInputChange}
                 rows={4}
+                required
               ></textarea>
             </div>
             <InputItems

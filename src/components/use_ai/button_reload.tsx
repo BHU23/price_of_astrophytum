@@ -1,5 +1,5 @@
 import React from "react";
-import { FiRotateCcw } from "react-icons/fi";
+
 
 interface ButtonUploadProp {
   name: string;

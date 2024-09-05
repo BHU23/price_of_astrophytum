@@ -170,3 +170,76 @@ export const createPrice = async (
     return null;
   }
 };
+
+export const CreateClass = async (
+  newClassData: Partial<ClassesInterface>
+): Promise<ClassesInterface | null> => {
+  const apiUrl = `http://127.0.0.1:8000/api/classes/`;
+
+  try {
+    // Get the authentication token from cookies
+    const token = Cookies.get("token");
+    if (!token) {
+      throw new Error("Token not found");
+    }
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`, // Using Token-based authentication
+      },
+      body: JSON.stringify(newClassData), // Sending the new class data
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        `Network response was not ok: ${
+          errorData.message || response.statusText
+        }`
+      );
+    }
+
+    const data: ClassesInterface = await response.json();
+    console.log("Created new class data:", data);
+    return data;
+  } catch (error) {
+    console.error("Error creating class data:", error);
+    return null;
+  }
+};
+
+export const DeleteClassByID = async (classID: string): Promise<boolean> => {
+  const apiUrl = `http://127.0.0.1:8000/api/classes/${classID}/`;
+
+  try {
+    // Get the authentication token from cookies
+    const token = Cookies.get("token");
+    if (!token) {
+      throw new Error("Token not found");
+    }
+
+    const response = await fetch(apiUrl, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Token ${token}`, // Using Token-based authentication
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        `Network response was not ok: ${
+          errorData.message || response.statusText
+        }`
+      );
+    }
+
+    console.log(`Deleted class with ID: ${classID}`);
+    return true;
+  } catch (error) {
+    console.error("Error deleting class:", error);
+    return false;
+  }
+};

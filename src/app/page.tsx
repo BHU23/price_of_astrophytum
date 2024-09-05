@@ -70,7 +70,7 @@ export default function Home() {
         <div className="flex gap-5 w-72 items-center">
           <ButtonPushPathItems
             name="Let's start"
-            path={`/${role?.toLowerCase()}/dashboard`}
+            path={role ? `${role?.toLowerCase()}/use_ai` : "/login"}
           ></ButtonPushPathItems>
           <p className="w-full">Try now.</p>
         </div>
