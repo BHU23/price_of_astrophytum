@@ -19,16 +19,16 @@ export default function ActionTable({
 
   return (
     <div
-      className="relative inline-block text-left justify-center left-1/2"
+      className="relative inline-block text-left "
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="relative py-2">
+      <div className="relative py-5 pl-5  left-1/2">
         <FiMoreVertical />
       </div>
       {isOpen && (
         <div
-          className="absolute right-0 z-10 w-32 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="absolute -right-2 -bottom-[100px]  z-10 w-32 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
