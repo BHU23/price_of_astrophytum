@@ -9,6 +9,7 @@ export default function useLogIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  
   const router = useRouter();
   const { setUserProfile, toggleIsOpenModelBoolean, toggleToken } =
     useGlobal();
@@ -37,7 +38,7 @@ export default function useLogIn() {
 
       setTimeout(() => {
         router.push(`/${data.user_profile.role.toLowerCase()}/dashboard`);
-      }, 1000);
+      }, 100);
     } catch (error) {
       setError(
         "An unexpected error occurred. Please try again."

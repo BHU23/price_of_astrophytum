@@ -190,7 +190,7 @@ export default function EditProfile() {
                   value={formData.first_name}
                   autoComplete="given-name"
                   handleChange={handleChange}
-                  pattern="[\u0E00-\u0E7Fa-zA-Z0-9' ]+|^'|'$|''"
+                  pattern="[\u0E00-\u0E7Fa-zA-Z']+"
                   textError="First name must be to text."
                 />
               </div>
@@ -205,7 +205,7 @@ export default function EditProfile() {
                   value={formData.last_name}
                   autoComplete="family-name"
                   handleChange={handleChange}
-                  pattern="[\u0E00-\u0E7Fa-zA-Z0-9' ]+|^'|'$|''"
+                  pattern="[\u0E00-\u0E7Fa-zA-Z']+"
                   textError="Last name must be to text."
                 />
               </div>

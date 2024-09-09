@@ -72,7 +72,7 @@ export default function useSignUp() {
         // toggleToken(true);
         setTimeout(() => {
           router.push(`/${role?.toLowerCase()}/dashboard`);
-        }, 1000);
+        }, 100);
       } else {
         const errorData = await response.json();
         setError(errorData.error);

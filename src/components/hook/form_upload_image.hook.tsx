@@ -19,7 +19,6 @@ export default function useFormUploadImage() {
     predictionHistoryGlobal?.image || null
   );
   const [videoStatus, setVideoStatus] = useState<boolean>(false);
-  const router = useRouter();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 

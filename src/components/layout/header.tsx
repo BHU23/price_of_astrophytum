@@ -85,7 +85,7 @@ export default function Header() {
           </div>
 
           <div className="flex items-center justify-center">
-            {!token && (
+            {token == null && (
               <div
                 onClick={toggleIsOpenModel}
                 className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0"
@@ -101,7 +101,7 @@ export default function Header() {
       </nav>
 
       {isOpenModel && (
-        <div className="fixed h-full w-full bg-transparent z-[99]">
+        <div className="fixed h-full w-full bg-transparent z-[9999]">
           <ModelSignInSignUp canClose={true} />
         </div>
       )}

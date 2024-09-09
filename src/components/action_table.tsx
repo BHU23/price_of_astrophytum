@@ -1,15 +1,18 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FiMoreVertical } from "react-icons/fi";
+import { FiMoreVertical, FiEdit, FiEye,FiTrash } from "react-icons/fi";
 interface ActionTableProp {
-  ID: number;
   handleDelete: () => void;
   handleEdit: () => void;
+  handlePreview: () => void;
 }
 
-export default function ActionTable({ ID, handleEdit, handleDelete }: ActionTableProp) {
+export default function ActionTable({
+  handleEdit,
+  handleDelete,
+  handlePreview,
+}: ActionTableProp) {
   const [isOpen, setIsOpen] = useState(false);
   const handleMouseEnter = () => setIsOpen(true);
   const handleMouseLeave = () => setTimeout(() => setIsOpen(false), 200);
@@ -34,23 +37,33 @@ export default function ActionTable({ ID, handleEdit, handleDelete }: ActionTabl
           <div className="py-1" role="none">
             <button
               type="button"
-              className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+              className=" flex flex-row gap-2 items-center  w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
               role="menuitem"
               tabIndex={-1}
               id="menu-item-4"
               onClick={handleEdit}
             >
-              Edit
+              <FiEdit /> Edit
             </button>
             <button
               type="button"
-              className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+              className=" flex flex-row gap-2 items-center  w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+              role="menuitem"
+              tabIndex={-1}
+              id="menu-item-4"
+              onClick={handlePreview}
+            >
+              <FiEye /> Preview
+            </button>
+            <button
+              type="button"
+              className=" flex flex-row gap-2 items-center text-red-500 w-full px-4 py-2 text-left text-sm  hover:bg-gray-100"
               role="menuitem"
               tabIndex={-1}
               id="menu-item-5"
               onClick={handleDelete}
             >
-              Delete
+              <FiTrash /> Delete
             </button>
           </div>
         </div>

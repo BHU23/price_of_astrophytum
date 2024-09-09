@@ -1,3 +1,5 @@
+
+import { useState } from "react";
 interface InputItemsProps {
   id: string;
   name: string;
@@ -10,7 +12,6 @@ interface InputItemsProps {
   textError: string;
   handleChange: (e: any) => void;
 }
-
 export default function InputItems({
   id,
   name,
@@ -23,16 +24,22 @@ export default function InputItems({
   textError,
   handleChange,
 }: InputItemsProps) {
+   const [isVisited, setIsVisited] = useState(false);
+
+   const handleBlur = () => {
+     setIsVisited(true);
+   };
+
+   const showError = isVisited && !value;
   return (
-    <label className="text-cta-text  text-sm" htmlFor={htmlFor}>
+    <label className="text-cta-text text-sm" htmlFor={htmlFor}>
       {name}
       <input
-        // className="block w-full mt-2 h-10 pr-2 text-sm text-cta-text border bg-card border-border rounded-lg cursor-pointer corder-gray-300  p-2.5  placeholder-gray-400 hover:bg-ring_gray focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
-        className="bg-gray-50 border mt-2 h-10 pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear 
-          [&:not(:placeholder-shown):invalid~span]:block 
-          invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-400
-          focus:invalid:[&:not(:placeholder-shown)]:border-red-400 focus:invalid:[&:not(:placeholder-shown)]:ring-red-400
-       "
+        className="bg-gray-50 border mt-2 h-10 pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear
+    [&:not(:placeholder-shown):invalid~span]:block 
+    visited:required:[&:not(:focus)]:border-red-400 
+    focus:invalid:[&:not(:placeholder-shown)]:border-red-400 
+    focus:invalid:[&:not(:placeholder-shown)]:ring-red-400"
         id={id}
         name={id}
         type={type}
@@ -42,9 +49,21 @@ export default function InputItems({
         onChange={handleChange}
         required
         pattern={pattern}
-        
+        aria-invalid="true"
+        aria-describedby={`${id}-error`}
+        onBlur={handleBlur}
       />
-      <span className="mt-1 hidden text-sm text-red-400">{textError}</span>
+      
+      <span id={`${id}-error`} className="mt-2 hidden text-sm text-red-400">
+        {textError}
+      </span>
+      {showError && (
+        <p className="mt-2 text-sm text-red-400">
+          Opp! Please enter {'"'}
+          {name}
+          {'"'}, this field is required.
+        </p>
+      )}
     </label>
   );
 }

@@ -108,13 +108,13 @@ export default function UploadImage() {
                     SVG, PNG, JPG or GIF (MAX. 800x400px)
                   </p>
                 </div>
-                <input
+                {/* <input
                   id="dropzone-file"
                   type="file"
                   className="hidden"
                   onChange={useFormUploadImageItem.handleFileChange}
                   accept="image/*"
-                />
+                /> */}
               </label>
             </div>
           ) : (
@@ -137,7 +137,7 @@ export default function UploadImage() {
 
         <label
           className="text-cta-text font-semibold text-sm"
-          htmlFor="small_size"
+          htmlFor="dropzone-file"
         >
           Import your Nudum image
         </label>
@@ -157,7 +157,7 @@ export default function UploadImage() {
           name={"Upload"}
           onClick={useFormUploadImageItem.handleUpload}
           type={"submit"}
-          withs={"full"} 
+          withs={"full"}
         />
       </div>
     </div>

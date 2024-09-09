@@ -15,7 +15,7 @@ export default function ModelSignInSignUp({ canClose }: ModelSignInSignUp) {
 
   return (
     // <div className="flex flex-col items-center justify-center p-5 mx-auto h-full sm:pt-16 pt-14">
-    <div className="flex flex-col items-center justify-center p-5 mx-auto h-full">
+    <div className="flex flex-col items-center justify-center p-5 mx-auto h-full ">
       <div className="relative w-full rounded-xl shadow border border-border md:mt-0 sm:max-w-md xl:p-0 bg-card">
         {canClose && (
           <div className="absolute  right-0">

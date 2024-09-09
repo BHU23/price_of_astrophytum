@@ -35,6 +35,7 @@ export default function Class({ params }: { params: { class: string } }) {
     <form
       className="flex flex-col w-full h-full p-5 pt-0 gap-5"
       onSubmit={handleUpdate}
+      noValidate
     >
       <div className="flex flex-col w-full h-full p-5 bg-card text-cta-text rounded-lg gap-5 ">
         <div className="w-auto h-full lg:w-[500px]">
@@ -93,13 +94,13 @@ export default function Class({ params }: { params: { class: string } }) {
                         SVG, PNG, JPG or GIF (MAX. 800x400px)
                       </p>
                     </div>
-                    <input
+                    {/* <input
                       id="dropzone-file"
                       type="file"
                       className="hidden"
                       onChange={handleFileChange} // No value attribute
                       accept="image/*"
-                    />
+                    /> */}
                   </label>
                 </div>
               ) : (
@@ -117,13 +118,13 @@ export default function Class({ params }: { params: { class: string } }) {
             <div className="flex flex-col gap-2">
               <label
                 className="text-cta-text font-semibold text-sm"
-                htmlFor="small_size"
+                htmlFor="dropzone-file"
               >
                 Upload new Image
               </label>
               <input
                 className="block w-full h-10 pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer file:p-2 file:font-semibold file:h-full file:rounded-md file:border-0 file:bg-gray-800 file:text-pear file:text-sm file:mr-2 dark:hover:text-white dark:hover:bg-gray-700  dark:focus:ring-pear focus:outline-none focus:z-10 focus:ring-1"
-                id="small_size"
+                id="dropzone-file"
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}

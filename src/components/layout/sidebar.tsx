@@ -54,8 +54,11 @@ export default function Sidebar() {
       if (response.ok) {
         Cookies.remove("token");
         Cookies.remove("role");
-        // toggleToken(false);
-        router.push("/");
+        setTimeout(() => {
+         router.push("/");
+       }, 1000)
+        
+        window.location.reload();
       } else {
         const errorData = await response.json();
         console.error("Logout error:", errorData);

@@ -1,6 +1,7 @@
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useLogIn from "../hook/login.hook";
+import InputItems from "../input_items";
 
 export default function LoginFrom() {
   const { useLogInItems } = useLogIn();
@@ -11,33 +12,43 @@ export default function LoginFrom() {
       onSubmit={useLogInItems.handleLoginSubmit}
     >
       <div>
-        <label
-          htmlFor="username"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Username
-        </label>
-        <input
-          type="text"
+        <InputItems
           id="username"
           name="username"
+          type="text"
+          autoComplete="off"
           value={useLogInItems.username}
-          onChange={(e) => useLogInItems.setUsername(e.target.value)}
-          placeholder="e.g. userName"
-          className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear 
-          [&:not(:placeholder-shown):invalid~span]:block 
-          invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-400
-          focus:invalid:[&:not(:placeholder-shown)]:border-red-400 focus:invalid:[&:not(:placeholder-shown)]:ring-red-400
-          valid:[&:not(:placeholder-shown)]:border-pear "
-          required
+          htmlFor="username"
+          placeholder="UserName"
+          handleChange={(e) => useLogInItems.setUsername(e.target.value)}
           pattern="[0-9a-zA-Z ]{6,}"
+          textError="User name must be at least 6 characters long"
         />
-        <span className="mt-1 hidden text-sm text-red-400">
-          User name must be at least 6 characters long
-        </span>
       </div>
       <div>
-        <label
+        <div className="relative top-0">
+          <button
+            type="button"
+            onClick={useLogInItems.togglePasswordVisibility}
+            className="absolute inset-y-0 right-0 top-[52px] flex items-center px-3 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            {useLogInItems.showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
+        <InputItems
+          id="password"
+          name="password"
+          type={useLogInItems.showPassword ? "text" : "password"}
+          autoComplete="off"
+          value={useLogInItems.password}
+          htmlFor="password"
+          placeholder="••••••••"
+          handleChange={(e) => useLogInItems.setPassword(e.target.value)}
+          pattern="[0-9a-zA-Z]{8,}"
+          textError=" Password must be at least 8 characters."
+        />
+
+        {/* <label
           htmlFor="password"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
@@ -59,19 +70,11 @@ export default function LoginFrom() {
           autoComplete="off"
           required
           pattern="[0-9a-zA-Z]{8,}"
-        />
-        <div className="relative">
-          <button
-            type="button"
-            onClick={useLogInItems.togglePasswordVisibility}
-            className="absolute inset-y-0 right-0 -top-12 flex items-center px-3 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            {useLogInItems.showPassword ? <FaEyeSlash /> : <FaEye />}
-          </button>
-        </div>
+        /> */}
+        {/*         
         <span className="mt-1 hidden text-sm text-red-400">
           Password must be at least 8 characters.{" "}
-        </span>
+        </span> */}
       </div>
 
       <div className="flex items-center justify-between">

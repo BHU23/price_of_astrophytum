@@ -4,14 +4,13 @@ import Footer from "@/components/layout/footer";
 import Image from "next/image";
 import Logo from "../../public/logo.png";
 import LogoName from "../../public/LogoName.png";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import ButtonPushPathItems from "@/components/button_pushpath_items";
-import { PostLogIn } from "@/components/hook/login.hook";
-
+import { FiArrowRight } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 export default function Home() {
   const [role, setRole] = useState<string | null>(null);
+  const router = useRouter();
   useEffect(() => {
     const fetchedRole = Cookies.get("role");
     if (fetchedRole) {
@@ -67,12 +66,17 @@ export default function Home() {
             Description="You can automated create posts to yours Facebook."
           />
         </div>
-        <div className="flex gap-5 w-72 items-center">
-          <ButtonPushPathItems
-            name="Let's start"
-            path={role ? `${role?.toLowerCase()}/use_ai` : "/login"}
-          ></ButtonPushPathItems>
-          <p className="w-full">Try now.</p>
+        <div className="flex gap-5 py-5 items-center">
+          {/* {role ? `${role?.toLowerCase()}/use_ai` : "/login"} */}
+          <button
+            type="button"
+            className="flex gap-2 justify-center items-center text-background font-bold bg-gradient-to-br from-pear to-tan hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-pear rounded-lg text-sm px-5 py-2.5 text-center w-full"
+            onClick={() =>
+              router.push(role ? `${role?.toLowerCase()}/use_ai` : "/login")
+            }
+          >
+            Get started <FiArrowRight className="" />
+          </button>
         </div>
       </div>
       <Footer />

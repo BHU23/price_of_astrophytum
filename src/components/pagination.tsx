@@ -14,7 +14,7 @@ export default function Pagination({
   onPageChange,
 }: PaginationProps) {
   return (
-    <div className="flex items-center justify-between bg-background px-4 py-3 sm:px-6">
+    <div className="flex items-center justify-between bg-background px-4 py-5 sm:px-6">
       <div className="flex flex-1 justify-between sm:hidden">
         {/* <button
           onClick={() => onPageChange(currentPage - 1)}
@@ -55,7 +55,7 @@ export default function Pagination({
             <button
               onClick={() => onPageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="relative inline-flex items-center rounded-l-md px-2 py-2 text-cta-gray ring-1 ring-inset ring-cta-gray dark:hover:bg-gray-700 dark:hover:border-gray-600 focus:z-20 focus:outline-offset-0"
+              className="relative inline-flex items-center rounded-l-md px-2 py-2 text-cta-gray border-y border-l border-gray-300 dark:hover:bg-gray-700 dark:hover:border-gray-600 focus:z-20 focus:outline-offset-0"
             >
               <span className="sr-only">Previous</span>
               <FiChevronLeft aria-hidden="true" className="h-5 w-5" />
@@ -64,10 +64,10 @@ export default function Pagination({
               <button
                 key={index + 1}
                 onClick={() => onPageChange(index + 1)}
-                className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold dark:hover:bg-gray-700 dark:hover:border-gray-600 ${
+                className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold border border-gray-300 dark:hover:bg-gray-700 dark:hover:border-gray-600 ${
                   currentPage === index + 1
-                    ? "bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-cta-text  ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    : "text-cta-gray ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    ? "bg-white  dark:bg-gray-800 dark:border-gray-300 text-cta-text border hover:bg-gray-50"
+                    : "text-cta-gray  hover:bg-gray-50 hover:text-cta-text"
                 } focus:z-20`}
               >
                 {index + 1}
@@ -76,7 +76,7 @@ export default function Pagination({
             <button
               onClick={() => onPageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="relative inline-flex items-center rounded-r-md px-2 py-2 text-cta-gray ring-1 ring-inset ring-cta-gray dark:hover:bg-gray-700 dark:hover:border-gray-600 focus:z-20 focus:outline-offset-0"
+              className="relative inline-flex items-center rounded-r-md px-2 py-2 text-cta-gray border-y border-r border-gray-300 dark:hover:bg-gray-700 dark:hover:border-gray-600 focus:z-20 focus:outline-offset-0"
             >
               <span className="sr-only">Next</span>
               <FiChevronRight aria-hidden="true" className="h-5 w-5" />

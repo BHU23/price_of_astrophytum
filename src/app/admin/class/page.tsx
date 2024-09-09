@@ -7,6 +7,7 @@ import { FiPlus } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/pagination";
 import Image from "next/image";
+import PreviewClass from "@/components/preview_class";
 
 export default function Class() {
   const router = useRouter();
@@ -15,6 +16,8 @@ export default function Class() {
   const [classToDelete, setClassToDelete] = useState<number | null>(null);
   const itemsPerPage = 10;
   const totalPages = Math.ceil(classes.length / itemsPerPage);
+
+  const [previewClass, setPreviewClass] = useState<number | null>(null);
 
   const onPageChange = (page: number) => {
     setCurrentPage(page);
@@ -28,6 +31,12 @@ export default function Class() {
   const handleEdit = (classID: number) => {
     router.push(`/admin/class/${classID}`);
   };
+  const handlePreview = (classID: number) => {
+    setPreviewClass(classID);
+    const modal = document.getElementById("previewModal");
+    if (modal) modal.classList.remove("hidden");
+  };
+
 
   const handleDeleteClick = (classID: number) => {
     setClassToDelete(classID);
@@ -158,7 +167,7 @@ export default function Class() {
                     checkbox
                   </label>*/}
 
-                  {itemsPerPage*(currentPage-1) + index + 1}
+                  {itemsPerPage * (currentPage - 1) + index + 1}
                 </div>
               </td>
               <th
@@ -186,7 +195,7 @@ export default function Class() {
               </td>
               <td className="px-6 py-4 h-full">
                 <ActionTable
-                  ID={cls.id}
+                  handlePreview={() => handlePreview(cls.id)}
                   handleDelete={() => handleDeleteClick(cls.id)}
                   handleEdit={() => handleEdit(cls.id)}
                 />
@@ -196,11 +205,18 @@ export default function Class() {
         </tbody>
       </table>
       <Pagination
-        classCount={classes.length }
+        classCount={classes.length}
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={onPageChange}
       />
+      <PreviewClass
+        classData={classes.find((cls) => cls.id === previewClass)}
+        previewClass={previewClass}
+        onEdite={(e) => handleEdit(e)}
+        onDelete={(e) => handlePreview(e)}
+        setPreviewClass={(e) => setPreviewClass(e)}
+      ></PreviewClass>
       <div
         id="deleteModal"
         tabIndex={-1}
@@ -208,7 +224,6 @@ export default function Class() {
         className="hidden fixed inset-0 z-[99999]  flex justify-center overflow-y-auto overflow-x-hidden"
       >
         <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-          {/* Modal content */}
           <div className="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
             <button
               type="button"
