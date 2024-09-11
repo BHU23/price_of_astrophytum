@@ -1,21 +1,35 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ThemeSwitch from "./ThemeSwitch";
 import { useGlobal } from "@/context/useGlobal";
 import ModelSignInSignUp from "../login/model_signIn_signUp";
 import Image from "next/image";
 import Logo from "../../../public/logo.png";
 import LogoName from "../../../public/LogoName.png";
+import Cookies from "js-cookie";
 
 export default function Header() {
   const {
-    token,
+    // token,
     isOpenModel,
     toggleIsOpenModel,
     isOpen,
     setIsOpen,
     breadcrumbLinks,
   } = useGlobal();
+  const [token, setToken] = useState<string | null>(null);
+  const [pathLogin, setPathLogin] = useState< boolean>(false);
+  useEffect(() => {
+    const savedToken = Cookies.get("token");
+    if (savedToken) {
+      setToken(savedToken);
+    }
+    if (breadcrumbLinks.some((link: any) => link.label.includes("login"))) {
+      setPathLogin(true);
+    } else {
+      setPathLogin(false);
+    }
+  }, [breadcrumbLinks]);
 
   return (
     <div>
@@ -85,14 +99,15 @@ export default function Header() {
           </div>
 
           <div className="flex items-center justify-center">
-            {token == null && (
-              <div
-                onClick={toggleIsOpenModel}
-                className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0"
-              >
-                <p>Sign in/up</p>
-              </div>
-            )}
+            {token == null &&
+              !pathLogin && (
+                <div
+                  onClick={toggleIsOpenModel}
+                  className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0"
+                >
+                  <p>Sign in/up</p>
+                </div>
+              )}
             <div className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-8 h-8 hover:text-tan ml-1 mr-5 md:my-0">
               <ThemeSwitch />
             </div>

@@ -77,10 +77,7 @@ export default function Sidebar() {
               MAIN
             </h5>
           </div>
-          <nav
-            className="flex flex-col gap-1 p-2 font-sans text-base font-normal"
-            onClick={() => setIsOpen(false)}
-          >
+          <nav className="flex flex-col gap-1 p-2 font-sans text-base font-normal">
             <Link
               href={`/${role?.toLowerCase()}/dashboard`}
               className={getLinkClassName(`/${role?.toLowerCase()}/dashboard`)}
@@ -141,6 +138,15 @@ export default function Sidebar() {
             </div>
             Price Of Class
           </Link> */}
+            <Link
+              href={`/${role?.toLowerCase()}/user`}
+              className={getLinkClassName(`/${role?.toLowerCase()}/user`)}
+            >
+              <div className="grid mr-4 place-items-center">
+                <IoPersonOutline />
+              </div>
+              Uers
+            </Link>
             <Link
               href={`/${role?.toLowerCase()}/profile`}
               className={getLinkClassName(`/${role?.toLowerCase()}/profile`)}

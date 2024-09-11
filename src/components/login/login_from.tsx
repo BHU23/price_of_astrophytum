@@ -14,7 +14,7 @@ export default function LoginFrom() {
       <div>
         <InputItems
           id="username"
-          name="username"
+          name="Username"
           type="text"
           autoComplete="off"
           value={useLogInItems.username}
@@ -37,7 +37,7 @@ export default function LoginFrom() {
         </div>
         <InputItems
           id="password"
-          name="password"
+          name="Password"
           type={useLogInItems.showPassword ? "text" : "password"}
           autoComplete="off"
           value={useLogInItems.password}

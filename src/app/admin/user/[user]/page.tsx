@@ -1,14 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { GetUserProfile, UpdateUserProfile } from "../้hook";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import ButtonReturn from "@/components/button_return";
 import ButtonItems from "@/components/button_items";
 import InputItems from "@/components/input_items";
 import FetchingState from "@/components/fetching_state";
+import { GetUserProfileByID, UpdateUserProfileByAdmin } from "../hook";
 
-export default function EditProfile() {
+export default function EditProfile({ params }: { params: { user: string } }) {
+  const userID = parseInt(params.user, 10);
   const router = useRouter();
   const initialFormData = {
     username: "",
@@ -20,7 +21,7 @@ export default function EditProfile() {
     last_name: "",
     fackbook_name: "",
   };
-
+ 
   const [formData, setFormData] = useState(initialFormData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,7 +30,7 @@ export default function EditProfile() {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-        const data = await GetUserProfile();
+        const data = await GetUserProfileByID(Number(userID));
         if (data) {
           setFormData(data);
         }
@@ -78,7 +79,7 @@ export default function EditProfile() {
     setLoading(true);
     setError(null);
     try {
-      const updatedProfile = await UpdateUserProfile(formData);
+      const updatedProfile = await UpdateUserProfileByAdmin(formData,userID);
       if (updatedProfile) {
         // Handle successful update, e.g., notify the user or redirect
         console.log("Profile updated successfully:", updatedProfile);
@@ -93,9 +94,9 @@ export default function EditProfile() {
   };
 
   if (loading) {
-    return <FetchingState  state="Loading..." />;
+    return <FetchingState state="Loading..." />;
   }
-  if (error) return <FetchingState state={`Error: ${error}`} />;
+
   return (
     <div className="flex flex-wrap lg:flex-nowrap w-full h-full p-5 pt-0 gap-5">
       <div className="w-full h-full p-5 gap-5 bg-card rounded-xl">

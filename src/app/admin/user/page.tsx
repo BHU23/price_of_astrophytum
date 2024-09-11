@@ -1,30 +1,31 @@
 "use client";
 import React, { useState } from "react";
-import { DeleteClassByID, useClasses } from "./hook";
+
 import FetchingState from "@/components/fetching_state";
 import ActionTable from "@/components/action_table";
 import { FiPlus } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/pagination";
 import Image from "next/image";
-import PreviewClass from "@/components/preview_class";
 import DeleteModle from "@/components/delete_model";
+import { DeleteUserProfileByID, useUserProfile } from "./hook";
+import profile from "../../../../public/profile_default_png.png"
 
-export default function Class() {
+export default function User() {
   const router = useRouter();
-  const { classes, loading, error } = useClasses();
+  const { userProfiles, loading, error } = useUserProfile();
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(classes.length / itemsPerPage);
+  const totalPages = Math.ceil(userProfiles?.length / itemsPerPage);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   // Search Logic
-  const filteredClasses = classes.filter((cls) =>
-    cls.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = userProfiles.filter((cls) =>
+    cls.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Sort Logic
@@ -32,7 +33,7 @@ export default function Class() {
     return key.split(".").reduce((o, i) => (o ? o[i] : undefined), obj);
   };
 
-  const sortedClasses = filteredClasses.sort((a, b) => {
+  const sortedUsers = filteredUsers.sort((a, b) => {
     if (!sortKey) return 0;
 
     const valueA = getNestedValue(a, sortKey);
@@ -51,15 +52,14 @@ export default function Class() {
     return 0;
   });
 
-
-  const [classToDelete, setClassToDelete] = useState<number | null>(null);
-  const [previewClass, setPreviewClass] = useState<number | null>(null);
+  const [userToDelete, setUserToDelete] = useState<number | null>(null);
+  const [previewUser, setPreviewUser] = useState<number | null>(null);
 
   const onPageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  const displayedClasses = sortedClasses.slice(
+  const displayedUser = sortedUsers.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -73,33 +73,32 @@ export default function Class() {
     }
   };
   
-  const handleEdit = (classID: number) => {
-    router.push(`/admin/class/${classID}`);
+  const handleEdit = (userID: number) => {
+    router.push(`/admin/user/${userID}`);
   };
 
-  const handlePreview = (classID: number) => {
-    setPreviewClass(classID);
+  const handlePreview = (userID: number) => {
+    setPreviewUser(userID);
     const modal = document.getElementById("previewModal");
     if (modal) modal.classList.remove("hidden");
   };
 
-  const handleDeleteClick = (classID: number) => {
-    setClassToDelete(classID);
+  const handleDeleteClick = (userID: number) => {
+    setUserToDelete(userID);
     const modal = document.getElementById("deleteModal");
     if (modal) modal.classList.remove("hidden");
   };
 
   const handleDeleteConfirm = async () => {
-    if (classToDelete !== null) {
-      const success = await DeleteClassByID(String(classToDelete));
+    if (userToDelete !== null) {
+      const success = await DeleteUserProfileByID(userToDelete);
       if (success) {
         console.log("Class deleted successfully");
-        // Refresh or update the UI after deletion
-        router.refresh(); // Refresh the page or trigger re-fetching
+        router.refresh(); 
       } else {
         console.error("Failed to delete the class");
       }
-      setClassToDelete(null);
+      setUserToDelete(null);
       const modal = document.getElementById("deleteModal");
       if (modal) modal.classList.add("hidden");
       window.location.reload();
@@ -118,15 +117,13 @@ export default function Class() {
             data-dropdown-toggle="dropdownAction"
             className="inline-flex items-center h-10 text-cta-gray bg-background border border-border focus:outline-none hover:bg-gray-100  focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:hover:bg-gray-700 dark:hover:border-gray-600 focus:ring-1 focus:border-pear focus:ring-pear "
             type="button"
-            onClick={() => router.push(`/admin/class/create`)}
+            onClick={() => router.push(`/admin/user/create`)}
           >
             <FiPlus />
-            &nbsp;Create New
+            &nbsp;New User
           </button>
         </div>
-        <label htmlFor="table-search" className="sr-only">
-          Search
-        </label>
+        <label htmlFor="table-search" className="sr-only"></label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
@@ -158,49 +155,56 @@ export default function Class() {
         <thead className="text-xs text-cta-gray uppercase bg-background">
           <tr>
             <th scope="col" className="p-4">
-              {/* <div className="flex items-center">
-                <input
-                  id="checkbox-all-search"
-                  type="checkbox"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label htmlFor="checkbox-all-search" className="sr-only">
-                  checkbox
-                </label>
-              </div> */}
               No.
+            </th>
+            <th scope="col" className="p-4">
+              Avatar
             </th>
             <th
               className="pl-6 py-3 cursor-pointer"
-              onClick={() => handleSort("name")}
+              onClick={() => handleSort("username")}
             >
-              Name {sortKey === "name" && (sortDirection === "asc" ? "↑" : "↓")}
+              Username{" "}
+              {sortKey === "username" && (sortDirection === "asc" ? "↑" : "↓")}
             </th>
             <th
-              className="pl-6 py-3 text-end cursor-pointer "
-              onClick={() => handleSort("extra_value")}
+              className="pl-6 py-3 cursor-pointer"
+              onClick={() => handleSort("role")}
             >
-              Extra Value
-              {sortKey === "extra_value" &&
+              Role {sortKey === "role" && (sortDirection === "asc" ? "↑" : "↓")}
+            </th>
+            <th
+              className="pl-6 py-3 text-center cursor-pointer "
+              onClick={() => handleSort("first_name")}
+            >
+              First Name
+              {sortKey === "first_name" &&
                 (sortDirection === "asc" ? "↑" : "↓")}
+            </th>
+            <th
+              className="pl-6 py-3 text-center cursor-pointer "
+              onClick={() => handleSort("last_name")}
+            >
+              Last Name
+              {sortKey === "last_name" && (sortDirection === "asc" ? "↑" : "↓")}
             </th>
             <th
               className="pl-6 py-3 cursor-pointer text-center"
-              onClick={() => handleSort("price.value_min")}
+              onClick={() => handleSort("email")}
             >
-              Price{" "}
-              {sortKey === "price.value_min" &&
-                (sortDirection === "asc" ? "↑" : "↓")}
+              Email{" "}
+              {sortKey === "email" && (sortDirection === "asc" ? "↑" : "↓")}
             </th>
+
             <th scope="col" className="px-6 py-3 text-center max-w-12">
               Action
             </th>
           </tr>
         </thead>
         <tbody>
-          {displayedClasses.map((cls, index) => (
+          {displayedUser.map((user, index) => (
             <tr
-              key={cls.id}
+              key={user.id}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
               <td className="w-4 p-4">
@@ -220,35 +224,36 @@ export default function Class() {
                   {itemsPerPage * (currentPage - 1) + index + 1}
                 </div>
               </td>
-              <th
+              <td
                 scope="row"
-                className=" pl-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                className=" pl-6 text-gray-900 whitespace-nowrap dark:text-white"
               >
-                <div className="flex items-center">
                 <Image
                   width={40}
                   height={40}
                   className="w-10 h-10 rounded-full"
-                  src={cls.example_image}
-                  alt={`${cls.name} image`}
+                  src={user.avatar ?? profile}
+                  alt={`${user.username} image`}
                 />
-
-                <div className="pl-3 ">
-                  <div className="text-base font-semibold">{cls.name}</div>
-                  <p className="font-normal text-gray-500 h-auto text-start w-20 md:w-60 truncate">
-                    {cls.description}
-                  </p>
-                </div></div>
-              </th>
-              <td className="pl-6 py-4 text-end">{cls.extra_value}</td>
-              <td className="pl-6 py-4 text-center">
-                {cls.price?.value_min} - {cls.price.value_max}
               </td>
+
+              <td className="pl-6 py-4 ">
+                <div className="pl-3 ">
+                  <div className="text-base font-semibold">{user.username}</div>
+                  <p className="font-normal text-gray-500 h-auto text-start w-20 md:w-60 truncate">
+                    {user.fackbook_name}
+                  </p>
+                </div>
+              </td>
+              <td className="pl-6 py-4 text-center">Admin</td>
+              <td className="pl-6 py-4 text-center">{user.first_name}</td>
+              <td className="pl-6 py-4 text-center">{user.last_name}</td>
+              <td className="pl-6 py-4 text-center">{user.email}</td>
               <td className="px-6 py-4 h-full">
                 <ActionTable
-                  handlePreview={() => handlePreview(cls.id)}
-                  handleDelete={() => handleDeleteClick(cls.id)}
-                  handleEdit={() => handleEdit(cls.id)}
+                  handlePreview={() => handlePreview(user.id)}
+                  handleDelete={() => handleDeleteClick(user.id)}
+                  handleEdit={() => handleEdit(user.id)}
                 />
               </td>
             </tr>
@@ -257,23 +262,23 @@ export default function Class() {
       </table>
       <Pagination
         itemsPerPage={itemsPerPage}
-        classCount={filteredClasses.length}
+        classCount={filteredUsers.length}
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={onPageChange}
       />
 
-      <PreviewClass
+      {/* <PreviewClass
         classData={classes.find((cls) => cls.id === previewClass)}
         previewClass={previewClass}
         onEdite={(e) => handleEdit(e)}
         onDelete={(e) => handleDeleteClick(e)}
         setPreviewClass={(e) => setPreviewClass(e)}
-      ></PreviewClass>
+      ></PreviewClass> */}
 
       <DeleteModle
         handleDeleteConfirm={handleDeleteConfirm}
-        setClassToDelete={(e) => setClassToDelete(e)}
+        setClassToDelete={(e) => setUserToDelete(e)}
       />
     </div>
   );

@@ -3,7 +3,7 @@
 import { UserProfileInterface } from "@/interface/user.interface";
 import Cookies from "js-cookie";
 export const GetUserProfile = async () => { 
-  const apiUrl = `http://127.0.0.1:8000/api/profile/`;
+  const apiUrl = `http://127.0.0.1:8000/api/user/profile/`;
 
   try {
     const token = Cookies.get("token");
@@ -30,7 +30,7 @@ export const GetUserProfile = async () => {
 export const UpdateUserProfile = async (
   updatedData: Partial<UserProfileInterface>
 ): Promise<UserProfileInterface | null> => {
-  const apiUrl = `http://127.0.0.1:8000/api/profile/`;
+  const apiUrl = `http://127.0.0.1:8000/api/user/profile/`;
 
   try {
     const token = Cookies.get("token");

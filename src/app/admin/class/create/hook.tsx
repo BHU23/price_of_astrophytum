@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ClassesInterface } from "@/interface/classes.interface";
-import Cookies from "js-cookie";
 import { createPrice, CreateClass, GetPrice } from "../hook";
 import { PriceInterface } from "@/interface/prices.interface";
 

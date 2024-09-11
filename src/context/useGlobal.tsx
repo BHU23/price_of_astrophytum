@@ -10,7 +10,6 @@ import React, {
 } from "react";
 import { UserProfileInterface } from "@/interface/user.interface";
 
-import Cookies from "js-cookie";
 
 const GlobalContext = createContext<any>(undefined);
 
@@ -34,13 +33,14 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
     avatar: "",
     first_name: "",
     last_name: "",
+    password: "",
     email: "",
     role: "",
     fackbook_name: "",
   });
 
   const [isOpenModel, setIsOpenModel] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggleIsOpenModelBoolean = (b: boolean) => {
       setIsOpenModel(b);
@@ -49,14 +49,7 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
       setIsOpenModel(!isOpenModel);
   };
 
-   const [token, setToken] = useState<string | null>(null);
-   useEffect(() => {
-     const savedToken = Cookies.get("token"); 
-     if (savedToken) {
-       setToken(savedToken);
-     }
-   }, []); 
-
+   
   const generateBreadcrumbLinks = (path: string) => {
     const segments = path.split("/").filter((segment) => segment);
 
@@ -80,7 +73,7 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
         setLoading,
         // istoken,
         // toggleToken,
-        token,
+        // token,
         toggleIsOpenModel,
         toggleIsOpenModelBoolean,
         isOpenModel,
