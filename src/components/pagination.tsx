@@ -38,7 +38,7 @@ export default function Pagination({
           <p className="text-sm ">
             <span className="text-cta-gray">Showing </span>
             <span className="font-medium text-cta-text">
-              {(currentPage - 1) * itemsPerPage + 1}
+              {classCount == 0 ? 0 : (currentPage - 1) * itemsPerPage + 1}
             </span>{" "}
             <span className="text-cta-gray">to </span>
             <span className="font-medium text-cta-text">

@@ -30,10 +30,10 @@ export default function CreateClass() {
 
   return (
     <form
-      className="flex flex-col w-full h-full p-5 pt-0 gap-5"
+      className="flex flex-col w-full h-full pt-0 gap-5"
       onSubmit={handleCreataClass}
     >
-      <div className="flex flex-col w-full h-full p-5 bg-card text-cta-text rounded-lg gap-5 ">
+      <div className="flex flex-col w-full h-full shadow-md  rounded-b-xl mt-0 p-5  bg-card text-cta-text  gap-5 ">
         <div className="w-auto h-full lg:w-[500px]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
@@ -114,7 +114,8 @@ export default function CreateClass() {
                 className="text-cta-text font-semibold text-sm"
                 htmlFor="example_image_input"
               >
-                Upload new Image
+                Upload new Image{" "}
+                <span className="text-red-400 text-start text-sm">*</span>
               </label>
               <input
                 className="block w-full h-10 pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer file:p-2 file:font-semibold file:h-full file:rounded-md file:border-0 file:bg-gray-800 file:text-pear file:text-sm file:mr-2 dark:hover:text-white dark:hover:bg-gray-700  dark:focus:ring-pear focus:outline-none focus:z-10 focus:ring-1"
@@ -131,7 +132,8 @@ export default function CreateClass() {
                 className="text-cta-text font-semibold text-sm"
                 htmlFor="description"
               >
-                Description
+                Description{" "}
+                <span className="text-red-400 text-start text-sm">*</span>
               </label>
               <textarea
                 // className="block w-full h-auto pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer p-2 font-semibold bg-card mr-2 dark:hover:text-white  hover:bg-ring_gray   dark:focus:ring-gray-700 focus:outline-none focus:z-10 focus:ring-4"
@@ -345,6 +347,7 @@ export default function CreateClass() {
               onClick={() => {}}
               type="submit"
               withs="28"
+              loading={false}
             />
           </div>
         </div>

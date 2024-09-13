@@ -7,25 +7,15 @@ import { RiFileTextLine, RiLogoutBoxLine } from "react-icons/ri";
 import { HiOutlineSparkles } from "react-icons/hi2";
 import { RiBitCoinLine } from "react-icons/ri";
 import { IoPeople, IoPersonOutline } from "react-icons/io5";
-import { useGlobal } from "@/context/useGlobal";
 import Cookies from "js-cookie";
+import { useGlobal } from "@/context/useGlobal";
+import Image from "next/image";
+import { profile } from "console";
 
-export default function Sidebar() {
+export default function SidebarAdmin() {
   const pathname = usePathname();
   const router = useRouter();
-  const { isOpen, setIsOpen, toggleToken } = useGlobal();
-  const [role, setRole] = useState<string | null>(null);
-
-  // Fetch the role from cookies and set it in the local state
-  useEffect(() => {
-    const fetchedRole = Cookies.get("role");
-    if (fetchedRole) {
-      setRole(fetchedRole);
-    } else {
-      console.warn("Role not found in cookies");
-    }
-  }, []);
-
+  const { userProfile } = useGlobal();
   const getLinkClassName = (path: string) => {
     const isSupPath = pathname.includes(path);
     return `flex items-center w-full p-3 transition-all rounded-lg outline-none text-start ${
@@ -55,9 +45,9 @@ export default function Sidebar() {
         Cookies.remove("token");
         Cookies.remove("role");
         setTimeout(() => {
-         router.push("/");
-       }, 1000)
-        
+          router.push("/");
+        }, 1000);
+
         window.location.reload();
       } else {
         const errorData = await response.json();
@@ -79,8 +69,8 @@ export default function Sidebar() {
           </div>
           <nav className="flex flex-col gap-1 p-2 font-sans text-base font-normal">
             <Link
-              href={`/${role?.toLowerCase()}/dashboard`}
-              className={getLinkClassName(`/${role?.toLowerCase()}/dashboard`)}
+              href={`/admin/dashboard`}
+              className={getLinkClassName(`/admin/dashboard`)}
             >
               <div className="grid mr-4 place-items-center">
                 <AiOutlineHome />
@@ -89,8 +79,8 @@ export default function Sidebar() {
             </Link>
 
             <Link
-              href={`/${role?.toLowerCase()}/use_ai`}
-              className={getLinkClassName(`/${role?.toLowerCase()}/use_ai`)}
+              href={`/admin/use_ai`}
+              className={getLinkClassName(`/admin/use_ai`)}
             >
               <div className="grid mr-4 place-items-center">
                 <HiOutlineSparkles />
@@ -98,8 +88,8 @@ export default function Sidebar() {
               AI
             </Link>
             <Link
-              href={`/${role?.toLowerCase()}/posts`}
-              className={getLinkClassName(`/${role?.toLowerCase()}/posts`)}
+              href={`/admin/posts`}
+              className={getLinkClassName(`/admin/posts`)}
             >
               <div className="flex justify-between items-center w-full transition-all rounded-lg outline-none text-start">
                 <div className="flex ">
@@ -118,29 +108,19 @@ export default function Sidebar() {
             </h5>
           </div>
           <nav className="flex flex-col gap-1 p-2 font-sans text-base font-normal">
-            {role == "Admin" && (
-              <Link
-                href={`/${role?.toLowerCase()}/class`}
-                className={getLinkClassName(`/${role?.toLowerCase()}/class`)}
-              >
-                <div className="grid mr-4 place-items-center">
-                  <RiBitCoinLine />
-                </div>
-                Class
-              </Link>
-            )}
-            {/* <Link
-            href="/customer/price_of_class"
-            className={getLinkClassName("/customer/price_of_class")}
-          >
-            <div className="grid mr-4 place-items-center">
-              <RiBitCoinLine />
-            </div>
-            Price Of Class
-          </Link> */}
             <Link
-              href={`/${role?.toLowerCase()}/user`}
-              className={getLinkClassName(`/${role?.toLowerCase()}/user`)}
+              href={`/admin/class`}
+              className={getLinkClassName(`/admin/class`)}
+            >
+              <div className="grid mr-4 place-items-center">
+                <RiBitCoinLine />
+              </div>
+              Class
+            </Link>
+
+            <Link
+              href={`/admin/user`}
+              className={getLinkClassName(`/admin/user`)}
             >
               <div className="grid mr-4 place-items-center">
                 <IoPeople />
@@ -148,8 +128,8 @@ export default function Sidebar() {
               Uers
             </Link>
             <Link
-              href={`/${role?.toLowerCase()}/profile`}
-              className={getLinkClassName(`/${role?.toLowerCase()}/profile`)}
+              href={`/admin/profile`}
+              className={getLinkClassName(`/admin/profile`)}
             >
               <div className="grid mr-4 place-items-center">
                 <IoPersonOutline />
@@ -158,19 +138,36 @@ export default function Sidebar() {
             </Link>
           </nav>
         </div>
-        <div
-          className="flex flex-col gap-1 p-2 font-sans text-base font-normal hover:cursor-pointer"
-          onClick={handleLogout}
-        >
+        <div className="flex flex-col gap-1 p-2 font-sans text-base font-normal hover:cursor-pointer">
           <div
             className={`${getLinkClassName(
               "/logout"
-            )} focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4`}
+            )} justify-between px-0 py-0 focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4`}
           >
-            <div className="grid mr-4 place-items-center">
+            <Link
+              className="flex items-center gap-2 font-medium dark:text-white p-3 pr-0"
+              href={`/admin/profile`}
+            >
+              <Image
+                width={50}
+                height={50}
+                className="w-10 h-10 rounded-full"
+                src={userProfile?.avatar ?? ""}
+                alt=""
+              ></Image>
+              <div className="font-medium dark:text-white ">
+                <div>{userProfile?.username}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">
+                  {userProfile?.role}
+                </div>
+              </div>
+            </Link>
+            <div
+              className="h-full grid place-items-center px-2 hover:bg-pear"
+              onClick={handleLogout}
+            >
               <RiLogoutBoxLine />
             </div>
-            Logout
           </div>
         </div>
       </div>

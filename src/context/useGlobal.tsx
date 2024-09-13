@@ -9,6 +9,7 @@ import React, {
   useEffect,
 } from "react";
 import { UserProfileInterface } from "@/interface/user.interface";
+import { GetUserProfile } from "@/app/admin/profile/้hook";
 
 
 const GlobalContext = createContext<any>(undefined);
@@ -39,6 +40,20 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
     fackbook_name: "",
   });
 
+    useEffect(() => {
+    const handleGetUserProfile = async () => {
+      try {
+        const data = await GetUserProfile();
+        console.log(data);
+        setUserProfile(data);
+      } catch (error) {
+        console.error("Failed to fetch user profile", error);
+      }
+    };
+
+    handleGetUserProfile();
+  }, []);
+
   const [isOpenModel, setIsOpenModel] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
 
@@ -57,8 +72,10 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
       const href = `/${segments.slice(0, index + 1).join("/")}`;
       return { href, label: segment };
     });
+    console.log(links);
+     const filteredLinks = links.filter((_, index) => index !== 0);
 
-    return [...links];
+     return [...filteredLinks];
   };
 
   const path = usePathname();

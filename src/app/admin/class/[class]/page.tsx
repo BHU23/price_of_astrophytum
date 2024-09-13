@@ -120,7 +120,8 @@ export default function Class({ params }: { params: { class: string } }) {
                 className="text-cta-text font-semibold text-sm"
                 htmlFor="dropzone-file"
               >
-                Upload new Image
+                Upload new Image{" "}
+                <span className="text-red-400 text-start text-sm">*</span>
               </label>
               <input
                 className="block w-full h-10 pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer file:p-2 file:font-semibold file:h-full file:rounded-md file:border-0 file:bg-gray-800 file:text-pear file:text-sm file:mr-2 dark:hover:text-white dark:hover:bg-gray-700  dark:focus:ring-pear focus:outline-none focus:z-10 focus:ring-1"
@@ -136,7 +137,8 @@ export default function Class({ params }: { params: { class: string } }) {
                 className="text-cta-text font-semibold text-sm"
                 htmlFor="description"
               >
-                Description
+                Description{" "}
+                <span className="text-red-400 text-start text-sm">*</span>
               </label>
               <textarea
                 // className="block w-full h-auto pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer p-2 font-semibold bg-card mr-2 dark:hover:text-white  hover:bg-ring_gray   dark:focus:ring-gray-700 focus:outline-none focus:z-10 focus:ring-4"
@@ -349,6 +351,7 @@ export default function Class({ params }: { params: { class: string } }) {
               onClick={() => {}}
               type="submit"
               withs="28"
+               loading={ false}
             />
           </div>
         </div>

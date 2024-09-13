@@ -9,7 +9,7 @@ interface BoxPostInt {
 export default function BoxPost({ img, onClick }: BoxPostInt) {
   return (
     <button
-      className="flex flex-col bg-pear rounded-md w-auto hover:bg-tan cursor-pointer focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
+      className="flex flex-col bg-pear rounded-md w-auto shadow-lg hover:bg-tan cursor-pointer focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
       onClick={() => onClick()}
     >
       <div className="flex justify-center items-center w-full h-40">

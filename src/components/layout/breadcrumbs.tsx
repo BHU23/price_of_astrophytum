@@ -10,14 +10,14 @@ interface BreadcrumbProps {
 export default function Breadcrumb({ links }: BreadcrumbProps) {
   return (
     <nav
-      className="w-full h-16 flex justify-between items-center gap-4 rounded-t-lg  border border-border p-5"
+      className="w-full px-5 pt-5 flex justify-between items-center gap-4 rounded-t-lg bg-card "
       aria-label="Breadcrumb"
     >
       <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse flex-wrap sm:flex-wrap">
         <li className="inline-flex items-center">
           <a
             href={"/"}
-            className="inline-flex items-center text-sm font-medium text-cta hover:text-cta-text"
+            className="inline-flex items-center text-sm font-medium text-cta hover:text-cta-text hover:underline"
           >
             <svg
               className="w-3 h-3 me-2.5"
@@ -37,7 +37,7 @@ export default function Breadcrumb({ links }: BreadcrumbProps) {
             {index < links.length - 1 ? (
               <a
                 href={link.href}
-                className="inline-flex items-center text-sm font-medium text-cta hover:text-cta-text"
+                className="inline-flex items-center text-sm font-medium text-cta hover:text-cta-text hover:underline"
               >
                 {link.label}
               </a>

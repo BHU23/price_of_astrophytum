@@ -22,6 +22,8 @@ export default function useFormUploadImage() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
+  const [isShow, setIsVShow] = useState(false);
+  
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -31,6 +33,7 @@ export default function useFormUploadImage() {
           console.log("reader.result: " + reader.result);
           setImagePreview(reader.result);
           setVideoStatus(false);
+          setIsVShow(false);
         }
       };
       reader.readAsDataURL(file);
@@ -38,6 +41,13 @@ export default function useFormUploadImage() {
   };
 
   const handleUpload = async () => {
+    console.log("handleCheckInput");
+    if (!imagePreview) {
+      setIsVShow(true);
+    } else {
+      setIsVShow(false);
+    }
+    console.log(isShow);
     if (!imagePreview || loading) return;
     if (imagePreview == imagePreviewOld) return;
 
@@ -179,6 +189,8 @@ export default function useFormUploadImage() {
       handleMouseEnter,
       handleMouseLeave,
       setImagePreview,
+      isShow,
+      loading,
     },
   };
 }

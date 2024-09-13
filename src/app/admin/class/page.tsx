@@ -110,8 +110,9 @@ export default function Class() {
   if (error) return <FetchingState state={`Error: ${error}`} />;
 
   return (
-    <div className="relative shadow-md rounded-xl m-5 mt-0 p-5  bg-card ">
-      <div className="flex items-center justify-between flex-wrap md:flex-nowrap space-y-4 md:space-y-0 pb-4 ">
+    <div className="relative shadow-md  mt-0 p-5 ">
+      <span className="text-cta-text font-semibold">All Classes</span>
+      <div className="flex items-center justify-between flex-wrap md:flex-nowrap space-y-4 md:space-y-0 py-4 ">
         <div>
           <button
             id="dropdownActionButton"
@@ -185,7 +186,7 @@ export default function Class() {
                 (sortDirection === "asc" ? "↑" : "↓")}
             </th>
             <th
-              className="pl-6 py-3 cursor-pointer text-center"
+              className="pl-6 py-3 cursor-pointer text-end"
               onClick={() => handleSort("price.value_min")}
             >
               Price{" "}
@@ -225,23 +226,24 @@ export default function Class() {
                 className=" pl-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
               >
                 <div className="flex items-center">
-                <Image
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 rounded-full"
-                  src={cls.example_image}
-                  alt={`${cls.name} image`}
-                />
+                  <Image
+                    width={40}
+                    height={40}
+                    className="w-10 h-10 rounded-full"
+                    src={cls.example_image}
+                    alt={`${cls.name} image`}
+                  />
 
-                <div className="pl-3 ">
-                  <div className="text-base font-semibold">{cls.name}</div>
-                  <p className="font-normal text-gray-500 h-auto text-start w-20 md:w-60 truncate">
-                    {cls.description}
-                  </p>
-                </div></div>
+                  <div className="pl-3 ">
+                    <div className="text-base font-semibold">{cls.name}</div>
+                    <p className="font-normal text-gray-500 h-auto text-start w-20 md:w-60 truncate">
+                      {cls.description}
+                    </p>
+                  </div>
+                </div>
               </th>
               <td className="pl-6 py-4 text-end">{cls.extra_value}</td>
-              <td className="pl-6 py-4 text-center">
+              <td className="pl-6 py-4 text-end">
                 {cls.price?.value_min} - {cls.price.value_max}
               </td>
               <td className="px-6 py-4 h-full">

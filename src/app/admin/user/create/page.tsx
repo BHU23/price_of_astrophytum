@@ -110,20 +110,6 @@ export default function CreateProfile() {
             </div>
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-full">
-                <InputItems
-                  id="first_name"
-                  name="First name"
-                  type="text"
-                  htmlFor="first_name"
-                  placeholder="John"
-                  value={formData.first_name ?? ""}
-                  autoComplete="given-name"
-                  handleChange={handleInputChange}
-                  pattern="[\u0E00-\u0E7Fa-zA-Z']+"
-                  textError="First name must be to text."
-                />
-              </div>
-              <div className="sm:col-span-full">
                 <div className="relative">
                   <label
                     className="text-cta-text text-sm"
@@ -131,7 +117,8 @@ export default function CreateProfile() {
                       setIsDropdownOpen(!isDropdownOpen);
                     }}
                   >
-                    Role
+                    Role{" "}
+                    <span className="text-red-400 text-start text-sm">*</span>
                     <div
                       id="dropdownActionButton"
                       data-dropdown-toggle="dropdownAction"
@@ -204,7 +191,20 @@ export default function CreateProfile() {
                   </label>
                 </div>
               </div>
-
+              <div className="sm:col-span-full">
+                <InputItems
+                  id="first_name"
+                  name="First name"
+                  type="text"
+                  htmlFor="first_name"
+                  placeholder="John"
+                  value={formData.first_name ?? ""}
+                  autoComplete="given-name"
+                  handleChange={handleInputChange}
+                  pattern="[\u0E00-\u0E7Fa-zA-Z']+"
+                  textError="First name must be to text."
+                />
+              </div>
               <div className="col-span-full">
                 <InputItems
                   id="last_name"
@@ -241,9 +241,10 @@ export default function CreateProfile() {
               <ButtonReturn name={"Cancel"}></ButtonReturn>
               <ButtonItems
                 name={"Save"}
-                onClick={() => {}}
+                onClick={() => { }}
                 type="submit"
                 withs="28"
+                loading={ false}
               />
             </div>
           </div>

@@ -1,15 +1,17 @@
 import { FiCamera, FiXCircle } from "react-icons/fi";
+import { FaArrowRotateLeft } from "react-icons/fa6";
 import ButtonItems from "../button_items";
 import ButtonReload from "./button_reload";
 import useFormUploadImage from "../hook/form_upload_image.hook";
 import Image from "next/image";
 import Logo from "../../../public/logo.png";
 import LogoName from "../../../public/LogoName.png";
+import { useState } from "react";
 export default function UploadImage() {
   const { useFormUploadImageItem } = useFormUploadImage();
-
+  
   return (
-    <div className="w-full lg:min-w-[350px] lg:w-[350px] h-full p-5 pt-2 bg-card text-cta-text rounded-lg">
+    <div className="w-full lg:min-w-[350px] lg:w-[350px] h-full p-5 pt-2 bg-card text-cta-text rounded-lg shadow-lg">
       <div className="pr-2 flex flex-row items-center justify-center">
         <Image
           width={500}
@@ -139,25 +141,36 @@ export default function UploadImage() {
           className="text-cta-text font-semibold text-sm"
           htmlFor="dropzone-file"
         >
-          Import your Nudum image
+          Import your Nudum image{" "}
+          <span className="text-red-400 text-start text-sm">*</span>
         </label>
         <ButtonReload
           name={"Reload"}
+          isShow={useFormUploadImageItem.isShow}
           handleFileChange={useFormUploadImageItem.handleFileChange}
         />
-        <div className="flex flex-row gap-5 items-center justify-center w-full">
+
+        <div className="flex flex-row gap-5 items-center justify-between w-full">
           <button
             onClick={useFormUploadImageItem.openCamera}
-            className="w-full py-3 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center"
+            className={`${useFormUploadImageItem.imagePreview ? "w-1/2 " : "w-full"} py-3 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center`}
           >
-            <FiCamera />
+            <FiCamera className="h-4" />
           </button>
+          {useFormUploadImageItem.imagePreview && <button className="w-1/2 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center">
+            <label htmlFor="dropzone-file" className="w-full h-full flex items-center justify-center">
+              <FaArrowRotateLeft className="h-4 mr-2" /> Retry
+            </label>
+          </button>}
         </div>
         <ButtonItems
           name={"Upload"}
-          onClick={useFormUploadImageItem.handleUpload}
+          onClick={() => {
+            useFormUploadImageItem.handleUpload();
+          }}
           type={"submit"}
           withs={"full"}
+          loading={useFormUploadImageItem.loading}
         />
       </div>
     </div>

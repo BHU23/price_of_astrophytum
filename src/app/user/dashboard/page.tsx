@@ -7,17 +7,26 @@ import { useFetchPredictions } from "./api";
 import { PredictionHistorysInterface } from "@/interface/predictionHistorys.interface";
 import Cookies from "js-cookie";
 import { HistoryPredicstionInterface } from "@/interface/historyPredictions.interface";
-import ButtonReturn from "@/components/fetching_state";
 import FetchingState from "@/components/fetching_state";
+import { useState, useEffect } from "react";
 export default function DeashBoard() {
   const router = useRouter();
   const { historyPredictions, loading, error } = useFetchPredictions();
 
-  const { predictionHistoryGlobal, setPredictionHistoryGlobal, role } =
+  const { predictionHistoryGlobal, setPredictionHistoryGlobal } =
     useGlobal();
 
   const classificationCount = historyPredictions?.length;
+   const [role, setRole] = useState<string | null>(null);
 
+   useEffect(() => {
+     const fetchedRole = Cookies.get("role");
+     if (fetchedRole) {
+       setRole(fetchedRole);
+     } else {
+       console.warn("Role not found in cookies");
+     }
+   }, []);
   const handleGetPrediction = async (
     prediction: HistoryPredicstionInterface
   ) => {
@@ -64,14 +73,16 @@ export default function DeashBoard() {
 
   // Handling loading and error states
   if (loading)
-    return <FetchingState state="Loading..." />;
+    return (
+      <FetchingState state="Loading..." />
+    );
   if (error)
     return (
       <FetchingState state={ `Error: ${error}`} />
     );
   return (
     <div className="flex pl-5 pr-5 pb-5 w-full flex-col h-full">
-      <div className="bg-card w-full flex flex-wrap rounded-lg ">
+      <div className="bg-card w-full flex flex-wrap rounded-lg shadow-lg">
         <div className="px-5 py-5 w-full md:w-1/2">
           <div className="border-2 border-pear flex-col rounded-md">
             <div className="flex flex-row justify-between p-4">
@@ -122,7 +133,7 @@ export default function DeashBoard() {
           </div>
         </div>
       </div>
-      <div className="h-auto w-full bg-card mt-5 rounded-md">
+      <div className="h-auto w-full bg-card mt-5 rounded-md shadow-lg">
         <div className="pt-5 pl-5">Your Image Predict</div>
         <hr className="h-px my-6 bg-gray-200 border-none dark:bg-gray-700" />
         {classificationCount !== 0 ? (

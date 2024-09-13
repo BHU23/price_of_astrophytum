@@ -1,23 +1,23 @@
-import { ClassesInterface } from "@/interface/classes.interface";
+import { UserProfileDisplayInterface } from "@/interface/user.interface";
 import Image from "next/image";
-
-interface PreviewClassProps {
-  classData: ClassesInterface | undefined;
-  previewClass: number | null;
+import profile from "../../public/profile_default_png.png";
+interface PreviewUserProps {
+  userData: UserProfileDisplayInterface | undefined;
+  previewUser: number | null;
   onEdite: (ID: number) => void;
   onDelete: (ID: number) => void;
-  setPreviewClass: (ID: number | null) => void;
+  setPreviewUser: (ID: number | null) => void;
 }
 
-export default function PreviewClass({
-  classData,
-  previewClass,
+export default function PreviewUser({
+  userData,
+  previewUser,
   onEdite,
   onDelete,
-  setPreviewClass,
-}: PreviewClassProps) {
+  setPreviewUser,
+}: PreviewUserProps) {
   const handlePreviewCancel = () => {
-    setPreviewClass(null);
+    setPreviewUser(null);
     const modal = document.getElementById("previewModal");
     if (modal) modal.classList.add("hidden");
   };
@@ -29,7 +29,7 @@ export default function PreviewClass({
       className="hidden fixed inset-0 z-[99999] bg-transparent flex justify-center items-center "
     >
       <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-        <div className="relative p-4 text-center bg-white rounded-lg  dark:bg-card dark:border dark:border-border sm:p-5 shadow-ring-gray shadow-lg">
+        <div className="relative p-4 text-center bg-white rounded-lg  shadow-lg dark:bg-card dark:border dark:border-border sm:p-5 shadow-ring-gray  ">
           <button
             type="button"
             className="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -50,18 +50,54 @@ export default function PreviewClass({
             </svg>
             <span className="sr-only">Close modal</span>
           </button>
-          {previewClass !== null && (
-            <div>
-              <h3 className="mb-4 text-lg font-semibold text-start text-gray-900 dark:text-white">
-                {classData?.name}
-              </h3>
-              <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
-                Description
-              </h5>
-              <p className="mb-4 text-gray-500 text-start dark:text-gray-300">
-                {classData?.description}
-              </p>
+          {previewUser !== null && (
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2 items-center ">
+                <Image
+                  width={40}
+                  height={40}
+                  className="w-12 h-12 rounded-full"
+                  src={userData?.avatar ?? profile}
+                  alt={`${userData?.username} image`}
+                />
+                <div className="text-start flex flex-col ">
+                  <h3 className="text-lg font-semibold  text-gray-900 dark:text-white">
+                    {userData?.username}
+                  </h3>
+                  <p className="text-cta-gray dark:text-gray-300">
+                    {userData?.role}
+                  </p>
+                </div>
+              </div>
               <div className="flex justify-between">
+                <div className="w-1/2">
+                  <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
+                    First Name
+                  </h5>
+                  <p className="mb-4 text-cta-gray text-start dark:text-gray-300">
+                    {userData?.first_name ?? "-"}
+                  </p>
+                </div>
+                <div className="w-1/2">
+                  {" "}
+                  <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
+                    Last Name
+                  </h5>
+                  <p className="mb-4 text-cta-gray text-start dark:text-gray-300">
+                    {userData?.last_name ?? "-"}
+                  </p>
+                </div>
+              </div>
+              <div className="w-1/2">
+                {" "}
+                <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
+                  Email
+                </h5>
+                <p className="mb-4 text-cta-gray text-start dark:text-gray-300">
+                  {userData?.email ?? "-"}
+                </p>
+              </div>
+              {/* <div className="flex justify-between">
                 <div className="w-1/2 rounded-lg overflow-hidden">
                   <Image
                     src={classData?.example_image ?? ""}
@@ -72,7 +108,7 @@ export default function PreviewClass({
                   />
                 </div>
                 <div className="w-1/2  flex flex-col justify-between">
-                  <div className="">
+                  <div className="w-1/2">
                     <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
                       Extra Value
                     </h5>
@@ -80,7 +116,7 @@ export default function PreviewClass({
                       {classData?.extra_value}
                     </p>
                   </div>
-                  <div className="">
+                  <div className="w-1/2">
                     <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
                       Price
                     </h5>
@@ -88,9 +124,9 @@ export default function PreviewClass({
                       {classData?.price.value_min}-{classData?.price.value_max}{" "}
                       ฿
                     </p>
-                  </div>
+                  </div> 
                 </div>
-              </div>
+              </div>*/}
             </div>
           )}
 
@@ -98,8 +134,8 @@ export default function PreviewClass({
             <div className="flex items-center space-x-3 sm:space-x-4">
               <button
                 type="button"
-                className="text-cta-text inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-tan font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                onClick={() => onEdite(classData?.id ?? 0)}
+                className="text-cta-text inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                onClick={() => onEdite(userData?.id ?? 0)}
               >
                 <svg
                   aria-hidden="true"
@@ -128,7 +164,7 @@ export default function PreviewClass({
               type="button"
               className="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
               onClick={() => {
-                onDelete(classData?.id ?? 0);
+                onDelete(userData?.id ?? 0);
                 handlePreviewCancel();
               }}
             >

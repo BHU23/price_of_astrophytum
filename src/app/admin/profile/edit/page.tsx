@@ -234,6 +234,7 @@ export default function EditProfile() {
                 onClick={() => {}}
                 type="submit"
                 withs="28"
+                loading={false}
               />
             </div>
           </div>

@@ -16,7 +16,7 @@ export default function ResultClassification({}: ResultClassificationProp) {
   console.log("predictionHistoryGlobal3", predictionHistoryGlobal);
   console.log("class3", predictionHistoryGlobal.class);
   return (
-    <div className="w-full flex flex-col justify-start h-[100%] gap-5">
+    <div className="w-full flex flex-col justify-start h-[100%] gap-5 ">
       <span className="text-cta-text font-semibold text-sm">
         Result of prediction image
       </span>

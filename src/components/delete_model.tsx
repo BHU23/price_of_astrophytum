@@ -17,10 +17,10 @@ export default function DeleteModle({
       id="deleteModal"
       tabIndex={-1}
       aria-hidden="true"
-      className="hidden fixed inset-0 z-[99999]  flex justify-center overflow-y-auto overflow-x-hidden"
+      className="hidden fixed inset-0 z-[99999] bg-transparent flex justify-center items-center "
     >
       <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-        <div className="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+        <div className="relative p-4 text-center bg-white rounded-lg shadow-lg dark:bg-card dark:border dark:border-border sm:p-5 shadow-ring-gray  ">
           <button
             type="button"
             className="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"

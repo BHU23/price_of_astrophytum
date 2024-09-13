@@ -12,7 +12,7 @@ input::-ms-clear {
   --pear: #C6ED46;
     --tan: #DF9061;
     --btn: #C1C1C1;
-  --background: 245, 245, 245;
+  --background: #f5f5f5;
 
   --border: #C1C1C1;
   --card: #ffffff;
@@ -21,12 +21,12 @@ input::-ms-clear {
   --copy-secondary: 115, 115, 115;
 
   --cta: 139, 92, 246;
-  --cta-gray: #a09f9f;
+  --cta-gray: #000000;
   --cta-active: 124, 58, 237;
   --cta-text: 255, 255, 255;
   --ring-gray: #f3f4f6;
 
-  background: rgba(var(--background));
+  background: var(--background);
 }
 
 .dark {
@@ -35,7 +35,7 @@ input::-ms-clear {
     --btn: #C1C1C1;
     --border:#8A8C91;
   
-    --background: 0, 0, 0;
+    --background: #000000;
     /* --border: 245, 245, 245; */
     --card: #161A23;
   
@@ -48,7 +48,7 @@ input::-ms-clear {
     --cta-text: 255, 255, 255;
     --ring-gray: #374151;
   
-    background: rgba(var(--background));
+    background: var(--background);
 }
 
 :root {

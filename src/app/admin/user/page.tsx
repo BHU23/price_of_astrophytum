@@ -10,6 +10,7 @@ import Image from "next/image";
 import DeleteModle from "@/components/delete_model";
 import { DeleteUserProfileByID, useUserProfile } from "./hook";
 import profile from "../../../../public/profile_default_png.png"
+import PreviewUser from "@/components/preview_user";
 
 export default function User() {
   const router = useRouter();
@@ -109,8 +110,9 @@ export default function User() {
   if (error) return <FetchingState state={`Error: ${error}`} />;
 
   return (
-    <div className="relative shadow-md rounded-xl m-5 mt-0 p-5  bg-card ">
-      <div className="flex items-center justify-between flex-wrap md:flex-nowrap space-y-4 md:space-y-0 pb-4 ">
+    <div className="relative shadow-md mt-0 p-5   ">
+      <span className="text-cta-text font-semibold">All Users</span>
+      <div className="flex items-center justify-between flex-wrap md:flex-nowrap space-y-4 md:space-y-0 py-4">
         <div>
           <button
             id="dropdownActionButton"
@@ -174,7 +176,7 @@ export default function User() {
               Role {sortKey === "role" && (sortDirection === "asc" ? "↑" : "↓")}
             </th>
             <th
-              className="pl-6 py-3 text-center cursor-pointer "
+              className="pl-6 py-3 cursor-pointer "
               onClick={() => handleSort("first_name")}
             >
               First Name
@@ -182,14 +184,14 @@ export default function User() {
                 (sortDirection === "asc" ? "↑" : "↓")}
             </th>
             <th
-              className="pl-6 py-3 text-center cursor-pointer "
+              className="pl-6 py-3  cursor-pointer "
               onClick={() => handleSort("last_name")}
             >
               Last Name
               {sortKey === "last_name" && (sortDirection === "asc" ? "↑" : "↓")}
             </th>
             <th
-              className="pl-6 py-3 cursor-pointer text-center"
+              className="pl-6 py-3 cursor-pointer "
               onClick={() => handleSort("email")}
             >
               Email{" "}
@@ -245,10 +247,10 @@ export default function User() {
                   </p>
                 </div>
               </td>
-              <td className="pl-6 py-4 text-center">Admin</td>
-              <td className="pl-6 py-4 text-center">{user.first_name}</td>
-              <td className="pl-6 py-4 text-center">{user.last_name}</td>
-              <td className="pl-6 py-4 text-center">{user.email}</td>
+              <td className="pl-6 py-4 ">{user.role}</td>
+              <td className="pl-6 py-4 ">{user.first_name}</td>
+              <td className="pl-6 py-4 ">{user.last_name}</td>
+              <td className="pl-6 py-4 ">{user.email}</td>
               <td className="px-6 py-4 h-full">
                 <ActionTable
                   handlePreview={() => handlePreview(user.id)}
@@ -268,13 +270,13 @@ export default function User() {
         onPageChange={onPageChange}
       />
 
-      {/* <PreviewClass
-        classData={classes.find((cls) => cls.id === previewClass)}
-        previewClass={previewClass}
+      <PreviewUser
+        userData={userProfiles.find((cls) => cls.id === previewUser)}
+        previewUser={previewUser}
         onEdite={(e) => handleEdit(e)}
         onDelete={(e) => handleDeleteClick(e)}
-        setPreviewClass={(e) => setPreviewClass(e)}
-      ></PreviewClass> */}
+        setPreviewUser={(e) => setPreviewUser(e)}
+      ></PreviewUser>
 
       <DeleteModle
         handleDeleteConfirm={handleDeleteConfirm}

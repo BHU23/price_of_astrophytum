@@ -16,7 +16,7 @@ const config: Config = {
       //   'primary-dark': '#1C2A1B',
       // },
       colors: {
-        background: "rgba(var(--background))",
+        background: "var(--background)",
         // border: "rgba(var(--border))",
         card: "var(--card)",
         border: "var(--border)",
