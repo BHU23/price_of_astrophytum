@@ -34,8 +34,8 @@ export default function RootLayout({
           isOpen ? "sm:ml-72 ml-5" : "ml-5 pb-0"
         }`}
       >
-        <div className="min-h-[calc(100vh-6rem)] h-auto w-full rounded-xl  bg-card shadow-md overflow-hidden ">
-          <Breadcrumb links={breadcrumbLinks} />
+        <div className="min-h-[calc(100vh-6rem)] h-auto w-full  ">
+
           {children}
         </div>
         <div className={`py-5 ${isOpen ? "" : "-pl-5"}`}>

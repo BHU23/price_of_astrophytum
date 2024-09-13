@@ -99,18 +99,17 @@ export default function Header() {
           </div>
 
           <div className="flex items-center justify-center">
-            {token == null &&
-              !pathLogin && (
-                <div
-                  onClick={toggleIsOpenModel}
-                  className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0"
-                >
-                  <p>Sign in/up</p>
-                </div>
-              )}
-            <div className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-8 h-8 hover:text-tan ml-1 mr-5 md:my-0">
+            {token == null && !pathLogin && (
+              <div
+                onClick={toggleIsOpenModel}
+                className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0"
+              >
+                <p>Sign in/up</p>
+              </div>
+            )}
+            <button className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-8 h-8 hover:text-tan ml-1 mr-5 md:my-0 hover:bg-gray-100  focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-card  dark:hover:bg-gray-700">
               <ThemeSwitch />
-            </div>
+            </button>
           </div>
         </div>
       </nav>

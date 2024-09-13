@@ -93,11 +93,11 @@ export default function EditProfile() {
   };
 
   if (loading) {
-    return <FetchingState state="Loading..." />;
+    return <FetchingState  state="Loading..." />;
   }
-
+  if (error) return <FetchingState state={`Error: ${error}`} />;
   return (
-    <div className="flex flex-wrap lg:flex-nowrap w-full h-full p-5 pt-0 gap-5">
+    <div className="flex flex-wrap lg:flex-nowrap w-full h-full gap-5">
       <div className="w-full h-full p-5 gap-5 bg-card rounded-xl">
         <form
           onSubmit={handleSubmit}
@@ -190,7 +190,7 @@ export default function EditProfile() {
                   value={formData.first_name}
                   autoComplete="given-name"
                   handleChange={handleChange}
-                  pattern="[\u0E00-\u0E7Fa-zA-Z0-9' ]+|^'|'$|''"
+                  pattern="[\u0E00-\u0E7Fa-zA-Z']+"
                   textError="First name must be to text."
                 />
               </div>
@@ -205,7 +205,7 @@ export default function EditProfile() {
                   value={formData.last_name}
                   autoComplete="family-name"
                   handleChange={handleChange}
-                  pattern="[\u0E00-\u0E7Fa-zA-Z0-9' ]+|^'|'$|''"
+                  pattern="[\u0E00-\u0E7Fa-zA-Z']+"
                   textError="Last name must be to text."
                 />
               </div>
@@ -234,6 +234,7 @@ export default function EditProfile() {
                 onClick={() => {}}
                 type="submit"
                 withs="28"
+                loading={false}
               />
             </div>
           </div>

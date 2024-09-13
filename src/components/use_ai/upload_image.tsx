@@ -11,7 +11,7 @@ export default function UploadImage() {
   const { useFormUploadImageItem } = useFormUploadImage();
   
   return (
-    <div className="w-full lg:min-w-[350px] lg:w-[350px] h-full p-5 pt-2 bg-card text-cta-text rounded-lg shadow-lg">
+    <div className="  h-auto lg:min-h-[calc(100vh-6rem)] w-full lg:min-w-[350px] lg:w-[350px] h-full p-5 pt-2 bg-card text-cta-text rounded-lg shadow-lg">
       <div className="pr-2 flex flex-row items-center justify-center">
         <Image
           width={500}
@@ -153,15 +153,22 @@ export default function UploadImage() {
         <div className="flex flex-row gap-5 items-center justify-between w-full">
           <button
             onClick={useFormUploadImageItem.openCamera}
-            className={`${useFormUploadImageItem.imagePreview ? "w-1/2 " : "w-full"} py-3 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center`}
+            className={`${
+              useFormUploadImageItem.imagePreview ? "w-1/2 " : "w-full"
+            } py-3 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center`}
           >
             <FiCamera className="h-4" />
           </button>
-          {useFormUploadImageItem.imagePreview && <button className="w-1/2 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center">
-            <label htmlFor="dropzone-file" className="w-full h-full flex items-center justify-center">
-              <FaArrowRotateLeft className="h-4 mr-2" /> Retry
-            </label>
-          </button>}
+          {useFormUploadImageItem.imagePreview && (
+            <button className="w-1/2 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center">
+              <label
+                htmlFor="dropzone-file"
+                className="w-full h-full flex items-center justify-center"
+              >
+                <FaArrowRotateLeft className="h-4 mr-2" /> Retry
+              </label>
+            </button>
+          )}
         </div>
         <ButtonItems
           name={"Upload"}

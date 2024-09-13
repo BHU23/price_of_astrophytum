@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { FaFacebook } from "react-icons/fa";
 import ButtonPushPathItems from "@/components/button_pushpath_items";
-import Line from "@/components/line";
 import { useGlobal } from "@/context/useGlobal";
 import { useEffect, useState } from "react";
 import { GetUserProfile } from "./้hook";
 import FetchingState from "@/components/fetching_state";
+import profile from "../../../../public/profile_default_png.png";
 import Cookies from "js-cookie";
 export default function Profile() {
   const { userProfile, setUserProfile } = useGlobal();
@@ -34,10 +34,10 @@ export default function Profile() {
     return <FetchingState state="Loading..." />;
   }
   return (
-    <div className="flex flex-wrap lg:flex-nowrap w-full h-full p-5 pt-0 gap-5">
-      <div className="flex flex-col justify-center items-center w-full h-full overflow-hidden gap-5 bg-card rounded-xl shadow-lg">
-        <div className="relative w-full h-72 bg-black dark:bg-white"></div>
-        <div className="relative w-full h-full text-cta-text flex flex-col justify-start items-center  gap-5 ">
+    <div className="flex flex-wrap lg:flex-nowrap w-full h-auto pt-5 gap-5">
+      <div className="flex flex-col justify-center items-center w-full overflow-hidden gap-5 ">
+        <div className="relative w-full h-[21rem] bg-black dark:bg-white"></div>
+        <div className="relative w-full text-cta-text flex flex-col justify-start items-center  gap-5 ">
           <div className="w-full relative h-[95px] md:h-32 lg:h-16 p-0 px-5 md:px-16 ">
             <div className=" w-full absolute -top-20 md:-top-24 flex flex-col lg:flex-row justify-between  lg:pr-[125px] gap-5 ">
               <div className="flex pr-5  lg:pr-0 lg:flex-row item-end gap-5">

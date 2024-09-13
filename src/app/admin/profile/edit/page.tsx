@@ -97,7 +97,7 @@ export default function EditProfile() {
   }
   if (error) return <FetchingState state={`Error: ${error}`} />;
   return (
-    <div className="flex flex-wrap lg:flex-nowrap w-full h-full p-5 pt-0 gap-5">
+    <div className="flex flex-wrap lg:flex-nowrap w-full h-full gap-5">
       <div className="w-full h-full p-5 gap-5 bg-card rounded-xl">
         <form
           onSubmit={handleSubmit}
