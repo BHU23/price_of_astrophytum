@@ -154,7 +154,7 @@ export default function User() {
         </div>
       </div>
       <table className="w-full text-sm text-left">
-        <thead className="text-xs text-cta-gray uppercase bg-background">
+        <thead className="text-xs text-cta-text uppercase bg-background">
           <tr>
             <th scope="col" className="p-4">
               No.
@@ -207,7 +207,7 @@ export default function User() {
           {displayedUser.map((user, index) => (
             <tr
               key={user.id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              className="bg-white border-b dark:bg-transparent dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
             >
               <td className="w-4 p-4">
                 <div className="flex items-center justify-center">

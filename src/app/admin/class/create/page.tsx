@@ -7,7 +7,7 @@ import InputItems from "@/components/input_items";
 import Image from "next/image";
 import ButtonReturn from "@/components/button_return";
 import FetchingState from "@/components/fetching_state";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CreateClass() {
   const {
@@ -24,7 +24,24 @@ export default function CreateClass() {
     loading,
     error,
   } = useCreateClass();
-   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  
   if (loading) return <FetchingState state="Loading..." /> ;
   if (error) return <FetchingState state={`Error: ${error}`} />;
 
@@ -118,7 +135,7 @@ export default function CreateClass() {
                 <span className="text-red-400 text-start text-sm">*</span>
               </label>
               <input
-                className="block w-full h-10 pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer file:p-2 file:font-semibold file:h-full file:rounded-md file:border-0 file:bg-gray-800 file:text-pear file:text-sm file:mr-2 dark:hover:text-white dark:hover:bg-gray-700  dark:focus:ring-pear focus:outline-none focus:z-10 focus:ring-1"
+                className="block w-full h-10 pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer file:p-2 file:font-semibold file:bg-gray-600 file:h-full file:rounded-md file:border-0  file:text-pear file:text-sm file:mr-2 dark:hover:text-white  focus:ring-pear focus:outline-none focus:z-10 focus:ring-1"
                 id="example_image_input"
                 type="file"
                 accept="image/*"
@@ -137,7 +154,7 @@ export default function CreateClass() {
               </label>
               <textarea
                 // className="block w-full h-auto pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer p-2 font-semibold bg-card mr-2 dark:hover:text-white  hover:bg-ring_gray   dark:focus:ring-gray-700 focus:outline-none focus:z-10 focus:ring-4"
-                className="bg-gray-50 border pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear 
+                className="bg-gray-50 border pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear 
                 [&:not(:placeholder-shown):invalid~span]:block 
               invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-400
               focus:invalid:[&:not(:placeholder-shown)]:border-red-400 focus:invalid:[&:not(:placeholder-shown)]:ring-red-400"
@@ -195,30 +212,13 @@ export default function CreateClass() {
                   )}
                 </div>
               </div>
-              {/* <select
-                className="block w-full h-10 p-1 text-sm text-cta-text border bg-card border-border rounded-lg cursor-pointer placeholder-gray-400 hover:bg-ring_gray focus:ring-ring_gray focus:outline-none focus:z-10 focus:ring-2 dark:focus:ring-4"
-                value={`${formDataClass.price.value_min} - ${formDataClass.price.value_max}`}
-                onChange={handlePriceChange}
-                id="price"
-              >
-                <option value="" disabled>
-                  Select a price
-                </option>
-                {prices.map((price) => (
-                  <option
-                    key={price.id}
-                    value={`${price.value_min} - ${price.value_max}`}
-                  >
-                    {price.value_min} - {price.value_max}
-                  </option>
-                ))}
-              </select> */}
+
               {!newPriceState ? (
-                <div className="relative">
+                <div className="relative" ref={dropdownRef}>
                   <div
                     id="dropdownActionButton"
                     data-dropdown-toggle="dropdownAction"
-                    className={`inline-flex items-center justify-between bg-gray-50 border mt-2 h-10 pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
+                    className={`inline-flex items-center justify-between bg-gray-50 border mt-2 h-10 pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
                       isDropdownOpen ? "ring-1 ring-pear" : ""
                     }`}
                     typeof="button"
@@ -255,7 +255,7 @@ export default function CreateClass() {
                   {/* Dropdown menu */}
                   <div
                     id="dropdownAction"
-                    className="z-10 hidden bg-background border border-border divide-y divide-gray-100 rounded-lg shadow w-full mt-1 absolute overflow-hidden"
+                    className="z-10 hidden bg-background border border-border divide-y divide-gray-100 rounded-lg shadow w-full mt-1 absolute h-40 overflow-y-scroll"
                   >
                     <ul
                       className="text-sm "

@@ -155,12 +155,12 @@ export default function UploadImage() {
             onClick={useFormUploadImageItem.openCamera}
             className={`${
               useFormUploadImageItem.imagePreview ? "w-1/2 " : "w-full"
-            } py-3 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center`}
+            } py-3 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-tan focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-500 dark:bg-gray-400 dark:text-cta-text dark:border-gray-500 dark:hover:bg-gray-400 cursor-pointer flex items-center justify-center`}
           >
             <FiCamera className="h-4" />
           </button>
           {useFormUploadImageItem.imagePreview && (
-            <button className="w-1/2 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center">
+            <button className="w-1/2 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-tan focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-500 dark:bg-gray-400 dark:text-cta-text dark:border-gray-500 dark:hover:bg-gray-400 cursor-pointer flex items-center justify-center">
               <label
                 htmlFor="dropzone-file"
                 className="w-full h-full flex items-center justify-center"

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { FiArrowRight } from "react-icons/fi";
 import { useRouter } from "next/navigation";
+
 export default function Home() {
   const [role, setRole] = useState<string | null>(null);
   const router = useRouter();

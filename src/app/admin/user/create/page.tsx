@@ -122,7 +122,7 @@ export default function CreateProfile() {
                     <div
                       id="dropdownActionButton"
                       data-dropdown-toggle="dropdownAction"
-                      className={`inline-flex items-center justify-between bg-gray-50 border mt-2 h-10 pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
+                      className={`inline-flex items-center justify-between bg-gray-50 border mt-2 h-10 pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
                         isDropdownOpen ? "ring-1 ring-pear" : ""
                       }`}
                       typeof="button"
