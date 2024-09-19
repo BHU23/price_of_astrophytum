@@ -3,22 +3,32 @@
 import { useState } from "react";
 import { useGlobal } from "@/context/useGlobal";
 
-export default function useUser() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const { isOpen, setIsOpen, breadcrumbLinks } = useGlobal();
+export default function useCustumer() {
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const {
+    isOpen,
+    setIsOpen,
+    breadcrumbLinks,
+    isOpenSM,
+    setIsOpenSM,
+    sidebarSMRef,
+  } = useGlobal();
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-    setIsOpen(false);
+    // setIsSidebarOpen(!isSidebarOpen);
+    setIsOpen(!isOpen);
   };
 
   return {
-    useUserItems: {
+    custumerItems: {
       isOpen,
       setIsOpen,
-      isSidebarOpen,
-      setIsSidebarOpen,
+      // isSidebarOpen,
+      // setIsSidebarOpen,
       toggleSidebar,
       breadcrumbLinks,
+      isOpenSM,
+      setIsOpenSM,
+      sidebarSMRef,
     },
   };
 }

@@ -189,7 +189,7 @@ export default function Class() {
               className="pl-6 py-3 cursor-pointer text-end"
               onClick={() => handleSort("price.value_min")}
             >
-              Price{" "}
+              Price (฿)
               {sortKey === "price.value_min" &&
                 (sortDirection === "asc" ? "↑" : "↓")}
             </th>
@@ -218,7 +218,7 @@ export default function Class() {
                     checkbox
                   </label>*/}
 
-                  {itemsPerPage * (currentPage - 1) + index + 1}
+                  {cls.id}
                 </div>
               </td>
               <th
@@ -242,9 +242,12 @@ export default function Class() {
                   </div>
                 </div>
               </th>
-              <td className="pl-6 py-4 text-end">{cls.extra_value}</td>
               <td className="pl-6 py-4 text-end">
-                {cls.price?.value_min} - {cls.price.value_max}
+                {cls.extra_value?.toLocaleString()}
+              </td>
+              <td className="pl-6 py-4 text-end">
+                {cls.price?.value_min?.toLocaleString()} -{" "}
+                {cls.price?.value_max?.toLocaleString()}
               </td>
               <td className="px-6 py-4 h-full">
                 <ActionTable

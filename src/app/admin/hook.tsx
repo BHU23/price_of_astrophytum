@@ -5,7 +5,14 @@ import { useGlobal } from "@/context/useGlobal";
 
 export default function useCustumer() {
   // const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const { isOpen, setIsOpen, breadcrumbLinks } = useGlobal();
+  const {
+    isOpen,
+    setIsOpen,
+    breadcrumbLinks,
+    isOpenSM,
+    setIsOpenSM,
+    sidebarSMRef,
+  } = useGlobal();
   const toggleSidebar = () => {
     // setIsSidebarOpen(!isSidebarOpen);
     setIsOpen(!isOpen);
@@ -19,6 +26,9 @@ export default function useCustumer() {
       // setIsSidebarOpen,
       toggleSidebar,
       breadcrumbLinks,
+      isOpenSM,
+      setIsOpenSM,
+      sidebarSMRef,
     },
   };
 }

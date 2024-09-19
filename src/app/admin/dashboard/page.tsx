@@ -43,8 +43,10 @@ export default function DeashBoard() {
       ?.filter((prediction) => {
         if (!dateRange.from || !dateRange.to) return true;
         const predictionDate = parseISO(prediction.timestamp);
+         const startDate = new Date(dateRange.from);
+         startDate.setDate(startDate.getDate() - 1);
         return isWithinInterval(predictionDate, {
-          start: dateRange.from,
+          start: startDate,
           end: dateRange.to,
         });
       })
@@ -103,7 +105,7 @@ export default function DeashBoard() {
         total_max: prediction.total_max,
       };
       await setPredictionHistoryGlobal(newPrediction);
-      router.push(`/${role?.toLowerCase()}/use_ai`);
+      router.push(`/admin/use_ai`);
     } catch (error) {
       console.error("Error fetching prediction details:", error);
     }

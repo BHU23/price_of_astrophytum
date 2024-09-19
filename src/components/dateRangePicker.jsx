@@ -27,22 +27,19 @@ export default function DateRangePicker({ onDateRangeChange }) {
     return date ? format(new Date(date), "MMM dd, yyyy") : "";
   };
 
-  const isDarkMode = document.documentElement.classList.contains("dark");
-
   return (
     <div className="flex items-center space-x-4">
       <Datepicker
-        primaryColor={"lime"} // Set primary color if needed
+        primaryColor={"lime"}
         value={value}
         onChange={handleDateSelect}
         placeholder="Select Date Range"
         showShortcuts={true}
-        inputClassName={`min-w-72 w-full border text-cta-text text-sm rounded-md p-2 focus:ring-pear focus:border-pear bg-background 
-        ${
-          isDarkMode
-            ? " text-white bg-black border-gray-600"
-            : "text-gray-900 border-gray-300"
-        }`}
+        maxDate={new Date()}
+        classNames={ {container: "z-[99999]", toggleButton:"text-cta-text "}}
+        inputClassName={`text-sm min-w-64 h-10 w-full rounded-lg focus:ring-pear focus:border-pear p-2.5 drak:text-white drak:bg-black dark:border-gray-600 
+               bg-gray-50 text-gray-900 border-gray-300
+            `}
         renderInput={({ ref }) => (
           <input
             ref={ref}
@@ -55,11 +52,10 @@ export default function DateRangePicker({ onDateRangeChange }) {
                 : ""
             }
             placeholder="Select Date Range"
-            className={`min-w-72 w-full rounded-lg focus:ring-pear focus:border-pear p-2.5 bg-background ${
-              isDarkMode
-                ? " text-white bg-black border-gray-600"
-                : "bg-gray-50 text-gray-900 border-gray-300"
-            }`}
+            className={`min-w-64 h-10 w-full text-sm rounded-lg focus:ring-pear border focus:border-pear p-2.5
+               drak:text-white drak:bg-black dark:border-gray-600 
+               bg-gray-50 text-gray-900 border-gray-300
+            `}
           />
         )}
       />

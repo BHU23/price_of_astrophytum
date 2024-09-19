@@ -51,7 +51,10 @@ input::-ms-clear {
   
     background: var(--background);
 }
-
+.dark .dark\:bg-slate-800{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
 :root {
   --grape: 114, 35, 204;
 }
@@ -69,7 +72,7 @@ input::-ms-clear {
   }
 } */
 
-body {
+/* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -77,7 +80,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+} */
 
 @layer utilities {
   .text-balance {

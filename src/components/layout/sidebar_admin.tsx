@@ -10,8 +10,7 @@ import { IoPeople, IoPersonOutline } from "react-icons/io5";
 import Cookies from "js-cookie";
 import { useGlobal } from "@/context/useGlobal";
 import Image from "next/image";
-import { profile } from "console";
-
+import profile from "../../../public/profile_default_png.png";
 export default function SidebarAdmin() {
   const pathname = usePathname();
   const router = useRouter();
@@ -60,7 +59,7 @@ export default function SidebarAdmin() {
 
   return (
     <div className="px-5 py-5 sm:py-4 h-full w-full">
-      <div className="h-full w-full flex flex-col justify-between rounded-xl border border-border p-4 ">
+      <div className="h-full w-full flex flex-col justify-between rounded-xl border border-border p-2 ">
         <div className="relative flex h-full w-full max-w-[20rem] flex-col  ">
           <div className="px-4 pt-2">
             <h5 className="block font-sans text-xs antialiased text-cta ">
@@ -152,7 +151,7 @@ export default function SidebarAdmin() {
                 width={50}
                 height={50}
                 className="w-10 h-10 rounded-full"
-                src={userProfile?.avatar ?? ""}
+                src={userProfile?.avatar ?? profile}
                 alt=""
               ></Image>
               <div className="font-medium dark:text-white ">

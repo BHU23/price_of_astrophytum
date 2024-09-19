@@ -37,7 +37,7 @@ export default function BoxPost({ prediction, onClick }: BoxPostInt) {
         onClick={() => onClick()}
       >
         {" "}
-        open <FiArrowRight />
+        open
       </button>
     </div>
   );

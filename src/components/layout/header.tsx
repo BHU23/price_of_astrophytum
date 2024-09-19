@@ -10,26 +10,28 @@ import Cookies from "js-cookie";
 
 export default function Header() {
   const {
-    // token,
     isOpenModel,
     toggleIsOpenModel,
-    isOpen,
-    setIsOpen,
+    isOpenSM,
+    setIsOpenSM,
+    bottomRef,
     breadcrumbLinks,
+    loginpath,
   } = useGlobal();
+
   const [token, setToken] = useState<string | null>(null);
-  const [pathLogin, setPathLogin] = useState< boolean>(false);
+  const [pathLogin, setPathLogin] = useState<boolean>(false);
+
   useEffect(() => {
     const savedToken = Cookies.get("token");
-    if (savedToken) {
-      setToken(savedToken);
-    }
-    if (breadcrumbLinks.some((link: any) => link.label.includes("login"))) {
-      setPathLogin(true);
-    } else {
-      setPathLogin(false);
-    }
-  }, [breadcrumbLinks]);
+    setToken(savedToken || null);
+
+    const hasLoginPath = loginpath.some((link: any) => {
+      return link.label.toLowerCase() === "login";
+    });
+
+    setPathLogin(!hasLoginPath);
+  }, [loginpath]);
 
   return (
     <div>
@@ -39,12 +41,13 @@ export default function Header() {
             {breadcrumbLinks.length > 0 && (
               <div className="flex sm:hidden gap-2">
                 <button
-                  onClick={() => setIsOpen((prev: boolean) => !prev)}
+                  onClick={() => setIsOpenSM((prev: boolean) => !prev)}
                   type="button"
                   className="flex items-center justify-center my-2 transition-colors duration-300 transform text-cta-text hover:border border-border rounded-md w-8 h-8 hover:text-tan ml-3 mr-1 md:my-0"
                   aria-label="toggle menu"
+                  ref={bottomRef}
                 >
-                  {isOpen ? (
+                  {isOpenSM ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-6 h-6"
@@ -99,15 +102,16 @@ export default function Header() {
           </div>
 
           <div className="flex items-center justify-center">
-            {token == null && !pathLogin && (
-              <div
+            {!token && pathLogin && (
+              <button
                 onClick={toggleIsOpenModel}
-                className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-18 h-8 px-5 hover:text-tan md:my-0"
+                className="w-auto px-4 flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md h-8 hover:text-tan md:my-0 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-card dark:hover:bg-gray-700"
               >
                 <p>Sign in/up</p>
-              </div>
+              </button>
             )}
-            <button className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-8 h-8 hover:text-tan ml-1 mr-5 md:my-0 hover:bg-gray-100  focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-card  dark:hover:bg-gray-700">
+
+            <button className="flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md w-8 h-8 hover:text-tan ml-1 mr-5 md:my-0 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-card dark:hover:bg-gray-700">
               <ThemeSwitch />
             </button>
           </div>

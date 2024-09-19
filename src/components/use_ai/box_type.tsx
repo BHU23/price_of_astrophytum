@@ -22,8 +22,8 @@ export default function BoxType({
         <div className="relative group">
           <MdInfoOutline className="w-4 h-4" />
           {/* <div className="absolute hidden group-hover:block h-auto w-64 bg-background rounded-lg left-40 -top-3 transform -translate-x-1/2 "> */}
-          <div className="absolute hidden group-hover:block h-auto w-64 bg-background rounded-lg left-4 transform -translate-x-1/2 z-50">
-            <div className="max-w-sm rounded overflow-hidden shadow-lg flex justify-center items-center flex-col p-5">
+          <div className="absolute hidden group-hover:block h-auto w-64 bg-white dark:bg-card dark:border dark:border-border rounded-lg left-4 transform -translate-x-1/2 z-50">
+            <div className="max-w-sm rounded overflow-hidden shadow-lg  flex justify-center items-center flex-col p-5">
               <Image
                 width={500}
                 height={500}
