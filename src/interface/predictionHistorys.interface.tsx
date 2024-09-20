@@ -6,3 +6,9 @@ export interface PredictionHistorysInterface {
   total_min: number;
   total_max: number;
 }
+
+export interface PredictionHistoryInterface {
+  id: number;
+  user: number;
+  class_name: ClassesInterface;
+}

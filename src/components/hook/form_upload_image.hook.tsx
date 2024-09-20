@@ -53,7 +53,7 @@ export default function useFormUploadImage() {
 
     try {
       const token = Cookies.get("token");
-      console.log("Token:", token); // Ensure the token is not null or undefined
+      console.log("Token:", token);
 
       setLoading(true);
       const apiUrl = "http://127.0.0.1:8000/api/history-predictions/";

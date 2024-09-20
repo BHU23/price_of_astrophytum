@@ -14,7 +14,6 @@ export interface UserProfileDisplayInterface {
   username: string;
   avatar: string | null;
   email: string;
-
   role: string;
   first_name: string;
   last_name: string;

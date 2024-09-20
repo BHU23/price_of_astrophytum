@@ -9,7 +9,7 @@ import Pagination from "@/components/pagination";
 import Image from "next/image";
 import DeleteModle from "@/components/delete_model";
 import { DeleteUserProfileByID, useUserProfile } from "./hook";
-import profile from "../../../../public/profile_default_png.png"
+import profile from "../../../../public/profile_default_png.png";
 import PreviewUser from "@/components/preview_user";
 
 export default function User() {
@@ -73,7 +73,7 @@ export default function User() {
       setSortDirection("asc");
     }
   };
-  
+
   const handleEdit = (userID: number) => {
     router.push(`/admin/user/${userID}`);
   };
@@ -95,7 +95,7 @@ export default function User() {
       const success = await DeleteUserProfileByID(userToDelete);
       if (success) {
         console.log("Class deleted successfully");
-        router.refresh(); 
+        router.refresh();
       } else {
         console.error("Failed to delete the class");
       }
@@ -156,7 +156,7 @@ export default function User() {
       <table className="w-full text-sm text-left">
         <thead className="text-xs text-cta-text uppercase bg-background">
           <tr>
-            <th scope="col" className="p-4">
+            <th scope="col" className="p-4" onClick={() => handleSort("id")}>
               No.
             </th>
             <th scope="col" className="p-4">

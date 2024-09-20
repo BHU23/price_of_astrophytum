@@ -53,17 +53,17 @@ export default function Home() {
         <div className="flex justify-between flex-col sm:flex-row">
           <BoxLanding
             Name="Classification"
-            LinkTo="/use_ai"
+            LinkTo={role ? `${role?.toLowerCase()}/use_ai` : "/login"}
             Description="Prediction of Price Astrophytum of Nudun."
           />
           <BoxLanding
             Name="Prompt"
-            LinkTo="/use_ai"
+            LinkTo={role ? `${role?.toLowerCase()}/use_ai` : "/login"}
             Description="Prompt for texts to help your write posts sale cactus."
           />
           <BoxLanding
             Name="Posts"
-            LinkTo="/posts"
+            LinkTo={role ? `${role?.toLowerCase()}/posts` : "/login"}
             Description="You can automated create posts to yours Facebook."
           />
         </div>
@@ -73,7 +73,7 @@ export default function Home() {
             type="button"
             className="flex gap-2 justify-center items-center text-background font-bold bg-gradient-to-br from-pear to-tan hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-pear rounded-lg text-sm px-5 py-2.5 text-center w-full"
             onClick={() =>
-              router.push(role ? `${role?.toLowerCase()}/use_ai` : "/login")
+              router.push(role ? `${role?.toLowerCase()}/dashboard` : "/login")
             }
           >
             Get started <FiArrowRight className="" />

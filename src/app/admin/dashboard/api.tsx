@@ -31,6 +31,7 @@ export const useFetchPredictions = () => {
 
       const data = await response.json();
       console.log("data:", data);
+      console.log("data.user:", data[0].user);
       setHistoryPredictions(data);
     } catch (err) {
       setError((err as Error).message);
@@ -50,4 +51,38 @@ export const useFetchPredictions = () => {
   }, []);
 
   return { historyPredictions, loading, error };
+};
+
+export const DeleteHistoryPredictionByID = async (hisID: string): Promise<boolean> => {
+  const apiUrl = `http://127.0.0.1:8000/api/history-predictions/${hisID}/`;
+
+  try {
+    // Get the authentication token from cookies
+    const token = Cookies.get("token");
+    if (!token) {
+      throw new Error("Token not found");
+    }
+
+    const response = await fetch(apiUrl, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        `Network response was not ok: ${
+          errorData.message || response.statusText
+        }`
+      );
+    }
+
+    console.log(`Deleted class with ID: ${hisID}`);
+    return true;
+  } catch (error) {
+    console.error("Error deleting class:", hisID);
+    return false;
+  }
 };

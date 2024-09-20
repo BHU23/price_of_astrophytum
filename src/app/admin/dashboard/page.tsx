@@ -1,9 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import BoxPost from "@/components/box_yourpost";
 import { useGlobal } from "@/context/useGlobal";
-import { useFetchPredictions } from "./api";
+import { DeleteHistoryPredictionByID, useFetchPredictions } from "./api";
 import { PredictionHistorysInterface } from "@/interface/predictionHistorys.interface";
 import Cookies from "js-cookie";
 import { HistoryPredicstionInterface } from "@/interface/historyPredictions.interface";
@@ -19,14 +18,23 @@ import { DropdownDay } from "@/components/dropdown_setdate";
 import { DropdownMonth } from "@/components/dropdown_setmouth";
 import { DropdownYear } from "@/components/dropdown_setyeas";
 import StatBoxPrice from "@/components/stat_boxPrice";
-
+import Image from "next/image";
+import ActionTable from "@/components/action_table";
+import Pagination from "@/components/pagination";
+import { format } from "date-fns";
+import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
+import { FiTrash } from "react-icons/fi";
+import DeleteModle from "@/components/delete_model";
 export default function DeashBoard() {
   const router = useRouter();
   const { historyPredictions, loading, error } = useFetchPredictions();
   const { setPredictionHistoryGlobal } = useGlobal();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const classificationCount = historyPredictions?.length;
   const [role, setRole] = useState<string | null>(null);
+
   const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
   const [dateRange, setDateRange] = useState<{
     from: Date | undefined;
@@ -34,10 +42,8 @@ export default function DeashBoard() {
   }>({ from: undefined, to: undefined });
 
   const now = new Date();
-  const [day, setDay] = useState<number | null>(now.getDate());
-  const [month, setMonth] = useState<number | null>(
-    (now.getMonth() + 1)
-  );
+  const [day, setDay] = useState<number | null>(null);
+  const [month, setMonth] = useState<number | null>(now.getMonth() + 1);
   const [year, setYear] = useState<number | null>(now.getFullYear());
 
   const filteredOnDayMonthYear = useMemo(() => {
@@ -46,10 +52,9 @@ export default function DeashBoard() {
 
       const matchesYear = year ? predictionDate.getFullYear() === year : true;
       const matchesMonth = month
-        ? predictionDate.getMonth() + 1 === (month)
+        ? predictionDate.getMonth() + 1 === month
         : true;
       const matchesDay = day ? predictionDate.getDate() === day : true;
-
       // Check if it matches the year, month, and day
       return matchesYear && matchesMonth && matchesDay;
     });
@@ -92,11 +97,18 @@ export default function DeashBoard() {
       .sort((a, b) => {
         const dateA = new Date(a.timestamp).getTime();
         const dateB = new Date(b.timestamp).getTime();
+
+        if (isNaN(dateA) || isNaN(dateB)) {
+          console.warn(`Invalid dates: ${a.timestamp}, ${b.timestamp}`);
+          return 0; // Handle invalid dates gracefully
+        }
+
         return sortOrder === "latest" ? dateB - dateA : dateA - dateB;
       });
   }, [sortOrder, dateRange, historyPredictions]);
 
   const handleDateRangeChange = (from: any, to: any) => {
+    setCurrentPage(1);
     if (!from || !to) {
       setDateRange({ from: undefined, to: undefined });
     } else {
@@ -147,6 +159,94 @@ export default function DeashBoard() {
     }
   };
 
+  const [predictHisToDelete, setPredictHisToDelete] = useState<number | null>(
+    null
+  );
+
+  const [previewPredictHis, setPredictHis] = useState<number[]>([]);
+  // const [previewPredictHis, setPredictHisID] = useState<number | null>(null);
+  const [sortKey, setSortKey] = useState<string | null>(null);
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const getNestedValue = (obj: any, key: string) => {
+    return key.split(".").reduce((o, i) => (o ? o[i] : undefined), obj);
+  };
+
+  const sortedPredictions = filteredAndSortedPredictions?.sort((a, b) => {
+    if (!sortKey) return 0;
+
+    const valueA = getNestedValue(a, sortKey);
+    const valueB = getNestedValue(b, sortKey);
+
+    if (typeof valueA === "string" && typeof valueB === "string") {
+      return sortDirection === "asc"
+        ? valueA.localeCompare(valueB)
+        : valueB.localeCompare(valueA);
+    }
+
+    if (typeof valueA === "number" && typeof valueB === "number") {
+      return sortDirection === "asc" ? valueA - valueB : valueB - valueA;
+    }
+
+    return 0;
+  });
+
+  const displayedPredictHus = sortedPredictions?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const totalPages = Math.ceil((sortedPredictions?.length ?? 0) / itemsPerPage);
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleSort = (key: string) => {
+    if (sortKey === key) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortKey(key);
+      setSortDirection("asc");
+    }
+  };
+  // const handlePreview = (hisspreID: number) => {
+  //   setPredictHisID(hisspreID);
+  //   const modal = document.getElementById("previewModal");
+  //   if (modal) modal.classList.remove("hidden");
+  // };
+  const togglePrediction = (id: number) => {
+    setPredictHis((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleDeleteClick = (hisspreID: number) => {
+    setPredictHisToDelete(hisspreID);
+    const modal = document.getElementById("deleteModal");
+    if (modal) modal.classList.remove("hidden");
+  };
+  const handleDeleteConfirm = async () => {
+    if (predictHisToDelete !== null) {
+      const success = await DeleteHistoryPredictionByID(
+        String(predictHisToDelete)
+      );
+      if (success) {
+        console.log("Class deleted successfully");
+        // Refresh or update the UI after deletion
+        router.refresh(); // Refresh the page or trigger re-fetching
+      } else {
+        console.error("Failed to delete the class");
+      }
+      setPredictHisToDelete(null);
+      const modal = document.getElementById("deleteModal");
+      if (modal) modal.classList.add("hidden");
+      window.location.reload();
+    }
+  };
+  const formatDate = (timestamp: Date) => {
+    if (!timestamp) return "";
+    const date = new Date(timestamp);
+    return format(date, "dd-MM-yyyy HH:mm a");
+  };
   if (loading) return <FetchingState state="Loading..." />;
   if (error) return <FetchingState state={`Error: ${error}`} />;
   return (
@@ -187,10 +287,10 @@ export default function DeashBoard() {
       <div className="flex flex-col md:flex-row justify-between items-center pt-5 gap-4 w-[99.9%] ">
         <BarChart
           series={"count"}
-          title="Historys Graph"
+          title="Histories Graph"
           subtitle={`Counts Classification of use AI data for ${
             day ? day + "-" : "day-"
-          }${month ? month : "month"}${year ? "-" + year: "-year"}`}
+          }${month ? month : "month"}${year ? "-" + year : "-year"}`}
           config={{ colors: ["#C6ED46"] }}
           filteredOnDayMonthYear={filteredOnDayMonthYear}
           year={year}
@@ -217,19 +317,192 @@ export default function DeashBoard() {
           </div>
         </div>
         {classificationCount !== 0 ? (
-          <div className="grid grid-flow-row auto-rows-auto grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 m-5">
-            {filteredAndSortedPredictions?.map((prediction, index) => (
-              <BoxPost
-                key={index}
-                prediction={prediction}
-                onClick={() => handleGetPrediction(prediction)}
-              />
-            ))}
-            <div className="flex text-cta-gray w-full ">
-              {filteredAndSortedPredictions?.length
-                ? ""
-                : 'Not have "Classification".'}
-            </div>
+          <div className="p-5">
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs text-cta-text uppercase bg-background">
+                <tr>
+                  <th
+                    scope="col"
+                    className="p-4 h-12 w-11"
+                    onClick={() => handleSort("id")}
+                  >
+                    {/* <div className="flex items-center">
+                      <input
+                        id="checkbox-all-search"
+                        type="checkbox"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      <label htmlFor="checkbox-all-search" className="sr-only">
+                        checkbox
+                      </label>
+                    </div> */}{" "}
+                    {sortKey === "id" && (sortDirection === "asc" ? "↑" : "↓")}
+                  </th>
+                  <th
+                    className="pl-6 py-3 cursor-pointer"
+                    onClick={() => handleSort("timestamp")}
+                  >
+                    {" "}
+                    {sortKey === "timestamp" &&
+                      (sortDirection === "asc" ? "↑" : "↓")}{" "}
+                    Date{" "}
+                  </th>
+                  <th
+                    className="pl-6 py-3 text-end cursor-pointer "
+                    onClick={() => handleSort("total_max")}
+                  >
+                    {" "}
+                    {sortKey === "total_max" &&
+                      (sortDirection === "asc" ? "↑" : "↓")}{" "}
+                    Total Max (฿)
+                  </th>
+                  <th
+                    className="pl-6 py-3 cursor-pointer text-end"
+                    onClick={() => handleSort("total_min")}
+                  >
+                    {sortKey === "total_min" &&
+                      (sortDirection === "asc" ? "↑" : "↓")}{" "}
+                    Total Min (฿)
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-center max-w-8">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+
+              {displayedPredictHus?.map((h, index) => (
+                <tbody>
+                  <tr
+                    key={h.id}
+                    className="bg-white border-b dark:bg-transparent dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  >
+                    <td className="w-4 p-4">
+                      <div
+                        className="flex items-center justify-center cursor-pointer"
+                        onClick={() => togglePrediction(h.id)}
+                      >
+                        {previewPredictHis.includes(h.id) ? (
+                          <FaChevronUp />
+                        ) : (
+                          <FaChevronDown />
+                        )}
+                      </div>
+                    </td>
+                    <th
+                      scope="row"
+                      className="pl-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      <div className="flex items-center">
+                        <Image
+                          width={40}
+                          height={40}
+                          className="w-10 h-10 rounded-full"
+                          src={h.image}
+                          alt={`${h.id} image`}
+                        />
+                        <div className="pl-3">
+                          <div className="text-base font-semibold">
+                            {h?.user_profile?.username}
+                          </div>
+                          <p className="font-normal text-gray-500 h-auto text-start w-20 md:w-60 truncate">
+                            {formatDate(new Date(h.timestamp))}
+                          </p>
+                        </div>
+                      </div>
+                    </th>
+                    <td className="pl-6 py-4 text-end">
+                      {h.total_min?.toLocaleString()}
+                    </td>
+                    <td className="pl-6 py-4 text-end">
+                      {h.total_max?.toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4">
+                      {" "}
+                      <button
+                        type="button"
+                        className=" flex flex-row gap-2  text-red-500 w-full px-4 py-2 text-left text-sm justify-center items-center"
+                        role="menuitem"
+                        tabIndex={-1}
+                        id="menu-item-5"
+                        onClick={() => handleDeleteClick(h.id)}
+                      >
+                        <FiTrash /> Delete
+                      </button>
+                    </td>
+                  </tr>
+                  {previewPredictHis.includes(h.id) && (
+                    <tr>
+                      <td
+                        colSpan={5}
+                        className="bg-gray-100 dark:bg-gray-700 p-4 pl-16"
+                      >
+                        <div className="text-gray-600 dark:text-gray-300 flex gap-5">
+                          <Image
+                            width={40}
+                            height={40}
+                            className="w-40 h-40 rounded-lg"
+                            src={h.image}
+                            alt={`${h.id} image`}
+                          />
+                          <div className="flex gap-4 flex-col">
+                            <strong>More Details:</strong>
+                            <div className="flex gap-1 flex-col">
+                              <p className="font-medium">Created by username</p>
+                              {h?.user_profile?.username ?? "-"}
+                            </div>
+                            <div className="flex gap-1 flex-col">
+                              <p className="font-medium">Name</p>
+                              {h?.user_profile?.first_name ?? "-"}{" "}
+                              {h?.user_profile?.last_name}
+                            </div>
+                          </div>
+                          <div className="flex gap-4 flex-col">
+                            <br />
+                            <div className="flex gap-1 flex-col">
+                              <p className="font-medium">Classes </p>
+                              <div className="flex items-center gap-2">
+                                {h?.predictions.length >= 1 &&
+                                  h?.predictions.map((p, idx) => (
+                                    <div key={idx}>
+                                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                                        {p?.class_name.name ?? "-"}
+                                      </p>
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+                            <div className="flex gap-1 flex-col">
+                              <p className="font-medium">Total Price</p>
+                              {h?.total_min} - {h?.total_min} Bath.
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              ))}
+            </table>
+
+            <Pagination
+              itemsPerPage={itemsPerPage}
+              classCount={sortedPredictions?.length ?? 0}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+            />
+
+            {/* <PreviewClass
+        classData={classes.find((cls) => cls.id === previewClass)}
+        previewClass={previewClass}
+        onDelete={(e) => handleDeleteClick(e)}
+        setPreviewClass={(e) => setPredictHisID(e)}
+      ></PreviewClass>*/}
+
+            <DeleteModle
+              handleDeleteConfirm={handleDeleteConfirm}
+              setClassToDelete={(e) => setPredictHisToDelete(e)}
+            />
           </div>
         ) : (
           <div className="flex text-cta-gray w-full p-5 pt-0">

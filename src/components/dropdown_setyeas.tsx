@@ -31,7 +31,7 @@ export function DropdownYear({ year, setYear }: DropdownYearProps) {
  if (inputValue) {
    lastFiveYears = Array.from({ length: 100 }, (_, i) => currentYear - i)
      .filter((year) => year.toString().includes(inputValue))
-     .slice(0, 5);;
+     .slice(0, 10);;
  }
 
 

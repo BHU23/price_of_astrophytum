@@ -19,7 +19,7 @@ export default function RootLayout({
     <div className="flex flex-1">
       <aside
         className={`fixed top-14 sm:top-16 left-0 sm:h-[calc(100vh-4rem)] h-[calc(100vh-3.5rem)] transition-all z-[99] 
-          ${isOpen ? "bg-background hidden lg:block w-72 " : "w-5"}
+          ${isOpen ? "hidden lg:block w-72 bg-transparent" : "w-5"}
         `}
       >
         {isOpen && <SidebarAdmin setIsOpenSM={() => {}} />}

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ApexOptions } from "apexcharts";
 import "tailwindcss/tailwind.css";
 import { parseISO } from "date-fns";
-
+import { useTheme } from "next-themes";
 const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface BarChartProps {
@@ -28,25 +28,27 @@ const BarChart = ({
   day,
 }: BarChartProps) => {
   const currentYear = new Date().getFullYear();
+   const { theme } = useTheme();
 console.log("yearmonthday", year, month, day);
   const getCategories = useMemo(() => {
     if (year && month && day) {
-      return Array.from({ length: 24 }, (_, i) => i.toString()); // Hours in a day
+      return Array.from({ length: 24 }, (_, i) => i.toString());
     } else if (year && month) {
       const daysInMonth = new Date(year, month, 0).getDate();
       return Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
     } else if (month) {
       const daysInMonth = new Date(currentYear, month, 0).getDate();
       return Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
-    } else if (year) {
-      return Array.from({ length: 12 }, (_, i) => (i + 1).toString()); // Months in a year
     } else if (day) {
-      return Array.from({ length: 24}, (_, i) => (i + 1).toString()); // Months in a year
+      return Array.from({ length: 24 }, (_, i) => (i + 1).toString());
+    } else if (year) {
+      return Array.from({ length: 12 }, (_, i) => (i + 1).toString()); 
     } else {
-      return Array.from({ length: 10 }, (_, i) => (currentYear - i).toString()).reverse(); // Last 10 years
+      return Array.from({ length: 10 }, (_, i) =>
+        (currentYear - i).toString()
+      ).reverse();
     }
   }, [year, month, day, currentYear]); 
-
 
   const categories = getCategories;
   console.log("categories", categories);
@@ -79,6 +81,24 @@ useEffect(() => {
         ) {
           const dayIndex = predictionDate.getDate() - 1;
           data[dayIndex] += 1;
+          totalCount += 1;
+        }
+      } else if (day && year) {
+        if (
+          predictionDate.getDate() === day &&
+          predictionDate.getFullYear() === year
+        ) {
+          const hourIndex = predictionDate.getHours();
+          data[hourIndex] += 1;
+          totalCount += 1;
+        }
+      } else if (day && month) {
+        if (
+          predictionDate.getDate() === day &&
+          predictionDate.getMonth() + 1 === month
+        ) {
+          const hourIndex = predictionDate.getHours();
+          data[hourIndex] += 1;
           totalCount += 1;
         }
       } else if (month) {
@@ -121,41 +141,54 @@ useEffect(() => {
   setChartData(data);
 }, [filteredOnDayMonthYear, year, month, day, categories]);
 
-  const chartConfig = useMemo(
-    () => ({
-      series: [{ name: series, data: chartData }],
-      chart: {
-        type: "bar" as const, // Ensure 'type' is a string literal
-        height: 280,
-        toolbar: { show: false },
-        animations: {
-          enabled: true,
-          easing: "easeinout" as const, // Ensure 'easing' is a string literal
-          speed: 800,
-        },
-      },
-      dataLabels: { enabled: false },
-      colors: ["#020617"],
-      plotOptions: {
-        bar: {
-          columnWidth: "40%",
-          borderRadius: 2,
-        },
-      },
-      xaxis: {
-        categories: getCategories,
-        labels: { style: { colors: "#616161", fontSize: "12px" } },
-      },
-      yaxis: {
-        labels: { style: { colors: "#616161", fontSize: "12px" } },
-      },
-      grid: { borderColor: "#dddddd", strokeDashArray: 5 },
-      fill: { opacity: 0.8 },
-      tooltip: { theme: "dark" },
-      ...config,
-    }),
-    [chartData, config, getCategories, series]
-  );
+ const chartConfig = useMemo(
+   () => ({
+     series: [{ name: series, data: chartData }],
+     chart: {
+       type: "bar" as const, // Ensure 'type' is a string literal
+       height: 280,
+       toolbar: { show: false },
+       animations: {
+         enabled: true,
+         easing: "easeinout" as const, // Ensure 'easing' is a string literal
+         speed: 800,
+       },
+     },
+     dataLabels: { enabled: false },
+     colors: [theme === "dark" ? "#f9fafb" : "#020617"], // Adjust colors based on the theme
+     plotOptions: {
+       bar: {
+         columnWidth: "40%",
+         borderRadius: 2,
+       },
+     },
+     xaxis: {
+       categories: getCategories,
+       labels: {
+         style: {
+           colors: theme === "dark" ? "#f9fafb" : "#616161", // Adjust label colors for dark mode
+           fontSize: "12px",
+         },
+       },
+     },
+     yaxis: {
+       labels: {
+         style: {
+           colors: theme === "dark" ? "#f9fafb" : "#616161", // Adjust y-axis label colors
+           fontSize: "12px",
+         },
+       },
+     },
+     grid: {
+       borderColor: theme === "dark" ? "#374151" : "#dddddd", // Adjust grid color for dark mode
+       strokeDashArray: 5,
+     },
+     fill: { opacity: 0.8 },
+     tooltip: { theme: theme === "dark" ? "dark" : "light" }, // Adjust tooltip theme
+     ...config,
+   }),
+   [chartData, config, getCategories, series, theme]
+ );
 
   return (
     <div className="relative flex flex-col rounded-xl bg-card shadow-md p-4 w-full h-auto">
@@ -184,7 +217,7 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="pt-6 px-2 pb-0 overflow-x-auto">
+      <div className="pt-5 px-2 pb-0 overflow-x-auto">
         <ApexCharts
           options={chartConfig}
           series={[{ name: series, data: chartData }]}

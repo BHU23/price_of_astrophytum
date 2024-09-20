@@ -17,19 +17,10 @@ export default function BoxLanding({
   LinkTo,
   Description,
 }: BoxLandingProp) {
-   const [role, setRole] = useState<string | null>(null);
-
-   useEffect(() => {
-     const fetchedRole = Cookies.get("role");
-     if (fetchedRole) {
-       setRole(fetchedRole);
-     } else {
-       console.warn("Role not found in cookies");
-     }
-   }, []);
+  
   return (
     <a
-      href={role ? `${role?.toLowerCase()}${LinkTo}` : "/login"}
+      href={LinkTo}
       className="flex flex-col p-3 pb-4 border-2 border-pear rounded-lg h-32  sm:w-44 m-4 gap-3 hover:bg-card"
     >
       <div className="w-full flex flex-row justify-between ">
