@@ -12,7 +12,7 @@ export default function BoxPost({ prediction, onClick }: BoxPostInt) {
   const formatDate = (timestamp : Date) => {
     if (!timestamp) return "";
     const date = new Date(timestamp);
-    return format(date, "HH:mm dd-MM-yyyy"); // Formats to 15:00 27-09-2021
+    return format(date, "dd-MM-yyyy HH:mm a"); 
   };
   return (
     <div className="flex flex-col gap-4 p-4 bg-card shadow-md border dark:border-border rounded-md">

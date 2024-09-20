@@ -39,7 +39,7 @@ export default function Header() {
         <div className="py-1 pl-2 flex justify-between items-center">
           <div className="flex flex-row items-center justify-between">
             {breadcrumbLinks.length > 0 && (
-              <div className="flex sm:hidden gap-2">
+              <div className="flex lg:hidden gap-2">
                 <button
                   onClick={() => setIsOpenSM((prev: boolean) => !prev)}
                   type="button"

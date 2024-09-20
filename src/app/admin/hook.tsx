@@ -1,6 +1,4 @@
 "use client";
-
-import { useState } from "react";
 import { useGlobal } from "@/context/useGlobal";
 
 export default function useCustumer() {
@@ -14,7 +12,6 @@ export default function useCustumer() {
     sidebarSMRef,
   } = useGlobal();
   const toggleSidebar = () => {
-    // setIsSidebarOpen(!isSidebarOpen);
     setIsOpen(!isOpen);
   };
 
@@ -22,8 +19,6 @@ export default function useCustumer() {
     custumerItems: {
       isOpen,
       setIsOpen,
-      // isSidebarOpen,
-      // setIsSidebarOpen,
       toggleSidebar,
       breadcrumbLinks,
       isOpenSM,
