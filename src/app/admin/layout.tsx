@@ -10,7 +10,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isOpen, toggleSidebar, isOpenSM,sidebarSMRef } =
+  const { isOpen, toggleSidebar, isOpenSM, sidebarSMRef, toggleSidebarSm } =
     useCustumer().custumerItems;
 
   
@@ -22,13 +22,13 @@ export default function RootLayout({
           ${isOpen ? "bg-background hidden lg:block w-72 " : "w-5"}
         `}
       >
-        {isOpen && <SidebarAdmin />}
-        <button
-          className={`absolute right-2 top-1/2 w-6 h-6 border border-border rounded-lg sm:flex items-center justify-center text-xs bg-background hover:bg-card transition-all hidden`}
+        {isOpen && <SidebarAdmin setIsOpenSM={() => {}} />}
+        {/* <button
+          className={`absolute right-2 top-1/2 w-6 h-6 border border-border rounded-lg lg:flex  items-center justify-center text-xs bg-background hover:bg-card transition-all hidden`}
           onClick={toggleSidebar}
         >
           <IoCodeOutline />
-        </button>
+        </button> */}
       </aside>
       <aside
         ref={sidebarSMRef}
@@ -36,14 +36,16 @@ export default function RootLayout({
           ${isOpenSM ? "bg-background w-72 lg:hidden " : "w-5"}
         `}
       >
-        {isOpenSM && <SidebarAdmin />}
+        {isOpenSM && <SidebarAdmin setIsOpenSM={() => toggleSidebarSm()} />}
       </aside>
       <main
         className={`flex-1 pl-0 pr-5 transition-all ${
           isOpen ? "lg:ml-72 ml-5" : "ml-5 pb-0"
         }`}
       >
-        <div className="min-h-[calc(100vh-6rem)] h-auto w-full ">{children}</div>
+        <div className="min-h-[calc(100vh-6rem)] h-auto w-full ">
+          {children}
+        </div>
         <div className={`py-5 ${isOpen ? "" : "-pl-5"}`}>
           <Footer />
         </div>

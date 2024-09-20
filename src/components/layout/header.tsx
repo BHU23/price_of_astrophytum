@@ -103,11 +103,19 @@ export default function Header() {
 
           <div className="flex items-center justify-center">
             {!token && pathLogin && (
+              // <button
+              //   onClick={toggleIsOpenModel}
+              //   className="w-auto px-4 flex items-center justify-center cursor-pointer my-2 mr-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md h-8 hover:text-tan md:my-0 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-card dark:hover:bg-gray-700"
+              // >
+              //   <p>Sign in/up</p>
+              // </button>
               <button
                 onClick={toggleIsOpenModel}
-                className="w-auto px-4 flex items-center justify-center cursor-pointer my-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md h-8 hover:text-tan md:my-0 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-card dark:hover:bg-gray-700"
+                className="w-auto px-4 flex items-center justify-center cursor-pointer my-2 mr-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md h-8 hover:text-tan md:my-0 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-card dark:hover:bg-gray-700"
               >
-                <p>Sign in/up</p>
+                <p>
+                  Sign in/<span className="text-pear">up</span>
+                </p>
               </button>
             )}
 

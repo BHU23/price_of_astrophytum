@@ -41,16 +41,14 @@ export default function Profile() {
           <div className="w-full relative h-[95px] md:h-32 lg:h-16 p-0 px-5 md:px-16 ">
             <div className=" w-full absolute -top-20 md:-top-24 flex flex-col lg:flex-row justify-between  lg:pr-[125px] gap-5 ">
               <div className="flex pr-5  lg:pr-0 lg:flex-row item-end gap-5 ">
-          
-                  <Image
-                    className="w-28 h-28 md:w-40 md:h-40 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                    src={userProfile.avatar ?? profile}
-                    alt="Bordered avatar"
-                    width={500}
-                    height={500}
-                  />
-       
-            
+                <Image
+                  className="w-28 h-28 md:w-40 md:h-40 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                  src={userProfile.avatar ?? profile}
+                  alt="Bordered avatar"
+                  width={500}
+                  height={500}
+                />
+
                 <div className="flex flex-col justify-end gap-2">
                   <span className="text-lg font-semibold">
                     {" "}
@@ -67,7 +65,7 @@ export default function Profile() {
               <div className="flex justify-end items-end pr-10 md:pr-32 lg:pr-0">
                 <ButtonPushPathItems
                   name="Edit profile"
-                  path={`/admin/profile/edit`}
+                  path={`/user/profile/edit`}
                 ></ButtonPushPathItems>
               </div>
             </div>

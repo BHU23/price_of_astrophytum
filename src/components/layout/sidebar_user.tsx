@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
@@ -9,11 +9,21 @@ import { IoPersonOutline } from "react-icons/io5";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import { useGlobal } from "@/context/useGlobal";
+import profile from "../../../public/profile_default_png.png";
+import LogOutModle from "../logOut_model";
 
-export default function SidebarUser() {
+interface usePathnameProps {
+  setIsOpenSM: () => void;
+}
+
+export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { userProfile } = useGlobal();
+
+
+  const [isLogOutModalOpen, setLogOutModalOpen] = useState(false);
+
   const getLinkClassName = (path: string) => {
     const isSupPath = pathname.includes(path);
     return `flex items-center w-full p-3 transition-all rounded-lg outline-none text-start ${
@@ -44,9 +54,9 @@ export default function SidebarUser() {
         Cookies.remove("role");
         setTimeout(() => {
           router.push("/");
-        }, 1000);
+        }, 100);
 
-        window.location.reload();
+        // window.location.reload();
       } else {
         const errorData = await response.json();
         console.error("Logout error:", errorData);
@@ -56,12 +66,23 @@ export default function SidebarUser() {
     }
   };
 
+  // Handler to open logout modal
+  const handleLogoutOpen = () => {
+    setLogOutModalOpen(true);
+    console.log(isLogOutModalOpen);
+  };
+
+  // Handler to close logout modal
+  const handleLogoutClose = () => {
+    setLogOutModalOpen(false);
+  };
+
   return (
     <div className="px-5 py-5 sm:py-4 h-full w-full">
       <div className="h-full w-full flex flex-col justify-between rounded-xl border border-border p-4 ">
-        <div className="relative flex h-full w-full max-w-[20rem] flex-col  ">
+        <div className="relative flex h-full w-full max-w-[20rem] flex-col">
           <div className="px-4 pt-2">
-            <h5 className="block font-sans text-xs antialiased text-cta ">
+            <h5 className="block font-sans text-xs antialiased text-cta">
               MAIN
             </h5>
           </div>
@@ -69,6 +90,7 @@ export default function SidebarUser() {
             <Link
               href={`/user/dashboard`}
               className={getLinkClassName(`/user/dashboard`)}
+              onClick={setIsOpenSM}
             >
               <div className="grid mr-4 place-items-center">
                 <AiOutlineHome />
@@ -88,9 +110,10 @@ export default function SidebarUser() {
             <Link
               href={`/user/posts`}
               className={getLinkClassName(`/user/posts`)}
+              onClick={setIsOpenSM}
             >
               <div className="flex justify-between items-center w-full transition-all rounded-lg outline-none text-start">
-                <div className="flex ">
+                <div className="flex">
                   <div className="grid mr-4 place-items-center">
                     <RiFileTextLine />
                   </div>
@@ -109,6 +132,7 @@ export default function SidebarUser() {
             <Link
               href={`/user/profile`}
               className={getLinkClassName(`/user/profile`)}
+              onClick={setIsOpenSM}
             >
               <div className="grid mr-4 place-items-center">
                 <IoPersonOutline />
@@ -126,15 +150,16 @@ export default function SidebarUser() {
             <Link
               className="flex items-center gap-2 font-medium dark:text-white p-3 pr-0"
               href={`/admin/profile`}
+              onClick={setIsOpenSM}
             >
               <Image
                 width={50}
                 height={50}
                 className="w-10 h-10 rounded-full"
-                src={userProfile?.avatar ?? ""}
-                alt=""
+                src={userProfile?.avatar ?? profile}
+                alt="Profile"
               ></Image>
-              <div className="font-medium dark:text-white ">
+              <div className="font-medium dark:text-white">
                 <div>{userProfile?.username}</div>
                 <div className="text-sm text-gray-500 dark:text-gray-400">
                   {userProfile?.role}
@@ -143,13 +168,20 @@ export default function SidebarUser() {
             </Link>
             <div
               className="h-full grid place-items-center px-2 hover:bg-pear"
-              onClick={handleLogout}
+              onClick={handleLogoutOpen}
             >
               <RiLogoutBoxLine />
             </div>
           </div>
         </div>
       </div>
+      {/* Conditionally render the logout modal */}
+      {isLogOutModalOpen && (
+        <LogOutModle
+          handlelogOutConfirm={handleLogout}
+          handleClose={handleLogoutClose}
+        />
+      )}
     </div>
   );
 }

@@ -13,6 +13,7 @@ import { parseISO, isWithinInterval } from "date-fns";
 import DateRangePicker from "@/components/DateRangePicker";
 import StatBox from "@/components/stat_box";
 import StatBoxPost from "@/components/stat_boxPost";
+import DropdownSort from "@/components/dropdown_sortOrder";
 
 export default function DeashBoard() {
   const router = useRouter();
@@ -30,8 +31,10 @@ export default function DeashBoard() {
     const now = new Date(); // Current date and time
     return historyPredictions?.filter((prediction) => {
       const predictionDate = parseISO(prediction.timestamp);
+      const startDate = new Date(predictionDate);
+      startDate.setDate(startDate.getDate() - 1);
       return isWithinInterval(predictionDate, {
-        start: now,
+        start: startDate,
         end: now,
       });
     }).length;
@@ -139,7 +142,10 @@ export default function DeashBoard() {
               datepicker-autoselect-today
               className="mx-auto sm:mx-0"
             ></div>
-           
+            <DropdownSort
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            ></DropdownSort>
           </div>
         </div>
         {/* <hr className="h-px my-6 bg-gray-200 border-none dark:bg-gray-700" /> */}

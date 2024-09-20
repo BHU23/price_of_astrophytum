@@ -189,8 +189,8 @@ export default function DeashBoard() {
           series={"count"}
           title="Historys Graph"
           subtitle={`Counts Classification of use AI data for ${
-            day ? day + " " : "-day"
-          } ${month ? month + " " : "-month"} ${year ? year + " " : "-year"}`}
+            day ? day + "-" : "day-"
+          }${month ? month : "month"}${year ? "-" + year: "-year"}`}
           config={{ colors: ["#C6ED46"] }}
           filteredOnDayMonthYear={filteredOnDayMonthYear}
           year={year}

@@ -43,7 +43,7 @@ console.log("yearmonthday", year, month, day);
     } else if (day) {
       return Array.from({ length: 24}, (_, i) => (i + 1).toString()); // Months in a year
     } else {
-      return Array.from({ length: 10 }, (_, i) => (currentYear - i).toString()); // Last 10 years
+      return Array.from({ length: 10 }, (_, i) => (currentYear - i).toString()).reverse(); // Last 10 years
     }
   }, [year, month, day, currentYear]); 
 
@@ -77,6 +77,12 @@ useEffect(() => {
           predictionDate.getFullYear() === year &&
           predictionDate.getMonth() + 1 === month
         ) {
+          const dayIndex = predictionDate.getDate() - 1;
+          data[dayIndex] += 1;
+          totalCount += 1;
+        }
+      } else if (month) {
+        if (predictionDate.getMonth() + 1 === month) {
           const dayIndex = predictionDate.getDate() - 1;
           data[dayIndex] += 1;
           totalCount += 1;

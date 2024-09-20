@@ -14,12 +14,16 @@ export default function useCustumer() {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+  const toggleSidebarSm = () => {
+    setIsOpenSM(!isOpenSM);
+  };
 
   return {
     custumerItems: {
       isOpen,
       setIsOpen,
       toggleSidebar,
+      toggleSidebarSm,
       breadcrumbLinks,
       isOpenSM,
       setIsOpenSM,

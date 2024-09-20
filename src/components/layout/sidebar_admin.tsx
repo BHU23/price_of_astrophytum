@@ -11,7 +11,12 @@ import Cookies from "js-cookie";
 import { useGlobal } from "@/context/useGlobal";
 import Image from "next/image";
 import profile from "../../../public/profile_default_png.png";
-export default function SidebarAdmin() {
+import LogOutModle from "../logOut_model";
+interface SidebarAdminProps {
+  setIsOpenSM: () => void; // พารามิเตอร์คือฟังก์ชันไม่มีพารามิเตอร์คืนค่า void
+}
+
+export default function SidebarAdmin({ setIsOpenSM }: SidebarAdminProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { userProfile } = useGlobal();
@@ -45,9 +50,9 @@ export default function SidebarAdmin() {
         Cookies.remove("role");
         setTimeout(() => {
           router.push("/");
-        }, 1000);
+        }, 100);
 
-        window.location.reload();
+        // window.location.reload();
       } else {
         const errorData = await response.json();
         console.error("Logout error:", errorData);
@@ -55,6 +60,15 @@ export default function SidebarAdmin() {
     } catch (error) {
       console.error("Error during logout:", error);
     }
+  };
+  const [isLogOutModalOpen, setLogOutModalOpen] = useState(false);
+  const handleLogoutOpen = () => {
+    setLogOutModalOpen(true);
+  };
+
+  // Handler to close logout modal
+  const handleLogoutClose = () => {
+    setLogOutModalOpen(false);
   };
 
   return (
@@ -70,6 +84,7 @@ export default function SidebarAdmin() {
             <Link
               href={`/admin/dashboard`}
               className={getLinkClassName(`/admin/dashboard`)}
+              onClick={setIsOpenSM}
             >
               <div className="grid mr-4 place-items-center">
                 <AiOutlineHome />
@@ -80,6 +95,7 @@ export default function SidebarAdmin() {
             <Link
               href={`/admin/use_ai`}
               className={getLinkClassName(`/admin/use_ai`)}
+              onClick={setIsOpenSM}
             >
               <div className="grid mr-4 place-items-center">
                 <HiOutlineSparkles />
@@ -89,6 +105,7 @@ export default function SidebarAdmin() {
             <Link
               href={`/admin/posts`}
               className={getLinkClassName(`/admin/posts`)}
+              onClick={setIsOpenSM}
             >
               <div className="flex justify-between items-center w-full transition-all rounded-lg outline-none text-start">
                 <div className="flex ">
@@ -110,6 +127,7 @@ export default function SidebarAdmin() {
             <Link
               href={`/admin/class`}
               className={getLinkClassName(`/admin/class`)}
+              onClick={setIsOpenSM}
             >
               <div className="grid mr-4 place-items-center">
                 <RiBitCoinLine />
@@ -120,6 +138,7 @@ export default function SidebarAdmin() {
             <Link
               href={`/admin/user`}
               className={getLinkClassName(`/admin/user`)}
+              onClick={setIsOpenSM}
             >
               <div className="grid mr-4 place-items-center">
                 <IoPeople />
@@ -129,6 +148,7 @@ export default function SidebarAdmin() {
             <Link
               href={`/admin/profile`}
               className={getLinkClassName(`/admin/profile`)}
+              onClick={setIsOpenSM}
             >
               <div className="grid mr-4 place-items-center">
                 <IoPersonOutline />
@@ -146,6 +166,7 @@ export default function SidebarAdmin() {
             <Link
               className="flex items-center gap-2 font-medium dark:text-white p-3 pr-0"
               href={`/admin/profile`}
+              onClick={setIsOpenSM}
             >
               <Image
                 width={50}
@@ -170,6 +191,12 @@ export default function SidebarAdmin() {
           </div>
         </div>
       </div>
+      {isLogOutModalOpen && (
+        <LogOutModle
+          handlelogOutConfirm={handleLogout}
+          handleClose={handleLogoutClose}
+        />
+      )}
     </div>
   );
 }
