@@ -222,7 +222,7 @@ useEffect(() => {
           options={chartConfig}
           series={[{ name: series, data: chartData }]}
           type="bar"
-          height={320}
+          height={325}
         />
       </div>
     </div>

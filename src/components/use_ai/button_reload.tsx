@@ -74,16 +74,16 @@ export default function ButtonReload({
             <span className="flex text-5xl h-full w-10 items-center">
               <FaRegFileImage />
             </span>{" "}
-            <div className="flex flex-col items-start justify-center h-full gap-2">
-              <span className={`truncate max-w-[200px] block`}>
+            <div className="flex flex-col items-start justify-center h-full gap-2 w-full">
+              <span className={`truncate max-w-[200px] block w-full text-start`}>
                 {uploadStatus ? file?.name : "Upload Image"}
               </span>
 
               {/* Conditionally render progress bar and file size */}
               {uploadStatus === "Uploading..." ? (
-                <div className="w-full bg-gray-200 rounded-full h-2 mb-1">
+                <div className="w-[200px] bg-gray-200 rounded-full h-2 mb-1">
                   <div
-                    className="h-full rounded-full bg-green-500"
+                    className="h-full w-[200px] rounded-full bg-pear"
                     style={{ width: `${progress}%`, transition: "width 0.2s" }}
                   />
                 </div>

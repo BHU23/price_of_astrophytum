@@ -371,7 +371,7 @@ export default function DeashBoard() {
               </thead>
 
               {displayedPredictHus?.map((h, index) => (
-                <tbody>
+                <>
                   <tr
                     key={h.id}
                     className="bg-white border-b dark:bg-transparent dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
@@ -480,7 +480,7 @@ export default function DeashBoard() {
                       </td>
                     </tr>
                   )}
-                </tbody>
+                </>
               ))}
             </table>
 

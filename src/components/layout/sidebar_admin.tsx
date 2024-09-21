@@ -184,7 +184,7 @@ export default function SidebarAdmin({ setIsOpenSM }: SidebarAdminProps) {
             </Link>
             <div
               className="h-full grid place-items-center px-2 hover:bg-pear"
-              onClick={handleLogout}
+              onClick={handleLogoutOpen}
             >
               <RiLogoutBoxLine />
             </div>
