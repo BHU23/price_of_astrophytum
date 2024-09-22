@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { format } from "date-fns";
@@ -36,10 +35,12 @@ export default function DateRangePicker({ onDateRangeChange }) {
         placeholder="Select Date Range"
         showShortcuts={true}
         maxDate={new Date()}
-        classNames={ {container: "z-[99999]", toggleButton:"text-cta-text "}}
-        inputClassName={`text-sm min-w-64 h-10 w-full rounded-lg focus:ring-pear focus:border-pear p-2.5 drak:text-white drak:bg-black dark:border-gray-600 
-               bg-gray-50 text-gray-900 border-gray-300
-            `}
+        classNames={{ container: "z-[99999]", toggleButton: "text-cta-text bg-cta-text" }}
+        inputClassName={`
+          text-sm min-w-64 h-10 w-full rounded-lg focus:ring-pear focus:border-pear p-2.5 
+          dark:text-white dark:bg-background dark:border-gray-600
+          bg-gray-50 text-gray-900 border-gray-300
+        `}
         renderInput={({ ref }) => (
           <input
             ref={ref}
@@ -52,9 +53,10 @@ export default function DateRangePicker({ onDateRangeChange }) {
                 : ""
             }
             placeholder="Select Date Range"
-            className={`min-w-64 h-10 w-full text-sm rounded-lg focus:ring-pear border focus:border-pear p-2.5
-               drak:text-white drak:bg-black dark:border-gray-600 
-               bg-gray-50 text-gray-900 border-gray-300
+            className={`
+              min-w-64 h-10 w-full text-sm rounded-lg focus:ring-pear border focus:border-pear p-2.5
+              dark:text-white dark:bg-black dark:border-gray-600
+              bg-gray-50 text-gray-900 border-gray-300
             `}
           />
         )}

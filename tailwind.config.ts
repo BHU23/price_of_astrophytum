@@ -30,6 +30,9 @@ const config: Config = withMT({
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      backgroundSize: {
+        "200%": "200%",
+      },
       keyframes: {
         typing: {
           "0%": { width: "0%" },
@@ -37,12 +40,17 @@ const config: Config = withMT({
           "80%": { width: "422px" },
           "100%": { width: "0%" },
         },
+        "gradient-x": {
+          "0%, 100%": { "background-position": "0% 50%" },
+          "50%": { "background-position": "100% 50%" },
+        },
         blink: {
           "50%": { borderColor: "transparent" },
         },
       },
       animation: {
         typing: "typing 5s steps(40, end) infinite, blink 1s step-end infinite",
+        "gradient-x": "gradient-x 8s ease infinite",
       },
     },
   },

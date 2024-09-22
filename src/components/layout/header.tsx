@@ -111,10 +111,11 @@ export default function Header() {
               // </button>
               <button
                 onClick={toggleIsOpenModel}
-                className="w-auto px-4 flex items-center justify-center cursor-pointer my-2 mr-2 transition-colors duration-300 transform text-cta-text border border-transparent hover:border-black hover:border-border rounded-md h-8 hover:text-tan md:my-0 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-card dark:hover:bg-gray-700"
+                // className="w-auto px-4 flex items-center justify-center cursor-pointer my-2 mr-2 transition-colors duration-300 transform text-blackborder border-transparent hover:border-black hover:border-border rounded-md h-8 hover:text-tan md:my-0 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 animate-gradient-x bg-gradient-to-r from-tan via-pear to-tan bg-200%  dark:hover:bg-gray-700"
+                className="w-auto px-4 flex items-center justify-center cursor-pointer my-2 mr-2 transition-colors duration-300 transform text-black border border-transparent hover:border-black hover:border-border rounded-md h-8 md:my-0 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 animate-gradient-x bg-gradient-to-r from-tan via-pear to-tan bg-200%  dark:hover:bg-gray-700"
               >
                 <p>
-                  Sign in/<span className="text-pear">up</span>
+                  Sign in/<span className="">up</span>
                 </p>
               </button>
             )}

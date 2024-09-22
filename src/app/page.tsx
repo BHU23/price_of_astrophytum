@@ -71,7 +71,7 @@ export default function Home() {
           {/* {role ? `${role?.toLowerCase()}/use_ai` : "/login"} */}
           <button
             type="button"
-            className="flex gap-2 justify-center items-center text-background font-bold bg-gradient-to-br from-pear to-tan hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-pear rounded-lg text-sm px-5 py-2.5 text-center w-full"
+            className="flex gap-2 justify-center items-center text-background font-bold bg-gradient-to-br from-pear to-tan hover:bg-gradient-to-r hover:from-tan hover:to-pear focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-pear rounded-lg text-sm px-5 py-2.5 text-center w-full transition-all duration-300 ease-in-out"
             onClick={() =>
               router.push(role ? `${role?.toLowerCase()}/dashboard` : "/login")
             }

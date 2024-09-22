@@ -22,7 +22,7 @@ export default function RootLayout({
         <GlobalProvider>
           <Providers>
             <Header />
-            <div className="flex pt-20 w-full h-auto ">
+            <div className="flex pt-16 w-full h-auto ">
               <div className="w-full h-auto ">
                 {children}
               </div>

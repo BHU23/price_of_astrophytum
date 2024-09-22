@@ -115,7 +115,7 @@ export default function DeashBoard() {
   if (error) return <FetchingState state={`Error: ${error}`} />;
 
   return (
-    <div className="flex pb-5 w-full flex-col h-full">
+    <div className="flex w-full flex-col h-full">
       <div className="w-full grid grid-cols-2 gap-5 ">
         <StatBox
           name={"Daliy Classification"}

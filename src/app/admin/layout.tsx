@@ -16,7 +16,7 @@ export default function RootLayout({
   
 
   return (
-    <div className="flex flex-1">
+    <div className="flex flex-1 pt-3 sm:pt-4 ">
       <aside
         className={`fixed top-14 sm:top-16 left-0 sm:h-[calc(100vh-4rem)] h-[calc(100vh-3.5rem)] transition-all z-[99] 
           ${isOpen ? "hidden lg:block w-72 bg-transparent" : "w-5"}
