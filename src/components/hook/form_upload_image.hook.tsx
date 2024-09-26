@@ -22,8 +22,9 @@ export default function useFormUploadImage() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const [isShow, setIsVShow] = useState(false);
-  
+  const [isShow, setIsShow] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -33,83 +34,101 @@ export default function useFormUploadImage() {
           console.log("reader.result: " + reader.result);
           setImagePreview(reader.result);
           setVideoStatus(false);
-          setIsVShow(false);
+          setIsShow(false);
         }
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleUpload = async () => {
-    console.log("handleCheckInput");
-    if (!imagePreview) {
-      setIsVShow(true);
-    } else {
-      setIsVShow(false);
-    }
-    console.log(isShow);
-    if (!imagePreview || loading) return;
-    if (imagePreview == imagePreviewOld) return;
+const handleUpload = async () => {
+  console.log("handleCheckInput");
 
-    try {
-      const token = Cookies.get("token");
-      console.log("Token:", token);
+  // Show error message if imagePreview is null
+  if (!imagePreview) {
+    setIsShow(true);
+    setErrorMessage("Opp! Please enter Nudum image, this field is required.");
+    return; // Early return if no image
+  } else {
+    setIsShow(false);
+    setErrorMessage(""); // Clear error message if there's an image
+  }
 
-      setLoading(true);
-      const apiUrl = "http://127.0.0.1:8000/api/history-predictions/";
+  // Skip if already loading or if the image hasn't changed
+  if (loading || imagePreview === imagePreviewOld) return;
 
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
-        },
-        body: JSON.stringify({ image: imagePreview }),
-      });
+  try {
+    const token = Cookies.get("token");
+    console.log("Token:", token);
 
-      console.log(response);
+    setLoading(true);
+    const apiUrl = "http://127.0.0.1:8000/api/history-predictions/";
 
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify({ image: imagePreview }),
+    });
+
+    // Check if response is not OK
+    if (!response.ok) {
       const data = await response.json();
-      console.log("data:", data);
-
-      const newPrediction: PredictionHistorysInterface = {
-        image: imagePreview,
-        class: data.classes.map((cls: any) => ({
-          id: cls.id,
-          name: cls.name,
-          example_image: cls.example_image,
-          extra_value: cls.extra_value,
-          description: cls.description,
-          price: {
-            id: cls.price.id ?? 1,
-            value_min: cls.price.value_min,
-            value_max: cls.price.value_max,
-          },
-        })),
-        total_min: data.total_min,
-        total_max: data.total_max,
-      };
-
-      const hasVtypeHigh = newPrediction.class.some(
-        (cls) => cls.name === "Vtype-High"
-      );
-      const hasVtypeLow = newPrediction.class.some(
-        (cls) => cls.name === "Vtype-Low"
-      );
-
-      if (hasVtypeHigh && hasVtypeLow) {
-        newPrediction.total_min = newPrediction.total_min / 2;
-        newPrediction.total_max = newPrediction.total_max / 2;
-      }
-      //  setPredictionHistory(newPrediction);
-      setImagePreviewOld(imagePreview);
-      setPredictionHistoryGlobal(newPrediction);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      setLoading(false);
+      console.error("Error response data:", data);
+      throw new Error(data.status || "Failed to upload image");
     }
-  };
+
+    const data = await response.json();
+    console.log("data:", data);
+
+    const newPrediction = {
+      image: imagePreview,
+      class: data.classes.map((cls: any) => ({
+        id: cls.id,
+        name: cls.name,
+        example_image: cls.example_image,
+        extra_value: cls.extra_value,
+        description: cls.description,
+        price: {
+          id: cls.price.id ?? 1,
+          value_min: cls.price.value_min,
+          value_max: cls.price.value_max,
+        },
+      })),
+      total_min: data.total_min,
+      total_max: data.total_max,
+    };
+
+    // Adjust total_min and total_max based on class types
+    const hasVtypeHigh = newPrediction.class.some(
+      (cls: any) => cls.name === "Vtype-High"
+    );
+    const hasVtypeLow = newPrediction.class.some(
+      (cls: any) => cls.name === "Vtype-Low"
+    );
+
+    if (hasVtypeHigh && hasVtypeLow) {
+      newPrediction.total_min /= 2;
+      newPrediction.total_max /= 2;
+    }
+
+    // Update global state and old image preview
+    setImagePreviewOld(imagePreview);
+    setPredictionHistoryGlobal(newPrediction);
+  } catch (error) {
+    // Check if the error is an instance of Error
+    console.error("Error uploading image:", error);
+    setIsShow(true);
+    setErrorMessage(
+      error instanceof Error ? error.message : "An unexpected error occurred."
+    );
+  } finally {
+    setLoading(false); // Ensure loading state is reset
+  }
+};
+
 
   const openCamera = async () => {
     setVideoStatus(true);
@@ -191,6 +210,7 @@ export default function useFormUploadImage() {
       setImagePreview,
       isShow,
       loading,
+      errorMessage,
     },
   };
 }

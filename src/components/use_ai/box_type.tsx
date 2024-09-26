@@ -45,7 +45,7 @@ export default function BoxType({
         </div>
       </div>
       <div className="flex items-center justify-center">
-        ฿{price_min}-{price_max}/ต้น
+        ฿{price_min.toLocaleString()}-{price_max.toLocaleString()}/ต้น
       </div>
     </div>
   );

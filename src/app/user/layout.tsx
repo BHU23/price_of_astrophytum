@@ -14,15 +14,15 @@ export default function RootLayout({
     useCustumer().custumerItems;
 
   return (
-    <div className="flex flex-1 pt-3 sm:pt-4 ">
+    <div className="flex flex-1 pt-3 sm:pt-3 ">
       <aside
         className={`fixed top-14 sm:top-16 left-0 sm:h-[calc(100vh-4rem)] h-[calc(100vh-3.5rem)] transition-all z-[99] 
-          ${isOpen ? "bg-background hidden lg:block w-72 " : "w-5"}
+          ${isOpen ? "hidden lg:block w-72 bg-transparent" : "w-5"}
         `}
       >
         {isOpen && <SidebarUser setIsOpenSM={() => {}} />}
         {/* <button
-          className={`absolute right-2 top-1/2 w-6 h-6 border border-border rounded-lg  lg:flex items-center justify-center text-xs bg-background hover:bg-card transition-all hidden`}
+          className={`absolute right-2 top-1/2 w-6 h-6 border border-border rounded-lg lg:flex  items-center justify-center text-xs bg-background hover:bg-card transition-all hidden`}
           onClick={toggleSidebar}
         >
           <IoCodeOutline />
@@ -30,7 +30,7 @@ export default function RootLayout({
       </aside>
       <aside
         ref={sidebarSMRef}
-        className={`fixed top-14 left-0 sm:h-[calc(100vh)] h-[calc(100vh-3.5rem)] transition-all z-[99] 
+        className={`fixed top-14 sm:top-16 left-0 sm:h-[calc(100%-4rem)] h-[calc(100%-3.5rem)] transition-all z-[99] 
           ${isOpenSM ? "bg-background w-72 lg:hidden " : "w-5"}
         `}
       >

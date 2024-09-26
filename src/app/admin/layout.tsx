@@ -32,7 +32,7 @@ export default function RootLayout({
       </aside>
       <aside
         ref={sidebarSMRef}
-        className={`fixed top-14 left-0 sm:h-[calc(100vh)] h-[calc(100vh-3.5rem)] transition-all z-[99] 
+        className={`fixed top-14 sm:top-16 left-0 sm:h-[calc(100%-4rem)] h-[calc(100%-3.5rem)] transition-all z-[99] 
           ${isOpenSM ? "bg-background w-72 lg:hidden " : "w-5"}
         `}
       >

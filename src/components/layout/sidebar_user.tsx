@@ -26,7 +26,7 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
 
   const getLinkClassName = (path: string) => {
     const isSupPath = pathname.includes(path);
-    return `flex items-center w-full p-3 transition-all rounded-lg outline-none text-start ${
+    return `flex items-center w-full p-3 h-full transition-all rounded-lg outline-none text-start ${
       isSupPath
         ? "text-cta-text bg-card shadow-lg  dark:shadow- "
         : "text-cta hover:text-cta-text hover:bg-card hover:shadow-lg"

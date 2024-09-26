@@ -85,8 +85,8 @@ export default function ResultClassification({}: ResultClassificationProp) {
             <div className="flex-none h-[10%] ">
               <TotalPrice
                 total="800"
-                price_min={predictionHistoryGlobal.total_min}
-                price_max={predictionHistoryGlobal.total_max}
+                price_min={predictionHistoryGlobal.total_min.toLocaleString()}
+                price_max={predictionHistoryGlobal.total_max.toLocaleString()}
               />
             </div>
           </>

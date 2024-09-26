@@ -23,6 +23,7 @@ export default function useCreateClass() {
       value_max: 0,
     },
     example_image: "",
+    care_instructions:"",
   });
 
   const router = useRouter();

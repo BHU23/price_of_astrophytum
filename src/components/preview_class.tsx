@@ -28,7 +28,7 @@ export default function PreviewClass({
       aria-hidden="true"
       className="hidden fixed inset-0 z-[99999] bg-transparent flex justify-center items-center "
     >
-      <div className="relative p-4 w-full max-w-md h-full md:h-auto">
+      <div className="relative p-4 w-full max-w-lg h-full md:h-auto">
         <div className="relative p-4 text-center bg-white rounded-lg  dark:bg-card dark:border dark:border-border sm:p-5 shadow-ring-gray shadow-lg">
           <button
             type="button"
@@ -60,6 +60,15 @@ export default function PreviewClass({
               </h5>
               <p className="mb-4 text-gray-500 text-start dark:text-gray-300">
                 {classData?.description}
+              </p>
+              <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
+                Care Instructions
+              </h5>
+              <p className="mb-4 text-gray-500 text-start dark:text-gray-300">
+                {classData?.care_instructions.split("\n")
+                  .map((line, index) => (
+                    <p key={index}>{line}</p>
+                  ))}
               </p>
               <div className="flex justify-between">
                 <div className="w-1/2 rounded-lg overflow-hidden">

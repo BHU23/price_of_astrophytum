@@ -25,6 +25,7 @@ export default function useClass(id: number) {
       value_max: 0,
     },
     example_image: "",
+    care_instructions: "",
   });
 
   const router = useRouter();

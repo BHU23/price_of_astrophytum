@@ -6,12 +6,14 @@ import { FaXmark } from "react-icons/fa6";
 interface ButtonUploadProp {
   name: string;
   isShow: boolean;
+  errMessage: string;
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function ButtonReload({
   name,
   isShow,
+  errMessage,
   handleFileChange,
 }: ButtonUploadProp) {
   const [uploadStatus, setUploadStatus] = useState<string | null>(null);
@@ -27,27 +29,27 @@ export default function ButtonReload({
       setUploadStatus("Uploading...");
       setProgress(0);
 
-      // Simulating upload progress
       const interval = setInterval(() => {
         setProgress((prev) => {
           if (prev < 100) {
-            return prev + 10; // Simulate progress increment
+            return prev + 75; // Faster progress increment (25%)
           } else {
             clearInterval(interval);
             setUploadStatus("Upload successful!");
             return prev; // Stop incrementing at 100
           }
         });
-      }, 200);
+      }, 100); // Faster interval (100ms)
 
       // Simulate a possible error
       setTimeout(() => {
-        if (Math.random() > 0.8) {
+        if (Math.random() > 0.9) {
+          // Increased probability of failure (10%)
           clearInterval(interval);
           setUploadStatus("Upload failed.");
           setProgress(0);
         }
-      }, 10000); // Simulate upload duration
+      }, 200); // Simulate upload duration
     }
   };
 
@@ -71,11 +73,13 @@ export default function ButtonReload({
           className="flex justify-between w-full h-full"
         >
           <div className="flex items-start gap-2 max-w-9/10 overflow-hidden">
-            <span className="flex text-5xl h-full w-10 items-center">
+            <span className="flex text-5xl h-full w-10 items-center text-gray-400 drak:text-cta-gray">
               <FaRegFileImage />
             </span>{" "}
             <div className="flex flex-col items-start justify-center h-full gap-2 w-full">
-              <span className={`truncate max-w-[200px] block w-full text-start`}>
+              <span
+                className={`truncate max-w-[200px] block w-full text-start`}
+              >
                 {uploadStatus ? file?.name : "Upload Image"}
               </span>
 
@@ -104,11 +108,7 @@ export default function ButtonReload({
         </label>
       </button>
 
-      {isShow && (
-        <p className="mt-2 text-sm text-red-400">
-          Opp! Please enter {"Nudum image"}, this field is required.
-        </p>
-      )}
+      {isShow && <p className="mt-2 text-sm text-red-400">{errMessage}</p>}
     </div>
   );
 }

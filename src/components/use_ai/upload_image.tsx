@@ -147,6 +147,7 @@ export default function UploadImage() {
         <ButtonReload
           name={"Reload"}
           isShow={useFormUploadImageItem.isShow}
+          errMessage={useFormUploadImageItem.errorMessage}
           handleFileChange={useFormUploadImageItem.handleFileChange}
         />
 

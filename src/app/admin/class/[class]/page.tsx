@@ -152,7 +152,33 @@ export default function Class({ params }: { params: { class: string } }) {
                 value={formDataClass.description}
                 placeholder="Enter description"
                 onChange={handleInputChange}
+                maxLength={500}
                 rows={4}
+              ></textarea>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label
+                className="text-cta-text font-semibold text-sm"
+                htmlFor="description"
+              >
+                Care Instructions
+                <span className="text-red-400 text-start text-sm">*</span>
+              </label>
+              <textarea
+                // className="block w-full h-auto pr-2 text-sm text-cta-gray border border-border rounded-lg cursor-pointer p-2 font-semibold bg-card mr-2 dark:hover:text-white  hover:bg-ring_gray   dark:focus:ring-gray-700 focus:outline-none focus:z-10 focus:ring-4"
+                className="bg-gray-50 border pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear 
+                [&:not(:placeholder-shown):invalid~span]:block 
+              invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-400
+              focus:invalid:[&:not(:placeholder-shown)]:border-red-400 focus:invalid:[&:not(:placeholder-shown)]:ring-red-400"
+                id="care_instructions"
+                name="care_instructions"
+                autoComplete="off"
+                value={formDataClass.care_instructions}
+                placeholder="Enter care instructions"
+                onChange={handleInputChange}
+                maxLength={500}
+                rows={4}
+                required
               ></textarea>
             </div>
             <InputItems

@@ -6,7 +6,8 @@ export interface ClassesInterface {
   example_image: string;
   extra_value: number;
   description: string;
-  price: PriceInterface ;
+  care_instructions: string;
+  price: PriceInterface;
 }
 export interface UpdateClassesInterface {
   id: number;
