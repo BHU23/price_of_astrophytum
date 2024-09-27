@@ -1,13 +1,17 @@
+import { RoleInterface } from "@/interface/hostoryprompt.interface";
+import { ListRoles } from "@/service/https/role";
 import { useState, useEffect, useRef } from "react";
 
 interface DropdownRolesProps {
-  role: string | null;
-  setRole: (role: string | null) => void;
+  role: number | null;
+  setRole: (role: number | null) => void;
 }
 
 export function DropdownRoles({ role, setRole }: DropdownRolesProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [roles, setRoles] = useState<RoleInterface[]>([]); 
   const dropdownRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -24,15 +28,29 @@ export function DropdownRoles({ role, setRole }: DropdownRolesProps) {
     };
   }, []);
 
-  const roles = [
-    "ผู้ขาย",
-    "ผู้ซื้อ",
-    "นักรีวิว",
-    "คนทั่วไป",
-    "เจ้าของสวน",
-    "นายหน้า",
-    "อื่นๆ"
-  ]; // รายการ roles
+  // const roles = [
+  //   "ผู้ขาย",
+  //   "ผู้ซื้อ",
+  //   "นักรีวิว",
+  //   "คนทั่วไป",
+  //   "เจ้าของสวน",
+  //   "นายหน้า",
+  //   "อื่นๆ"
+  // ]; // รายการ roles
+  useEffect(() => {
+    const fetchStyles = async () => {
+      try {
+        const result = await ListRoles();
+        if (result) {
+          setRoles(result);
+        }
+      } catch (error) {
+        console.error("Error fetching styles:", error);
+      }
+    };
+
+    fetchStyles();
+  }, []);
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -48,7 +66,9 @@ export function DropdownRoles({ role, setRole }: DropdownRolesProps) {
           }`}
         >
           <span className={`${role ? "text-cta-text" : "text-gray-500"}`}>
-            {role !== null ? role : "Select Role"}
+            {role !== null
+              ? roles.find((r) => r.id === role)?.name
+              : "Select Role"}
           </span>
           <svg
             className="w-2.5 h-2.5"
@@ -86,19 +106,19 @@ export function DropdownRoles({ role, setRole }: DropdownRolesProps) {
                 </div>
               </li>
               {roles.map((r) => (
-                <li key={r}>
+                <li key={r.id}>
                   <div
                     onClick={() => {
-                      setRole(r);
+                      setRole(r.id);
                       setIsDropdownOpen(false);
                     }}
                     className={`block px-4 py-2 w-full text-left hover:bg-white dark:hover:bg-gray-600 dark:hover:text-white ${
-                      role === r
+                      role === r.id
                         ? "bg-card text-cta-text"
                         : "text-gray-700 dark:text-gray-200"
                     }`}
                   >
-                    {r}
+                    {r.name}
                   </div>
                 </li>
               ))}

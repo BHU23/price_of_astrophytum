@@ -11,8 +11,10 @@ interface InputItemsProps {
   pattern: string;
   textError: string;
   handleChange: (e: any) => void;
+  min: string;
+  step: string;
 }
-export default function InputItems({
+export default function InputNumber({
   id,
   name,
   type,
@@ -22,7 +24,7 @@ export default function InputItems({
   autoComplete,
   pattern,
   textError,
-  handleChange,
+  handleChange, min,step
 }: InputItemsProps) {
    const [isVisited, setIsVisited] = useState(false);
 
@@ -51,6 +53,8 @@ export default function InputItems({
         aria-invalid="true"
         aria-describedby={`${id}-error`}
         onBlur={handleBlur}
+        min={min}
+        step={step}
       />
       <span id={`${id}-error`} className="mt-2 hidden text-sm text-red-400">
         {textError}

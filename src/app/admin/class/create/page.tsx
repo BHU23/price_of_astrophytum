@@ -8,7 +8,7 @@ import Image from "next/image";
 import ButtonReturn from "@/components/button_return";
 import FetchingState from "@/components/fetching_state";
 import { useEffect, useRef, useState } from "react";
-
+import InputNumber from "@/components/input_number";
 export default function CreateClass() {
   const {
     useClassItems: {
@@ -194,7 +194,7 @@ export default function CreateClass() {
                 maxLength={500}
               ></textarea>
             </div>
-            <InputItems
+            <InputNumber
               id="extra_value"
               autoComplete=""
               name={"Extra Value (฿): "}
@@ -203,9 +203,11 @@ export default function CreateClass() {
               type={"number"}
               placeholder="e.g. 60.5"
               handleChange={handleInputChange}
-              pattern="^[1-9]\d*$"
-              textError="Value can't null."
-            ></InputItems>
+              pattern="^\d+(\.\d{2})?$"
+              min="0"
+              step="0.01"
+              textError="Please enter a valid price."
+            ></InputNumber>
             <div className="flex flex-col gap-2">
               <div className="flex justify-between flex-row gap-2">
                 <label
@@ -320,7 +322,7 @@ export default function CreateClass() {
                 </div>
               ) : (
                 <div className="flex justify-between gap-5">
-                  <InputItems
+                  <InputNumber
                     id="value_min"
                     name="value_min"
                     type="number"
@@ -337,10 +339,12 @@ export default function CreateClass() {
                         },
                       }))
                     }
-                    pattern="^[1-9]\d*$"
-                    textError="Value can't null."
+                    pattern="^\d+(\.\d{2})?$"
+                    min="0"
+                    step="0.01"
+                    textError="Please enter a valid price."
                   />
-                  <InputItems
+                  <InputNumber
                     id="value_max"
                     name="value_max"
                     type="number"
@@ -357,8 +361,10 @@ export default function CreateClass() {
                         },
                       }))
                     }
-                    pattern="^[1-9]\d*$"
-                    textError="Value can't null."
+                    pattern="^\d+(\.\d{2})?$"
+                    min="0"
+                    step="0.01"
+                    textError="Please enter a valid price."
                   />
                 </div>
               )}
