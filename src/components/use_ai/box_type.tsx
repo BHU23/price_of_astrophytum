@@ -4,6 +4,7 @@ import { MdInfoOutline } from "react-icons/md";
 interface BoxTypeProp {
   image: string;
   description: string;
+  care_instructions: string;
   typeName: string;
   price_min: number;
   price_max: number;
@@ -11,6 +12,7 @@ interface BoxTypeProp {
 export default function BoxType({
   image,
   description,
+  care_instructions,
   typeName,
   price_min,
   price_max,
@@ -22,7 +24,7 @@ export default function BoxType({
         <div className="relative group">
           <MdInfoOutline className="w-4 h-4" />
           {/* <div className="absolute hidden group-hover:block h-auto w-64 bg-background rounded-lg left-40 -top-3 transform -translate-x-1/2 "> */}
-          <div className="absolute hidden group-hover:block h-auto w-64 bg-white dark:bg-card dark:border dark:border-border rounded-lg left-4 transform -translate-x-1/2 z-50">
+          <div className="absolute hidden group-hover:block h-auto w-80 bg-white dark:bg-card dark:border dark:border-border rounded-lg left-4 transform -translate-x-1/2 z-50">
             <div className="max-w-sm rounded overflow-hidden shadow-lg  flex justify-center items-center flex-col p-5">
               <Image
                 width={500}
@@ -34,6 +36,12 @@ export default function BoxType({
               <div className="text-start pt-2">
                 <div className="font-bold text-lg my-2">{typeName}</div>
                 <p className="text-cta ">{description}</p>
+                <div className="font-semibold my-2">Care instructions</div>
+                <p className="text-cta text-wrap">
+                  {care_instructions?.split("\n").map((line, index) => (
+                    <p key={index}>{line}</p>
+                  ))}
+                </p>
               </div>
               {/* <div className="px-6 pt-4 pb-2">
                 <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>

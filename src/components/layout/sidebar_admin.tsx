@@ -103,8 +103,8 @@ export default function SidebarAdmin({ setIsOpenSM }: SidebarAdminProps) {
               AI
             </Link>
             <Link
-              href={`/admin/posts`}
-              className={getLinkClassName(`/admin/posts`)}
+              href={`/admin/prompt_ai`}
+              className={getLinkClassName(`/admin/prompt_ai`)}
               onClick={setIsOpenSM}
             >
               <div className="flex justify-between items-center w-full transition-all rounded-lg outline-none text-start">
@@ -112,9 +112,9 @@ export default function SidebarAdmin({ setIsOpenSM }: SidebarAdminProps) {
                   <div className="grid mr-4 place-items-center">
                     <RiFileTextLine />
                   </div>
-                  Posts
+                  Prompt AI
                 </div>
-                <p>4</p>
+                <p>5</p>
               </div>
             </Link>
           </nav>
@@ -172,7 +172,9 @@ export default function SidebarAdmin({ setIsOpenSM }: SidebarAdminProps) {
                 width={50}
                 height={50}
                 className="w-10 h-10 rounded-full"
-                src={userProfile?.avatar ?? profile}
+                src={
+                  (userProfile?.avatar != "" && userProfile?.avatar) ? userProfile?.avatar : profile 
+                }
                 alt=""
               ></Image>
               <div className="font-medium dark:text-white ">

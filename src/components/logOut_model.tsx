@@ -14,7 +14,7 @@ export default function LogOutModle({
       id="deleteModal"
       tabIndex={-1}
       aria-hidden="true"
-      className="fixed inset-0 z-[99999] bg-transparent flex justify-center items-center "
+      className="fixed inset-0 inset-y-1/3 z-[9999] bg-transparent flex justify-center items-center "
     >
       <div className="relative p-4 w-full max-w-md h-full md:h-auto">
         <div className="relative p-4 text-center bg-white rounded-lg shadow-lg dark:bg-card dark:border dark:border-border sm:p-5 shadow-ring-gray  ">

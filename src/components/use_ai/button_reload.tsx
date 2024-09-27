@@ -6,6 +6,7 @@ import { FaXmark } from "react-icons/fa6";
 interface ButtonUploadProp {
   name: string;
   isShow: boolean;
+  loading: boolean;
   errMessage: string;
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -14,6 +15,7 @@ export default function ButtonReload({
   name,
   isShow,
   errMessage,
+  loading,
   handleFileChange,
 }: ButtonUploadProp) {
   const [uploadStatus, setUploadStatus] = useState<string | null>(null);
@@ -61,22 +63,24 @@ export default function ButtonReload({
         type="file"
         accept="image/*"
         onChange={handleUpload}
+        disabled={loading}
       />
 
       <button
         className={`gap-2 items-center p-2 w-full h-20 text-sm text-cta-gray border-2 border-border rounded-lg cursor-pointer transition-colors hover:bg-gray-100 hover:text-tan dark:hover:text-cta-text focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-500 dark:bg-transparent dark:border-gray-500 dark:hover:bg-border ${
           isShow ? "border-red-500" : ""
         }`}
+        disabled={loading}
       >
         <label
           htmlFor="dropzone-file"
           className="flex justify-between w-full h-full"
         >
-          <div className="flex items-start gap-2 max-w-9/10 overflow-hidden">
+          <div className="flex items-start gap-2 max-w-9/10 w-full overflow-hidden">
             <span className="flex text-5xl h-full w-10 items-center text-gray-400 drak:text-cta-gray">
               <FaRegFileImage />
             </span>{" "}
-            <div className="flex flex-col items-start justify-center h-full gap-2 w-full">
+            <div className="flex flex-col items-start justify-center h-full gap-2 w-[100%]">
               <span
                 className={`truncate max-w-[200px] block w-full text-start`}
               >
@@ -85,7 +89,7 @@ export default function ButtonReload({
 
               {/* Conditionally render progress bar and file size */}
               {uploadStatus === "Uploading..." ? (
-                <div className="w-[200px] bg-gray-200 rounded-full h-2 mb-1">
+                <div className="min-w-[200px] w-full bg-gray-200 rounded-full h-2 mb-1">
                   <div
                     className="h-full w-[200px] rounded-full bg-pear"
                     style={{ width: `${progress}%`, transition: "width 0.2s" }}

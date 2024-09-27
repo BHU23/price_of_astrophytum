@@ -85,6 +85,7 @@ const handleUpload = async () => {
 
     const newPrediction = {
       image: imagePreview,
+      id: data.id,
       class: data.classes.map((cls: any) => ({
         id: cls.id,
         name: cls.name,

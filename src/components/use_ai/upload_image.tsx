@@ -11,7 +11,7 @@ export default function UploadImage() {
   const { useFormUploadImageItem } = useFormUploadImage();
   
   return (
-    <div className="  h-auto lg:min-h-[calc(100vh-6rem)] w-full lg:min-w-[350px] lg:w-[350px] h-full p-5 pt-2 bg-card text-cta-text rounded-lg shadow-lg">
+    <div className="  h-auto lg:min-h-[calc(100vh-6rem)] w-full lg:min-w-[350px] lg:w-[350px] lg:h-auto p-5 pt-2 bg-card text-cta-text rounded-lg shadow-lg">
       <div className="pr-2 flex flex-row items-center justify-center">
         <Image
           width={500}
@@ -149,6 +149,7 @@ export default function UploadImage() {
           isShow={useFormUploadImageItem.isShow}
           errMessage={useFormUploadImageItem.errorMessage}
           handleFileChange={useFormUploadImageItem.handleFileChange}
+          loading={useFormUploadImageItem.loading}
         />
 
         <div className="flex flex-row gap-5 items-center justify-between w-full">
@@ -157,6 +158,7 @@ export default function UploadImage() {
             className={`${
               useFormUploadImageItem.imagePreview ? "w-1/2 " : "w-full"
             } py-3 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-background border border-border  rounded-lg  hover:bg-gray-100 hover:text-tan focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-500 dark:bg-gray-400 dark:text-cta-text dark:border-gray-500 dark:hover:bg-gray-400 cursor-pointer flex items-center justify-center`}
+            disabled={useFormUploadImageItem.loading}
           >
             <FiCamera className="h-4" />
           </button>

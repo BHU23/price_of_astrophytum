@@ -43,7 +43,11 @@ export default function Profile() {
               <div className="flex pr-5  lg:pr-0 lg:flex-row item-end gap-5 ">
                 <Image
                   className="w-28 h-28 md:w-40 md:h-40 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                  src={userProfile.avatar ?? profile}
+                  src={
+                    userProfile?.avatar != "" && userProfile?.avatar
+                      ? userProfile?.avatar
+                      : profile
+                  }
                   alt="Bordered avatar"
                   width={500}
                   height={500}

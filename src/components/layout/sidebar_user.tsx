@@ -108,8 +108,8 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
               AI
             </Link>
             <Link
-              href={`/user/posts`}
-              className={getLinkClassName(`/user/posts`)}
+              href={`/user/prompt_ai`}
+              className={getLinkClassName(`/user/prompt_ai`)}
               onClick={setIsOpenSM}
             >
               <div className="flex justify-between items-center w-full transition-all rounded-lg outline-none text-start">
@@ -156,7 +156,11 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
                 width={50}
                 height={50}
                 className="w-10 h-10 rounded-full"
-                src={userProfile?.avatar ?? profile}
+                src={
+                  userProfile?.avatar != "" && userProfile?.avatar
+                    ? userProfile?.avatar
+                    : profile
+                }
                 alt="Profile"
               ></Image>
               <div className="font-medium dark:text-white">

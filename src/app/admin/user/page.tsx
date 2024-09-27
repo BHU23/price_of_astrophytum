@@ -234,7 +234,7 @@ export default function User() {
                   width={40}
                   height={40}
                   className="w-10 h-10 rounded-full"
-                  src={user.avatar ?? profile}
+                  src={user.avatar != "" && user.avatar ? user.avatar : profile}
                   alt={`${user.username} image`}
                 />
               </td>

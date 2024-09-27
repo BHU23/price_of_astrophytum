@@ -8,7 +8,7 @@ interface ButtonPushPathItemsProps {
   path: string;
 }
 
-export default function ButtonPushPathItems({ name, path }: ButtonPushPathItemsProps) {
+export default function ButtonNext({ name, path }: ButtonPushPathItemsProps) {
   const router = useRouter();
   const handleButtonClick = () => {
     router.push(path);

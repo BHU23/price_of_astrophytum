@@ -1,6 +1,7 @@
 import { ClassesInterface } from "./classes.interface";
 
 export interface PredictionHistorysInterface {
+  id: number | null;
   image: string;
   class: ClassesInterface[];
   total_min: number;

@@ -5,6 +5,7 @@ import TotalPrice from "@/components/use_ai/total_price";
 import useUploadImage from "../hook/upload_image.hook";
 import { useGlobal } from "@/context/useGlobal";
 import { ClassesInterface } from "@/interface/classes.interface";
+import ButtonPushPathItems from "../button_pushpath_items";
 
 interface ResultClassificationProp {}
 
@@ -73,6 +74,7 @@ export default function ResultClassification({}: ResultClassificationProp) {
                     <BoxType
                       key={index}
                       image={e.example_image}
+                      care_instructions={e.care_instructions}
                       description={e.description}
                       typeName={e.name ?? ""}
                       price_min={e.price.value_min}
@@ -92,6 +94,14 @@ export default function ResultClassification({}: ResultClassificationProp) {
           </>
         )}
       </div>
+      {!loading && predictionHistoryGlobal.image && (
+        <div className="w-1/6  self-end self">
+          <ButtonPushPathItems
+            name={"Next"}
+            path="/admin/prompt_ai"
+          ></ButtonPushPathItems>
+        </div>
+      )}
     </div>
   );
 }

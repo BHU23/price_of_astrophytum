@@ -13,8 +13,6 @@ export default function RootLayout({
   const { isOpen, toggleSidebar, isOpenSM, sidebarSMRef, toggleSidebarSm } =
     useCustumer().custumerItems;
 
-  
-
   return (
     <div className="flex flex-1 pt-3 sm:pt-4 ">
       <aside

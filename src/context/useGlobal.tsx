@@ -21,12 +21,16 @@ interface GlobalProviderProps {
 export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
   const [predictionHistoryGlobal, setPredictionHistoryGlobal] =
     useState<PredictionHistorysInterface | null>({
+      id: null ,
       image: "",
       class: [],
       total_min: 0,
       total_max: 0,
     });
   const [loading, setLoading] = useState(false);
+
+
+  const [loading_prompt, setLoadingPrompt] = useState(false);
   // const [istoken, setIsToken] = useState(false);
 
   const [userProfile, setUserProfile] = useState<UserProfileInterface>({
@@ -120,6 +124,8 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
         loginpath,
         loading,
         setLoading,
+        loading_prompt,
+        setLoadingPrompt,
         // istoken,
         // toggleToken,
         // token,
@@ -128,7 +134,9 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
         isOpenModel,
         setIsOpen,
         isOpenSM,
-        setIsOpenSM,sidebarSMRef,bottomRef,
+        setIsOpenSM,
+        sidebarSMRef,
+        bottomRef,
         isOpen,
         breadcrumbLinks,
         userProfile,
