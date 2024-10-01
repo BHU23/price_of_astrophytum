@@ -2,20 +2,26 @@ import BoxType from "@/components/use_ai/box_type";
 import Line from "@/components/line";
 import TitleTopic from "@/components/notuse/title_topic";
 import TotalPrice from "@/components/use_ai/total_price";
-import useUploadImage from "../hook/upload_image.hook";
 import { useGlobal } from "@/context/useGlobal";
 import { ClassesInterface } from "@/interface/classes.interface";
 import ButtonPushPathItems from "../button_pushpath_items";
-
+import Cookies from "js-cookie";
+import { useState,useEffect } from "react";
 interface ResultClassificationProp {}
 
 export default function ResultClassification({}: ResultClassificationProp) {
-  // const {
-  //   loading,
-  // } = useUploadImage().uploadImageItem;
   const { predictionHistoryGlobal, loading } = useGlobal();
   console.log("predictionHistoryGlobal3", predictionHistoryGlobal);
   console.log("class3", predictionHistoryGlobal.class);
+  const [role, setRole] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchedRole = Cookies.get("role");
+    if (fetchedRole) {
+      setRole(fetchedRole);
+    } else {
+      console.warn("Role not found in cookies");
+    }
+  }, []);
   return (
     <div className="w-full flex flex-col justify-start h-[100%] gap-5 ">
       <span className="text-cta-text font-semibold text-sm">
@@ -98,7 +104,7 @@ export default function ResultClassification({}: ResultClassificationProp) {
         <div className="w-1/6  self-end self">
           <ButtonPushPathItems
             name={"Next"}
-            path="/admin/prompt_ai"
+            path={`/${role ? role?.toLowerCase() : ""}/post_ai`}
           ></ButtonPushPathItems>
         </div>
       )}

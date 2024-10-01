@@ -11,6 +11,7 @@ import React, {
 } from "react";
 import { UserProfileInterface } from "@/interface/user.interface";
 import { GetUserProfile } from "@/app/admin/profile/้hook";
+import { HistoryPromptInterface } from "@/interface/hostoryprompt.interface";
 
 const GlobalContext = createContext<any>(undefined);
 
@@ -21,7 +22,7 @@ interface GlobalProviderProps {
 export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
   const [predictionHistoryGlobal, setPredictionHistoryGlobal] =
     useState<PredictionHistorysInterface | null>({
-      id: null ,
+      id: null,
       image: "",
       class: [],
       total_min: 0,
@@ -29,8 +30,20 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
     });
   const [loading, setLoading] = useState(false);
 
+  const [historyPrompt, setHistoryPrompt] = useState<HistoryPromptInterface>({
+    prompt: "",
+    result: "",
+    classes: [],
+    image: "",
+    price: 0,
+    user_profile: null,
+    history_predictions: null,
+    role: null,
+    style: null,
+  });
 
   const [loading_prompt, setLoadingPrompt] = useState(false);
+
   // const [istoken, setIsToken] = useState(false);
 
   const [userProfile, setUserProfile] = useState<UserProfileInterface>({
@@ -126,6 +139,8 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
         setLoading,
         loading_prompt,
         setLoadingPrompt,
+        historyPrompt,
+        setHistoryPrompt,
         // istoken,
         // toggleToken,
         // token,

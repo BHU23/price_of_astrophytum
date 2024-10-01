@@ -17,7 +17,6 @@ export default function Class({ params }: { params: { class: string } }) {
     useClassItems: {
       handleFileChange,
       handleInputChange,
-      handlePriceChange,
       handleUpdate,
       newPriceState,
       setNewPriceState,

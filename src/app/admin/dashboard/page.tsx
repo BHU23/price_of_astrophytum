@@ -147,6 +147,7 @@ export default function DeashBoard() {
       }
       const data = await response.json();
       const newPrediction: PredictionHistorysInterface = {
+        id: prediction.id,
         image: prediction.image,
         class: data.map((item: any) => item.class_name),
         total_min: prediction.total_min,

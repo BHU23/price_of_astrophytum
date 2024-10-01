@@ -1,15 +1,16 @@
-import BoxType from "@/components/use_ai/box_type";
-import Line from "@/components/line";
-import TitleTopic from "@/components/notuse/title_topic";
-import TotalPrice from "@/components/use_ai/total_price";
+
 import { useGlobal } from "@/context/useGlobal";
-import { ClassesInterface } from "@/interface/classes.interface";
 import Image from "next/image";
-import ButtonPushPathItems from "../button_pushpath_items";
 import ButtonReturn from "../button_return";
 
-export default function Resultprompt() {
-  const { predictionHistoryGlobal, loading_prompt, userProfile } = useGlobal();
+export default function ResultPost() {
+  const {
+    predictionHistoryGlobal,
+    loading_prompt,
+    setLoadingPrompt,
+    historyPrompt,
+    setHistoryPrompt,
+  } = useGlobal();
   console.log("predictionHistoryGlobal3", predictionHistoryGlobal);
   console.log("class3", predictionHistoryGlobal.class);
   return (
@@ -48,8 +49,13 @@ export default function Resultprompt() {
                 </svg>
                 Loading...
               </div>
-            ) : predictionHistoryGlobal.image ? (
-              ""
+            ) : historyPrompt.result != "" ? (
+              <div
+                className="transition-all text-cta-gray text-wrap"
+                style={{ whiteSpace: "pre-wrap" }}
+              >
+                {historyPrompt.result}
+              </div>
             ) : (
               <div className="transition-all text-center text-cta-gray">
                 Please Generate

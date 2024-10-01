@@ -98,7 +98,9 @@ export default function DeashBoard() {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
+      console.log("dddd",data);
       const newPrediction: PredictionHistorysInterface = {
+        id: prediction.id,
         image: prediction.image,
         class: data.map((item: any) => item.class_name),
         total_min: prediction.total_min,

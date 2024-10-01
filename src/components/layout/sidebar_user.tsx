@@ -108,8 +108,8 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
               AI
             </Link>
             <Link
-              href={`/user/prompt_ai`}
-              className={getLinkClassName(`/user/prompt_ai`)}
+              href={`/user/post_ai`}
+              className={getLinkClassName(`/user/post_ai`)}
               onClick={setIsOpenSM}
             >
               <div className="flex justify-between items-center w-full transition-all rounded-lg outline-none text-start">
@@ -117,9 +117,9 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
                   <div className="grid mr-4 place-items-center">
                     <RiFileTextLine />
                   </div>
-                  Posts
+                  Posts AI
                 </div>
-                <p>4</p>
+                {/* <p>4</p> */}
               </div>
             </Link>
           </nav>

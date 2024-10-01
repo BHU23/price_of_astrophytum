@@ -1,27 +1,29 @@
 import { HistoryPredicstionInterface } from "./historyPredictions.interface";
+import { UserProfileDisplayInterface } from "./user.interface";
 
 export interface HistoryPromptInterface {
   id?: number;
   prompt: string;
   result: string;
+  classes: string[];
   image: string;
   price?: number;
   timestamp?: string;
-  user: number;
-  history_predictions?: HistoryPredicstionInterface;
+  user_profile: UserProfileDisplayInterface | null;
+  history_predictions: HistoryPredicstionInterface | null;
   role?: RoleInterface | null;
   style?: StyleInterface | null;
 }
 
-export interface HistoryPromptfromInterface {
+export interface PromptfromInterface {
   prompt: string;
   result: string;
+  classes: string[];
   image: string;
   price?: number;
-  user: number;
-  history_predictions?: number;
-  role: number | null;
-  style: number | null;
+  history_prediction_id: number | null;
+  role_id: number | null;
+  style_id: number | null;
 }
 
 export interface RoleInterface {
