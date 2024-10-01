@@ -44,17 +44,16 @@ export default function useFormUploadImage() {
 const handleUpload = async () => {
   console.log("handleCheckInput");
 
-  // Show error message if imagePreview is null
   if (!imagePreview) {
     setIsShow(true);
     setErrorMessage("Opp! Please enter Nudum image, this field is required.");
-    return; // Early return if no image
+
+    return; 
   } else {
     setIsShow(false);
-    setErrorMessage(""); // Clear error message if there's an image
+    setErrorMessage("");
   }
 
-  // Skip if already loading or if the image hasn't changed
   if (loading || imagePreview === imagePreviewOld) return;
 
   try {
@@ -77,6 +76,18 @@ const handleUpload = async () => {
     if (!response.ok) {
       const data = await response.json();
       console.error("Error response data:", data);
+      setPredictionHistoryGlobal((prev: PredictionHistorysInterface) => ({
+        ...prev, 
+        prompt: "",
+        result: "",
+        classes: [],
+        image: "",
+        price: 0,
+        user_profile: null,
+        history_predictions: null,
+        role: null,
+        style: null,
+      }));
       throw new Error(data.status || "Failed to upload image");
     }
 

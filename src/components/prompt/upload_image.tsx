@@ -37,7 +37,7 @@ export default function SettingPrompt() {
       classes: [],
       image: predictionHistory?.image ?? "",
       price:
-        (predictionHistory.total_min ?? 0 + predictionHistory.total_max ?? 0) /
+        ((predictionHistory.total_min ?? 0 )+ (predictionHistory.total_max ?? 0)) /
         2,
       history_prediction_id: predictionHistory.id,
       role_id: null,
@@ -65,7 +65,19 @@ export default function SettingPrompt() {
         setHistoryPrompt(response);
       } else {
         console.error("Response is null");
-        // Handle the null response case (optional)
+        setHistoryPrompt((prev: HistoryPromptInterface) => ({
+          ...prev, // Optional: spread previous state if you're preserving values
+          prompt: "",
+          result: "",
+          classes: [],
+          image: "",
+          price: 0,
+          user_profile: null,
+          history_predictions: null,
+          role: null,
+          style: null,
+        }));
+
       }
        setLoadingPrompt(false);
     } catch (error) {

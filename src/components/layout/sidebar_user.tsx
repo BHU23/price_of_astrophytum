@@ -149,7 +149,7 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
           >
             <Link
               className="flex items-center gap-2 font-medium dark:text-white p-3 pr-0"
-              href={`/admin/profile`}
+              href={`/user/profile`}
               onClick={setIsOpenSM}
             >
               <Image

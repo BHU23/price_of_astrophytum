@@ -1,8 +1,9 @@
-
 import { useGlobal } from "@/context/useGlobal";
 import Image from "next/image";
 import ButtonReturn from "../button_return";
-
+import { HistoryPromptInterface } from "@/interface/hostoryprompt.interface";
+import { PiCopy } from "react-icons/pi";
+import { useState } from "react";
 export default function ResultPost() {
   const {
     predictionHistoryGlobal,
@@ -13,6 +14,14 @@ export default function ResultPost() {
   } = useGlobal();
   console.log("predictionHistoryGlobal3", predictionHistoryGlobal);
   console.log("class3", predictionHistoryGlobal.class);
+   const [copyStatus, setCopyStatus] = useState("Copy"); 
+
+   const handleCopy = () => {
+     navigator.clipboard.writeText(historyPrompt.result); 
+     setCopyStatus("Copied!"); 
+     setTimeout(() => setCopyStatus("Copy"), 2000); 
+   };
+
   return (
     <div className="w-full flex flex-col justify-start h-[100%] gap-5 ">
       <span className="text-cta-text font-semibold text-sm">
@@ -20,16 +29,19 @@ export default function ResultPost() {
       </span>
       <div className="h-[1px] bg-cta-gray w-full" />
       <div className="flex flex-col h-full gap-5">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 relative">
           <span className="text-cta-text font-semibold text-sm">Text</span>
-          <div
-            className="min-h-48 bg-gray-50 border pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear 
-                [&:not(:placeholder-shown):invalid~span]:block 
-              invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-400
-              focus:invalid:[&:not(:placeholder-shown)]:border-red-400 focus:invalid:[&:not(:placeholder-shown)]:ring-red-400"
-          >
-            {loading_prompt ? (
-              <div className="transition-all text-center text-cta-gray">
+          {historyPrompt.result != "" ? (
+            <button
+              className="absolute top-0 right-0 px-2 text-xs rounded-full hover:text-tan transition-all flex gap-1"
+              onClick={handleCopy}
+              disabled={loading_prompt}
+            >
+              <PiCopy size={15} /> {copyStatus}
+            </button>) : ("")}
+          {loading_prompt ? (
+            <div className="min-h-48 h-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full dark:bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear">
+              <div className="transition-all text-center text-cta-gray pt-4">
                 <svg
                   aria-hidden="true"
                   role="status"
@@ -49,20 +61,34 @@ export default function ResultPost() {
                 </svg>
                 Loading...
               </div>
-            ) : historyPrompt.result != "" ? (
-              <div
-                className="transition-all text-cta-gray text-wrap"
-                style={{ whiteSpace: "pre-wrap" }}
-              >
-                {historyPrompt.result}
-              </div>
-            ) : (
-              <div className="transition-all text-center text-cta-gray">
+            </div>
+          ) : historyPrompt.result != "" ? (
+            <textarea
+              id="textarea"
+              onChange={(e) =>
+                setHistoryPrompt((prev: HistoryPromptInterface) => ({
+                  ...prev,
+                  result: e.target.value, // Capture the new value from the event
+                }))
+              }
+              value={historyPrompt.result !== "" ? historyPrompt.result : ""} // Empty value if no result is present
+              className="min-h-60 h-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full dark:bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear transition-all text-cta-gray"
+              style={{ whiteSpace: "pre-wrap" }}
+              disabled={loading_prompt} // Disable while loading
+              placeholder={
+                historyPrompt.result === ""
+                  ? "Please Generate"
+                  : "Type your text here..."
+              }
+            />
+          ) : (
+            <div className="min-h-48 h-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full dark:bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear">
+              <div className="transition-all text-center text-cta-gray pt-4">
                 Please Generate
-              </div>
-            )}
-          </div>{" "}
-        </div>
+              </div>{" "}
+            </div>
+          )}
+        </div>{" "}
         <div className="flex flex-col gap-2">
           <span className="text-cta-text font-semibold text-sm">Image</span>
 
