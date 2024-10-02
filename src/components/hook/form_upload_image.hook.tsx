@@ -6,18 +6,21 @@ import { useGlobal } from "@/context/useGlobal";
 import { PredictionHistorysInterface } from "@/interface/predictionHistorys.interface";
 import Cookies from "js-cookie";
 export default function useFormUploadImage() {
+  const router = useRouter();
   const {
     predictionHistoryGlobal,
     setPredictionHistoryGlobal,
     setLoading,
     loading,
   } = useGlobal();
+  console.log("predictionHistoryGlobalUp", predictionHistoryGlobal);
   const [imagePreview, setImagePreview] = useState<string | null>(
-    predictionHistoryGlobal?.image || null
+    predictionHistoryGlobal.image || null
   );
   const [imagePreviewOld, setImagePreviewOld] = useState<string | null>(
-    predictionHistoryGlobal?.image || null
+    predictionHistoryGlobal.image || null
   );
+ 
   const [videoStatus, setVideoStatus] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -129,6 +132,8 @@ const handleUpload = async () => {
     // Update global state and old image preview
     setImagePreviewOld(imagePreview);
     setPredictionHistoryGlobal(newPrediction);
+     const newPath = `${window.location.pathname}/${newPrediction.id}`;
+     window.history.pushState({}, "", newPath); 
   } catch (error) {
     // Check if the error is an instance of Error
     console.error("Error uploading image:", error);
@@ -204,6 +209,11 @@ const handleUpload = async () => {
       stream?.getTracks().forEach((track) => track.stop());
     };
   }, []);
+
+   useEffect(() => {
+     setImagePreview(predictionHistoryGlobal.image || null);
+     setImagePreviewOld(predictionHistoryGlobal.image || null);
+   }, [predictionHistoryGlobal]);
 
   return {
     useFormUploadImageItem: {

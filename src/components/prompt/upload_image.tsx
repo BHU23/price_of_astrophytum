@@ -87,13 +87,14 @@ export default function SettingPrompt() {
   };
 
   useEffect(() => {
+    setPredictionHistory(predictionHistoryGlobal);
     if (Array.isArray(predictionHistory?.class)) {
       setPrompt((prev: PromptfromInterface) => ({
         ...prev,
         classes: predictionHistory?.class.map((item) => item.name),
       }));
     }
-  }, [predictionHistory]);
+  }, [predictionHistory, predictionHistoryGlobal]);
 
   return (
     <form

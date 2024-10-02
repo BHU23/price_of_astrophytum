@@ -107,7 +107,7 @@ export default function DeashBoard() {
         total_max: prediction.total_max,
       };
       await setPredictionHistoryGlobal(newPrediction);
-      router.push(`/user/use_ai`);
+      router.push(`/user/use_ai/${prediction.id}`);
     } catch (error) {
       console.error("Error fetching prediction details:", error);
     }

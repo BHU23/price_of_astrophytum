@@ -104,7 +104,9 @@ export default function ResultClassification({}: ResultClassificationProp) {
         <div className="w-1/6  self-end self">
           <ButtonPushPathItems
             name={"Next"}
-            path={`/${role ? role?.toLowerCase() : ""}/post_ai`}
+            path={`/${
+              role ? role?.toLowerCase() : ""
+            }/post_ai/${predictionHistoryGlobal.id}`}
           ></ButtonPushPathItems>
         </div>
       )}

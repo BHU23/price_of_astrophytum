@@ -9,7 +9,7 @@ import LogoName from "../../../public/LogoName.png";
 import { useState } from "react";
 export default function UploadImage() {
   const { useFormUploadImageItem } = useFormUploadImage();
-  
+  console.log("useFormUploadImageItem", useFormUploadImageItem);
   return (
     <div className="  h-auto lg:min-h-[calc(100vh-6rem)] w-full lg:min-w-[350px] lg:w-[350px] lg:h-auto p-5 pt-2 bg-card text-cta-text rounded-lg shadow-lg">
       <div className="pr-2 flex flex-row items-center justify-center">

@@ -12,7 +12,7 @@ export default function ResultPost() {
     historyPrompt,
     setHistoryPrompt,
   } = useGlobal();
-  console.log("predictionHistoryGlobal3", predictionHistoryGlobal);
+  console.log("predictionHistoryGlobalpost", predictionHistoryGlobal);
   console.log("class3", predictionHistoryGlobal.class);
    const [copyStatus, setCopyStatus] = useState("Copy"); 
 
