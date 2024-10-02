@@ -88,6 +88,15 @@ export default function SettingPrompt() {
 
   useEffect(() => {
     setPredictionHistory(predictionHistoryGlobal);
+    setPrompt((prev: PromptfromInterface) => ({
+      ...prev,
+      image: predictionHistory?.image ?? "",
+      price:
+        ((predictionHistory.total_min ?? 0) +
+          (predictionHistory.total_max ?? 0)) /
+        2,
+      history_prediction_id: predictionHistory.id,
+    }));
     if (Array.isArray(predictionHistory?.class)) {
       setPrompt((prev: PromptfromInterface) => ({
         ...prev,
