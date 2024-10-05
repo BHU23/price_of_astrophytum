@@ -3,51 +3,31 @@ import Image from "next/image";
 import { FiArrowRight, FiTrash } from "react-icons/fi";
 import { format } from "date-fns";
 import DeleteModle from "./delete_model";
-import { useState } from "react";
-import { DeleteHistoryPredictionByID } from "@/app/admin/dashboard/api";
+import { useState, useEffect } from "react";
+
 import { useRouter } from "next/navigation";
 interface BoxPostInt {
   prediction: HistoryPredicstionInterface;
   key: number;
   onClick: () => void;
+  setPredictHisToDelete: (n: number | null) => void;
+  handleDeleteConfirm: () => void;
+  handleDeleteClick: (n: number) => void;
 }
 
-export default function BoxPost({ prediction, onClick }: BoxPostInt) {
-  const router = useRouter();
-  const formatDate = (timestamp : Date) => {
+export default function BoxPost({
+  prediction,
+  onClick,
+  setPredictHisToDelete,
+  handleDeleteConfirm,
+  handleDeleteClick,
+}: BoxPostInt) {
+  const formatDate = (timestamp: Date) => {
     if (!timestamp) return "";
     const date = new Date(timestamp);
-    return format(date, "dd-MM-yyyy HH:mm a"); 
+    return format(date, "dd-MM-yyyy HH:mm a");
   };
-    const [predictHisToDelete, setPredictHisToDelete] = useState<number | null>(
-      null
-  );
-   const handleDeleteClick = (hisspreID: number) => {
-     setPredictHisToDelete(hisspreID);
-    //  console.log("Class setPredictHisToDelete", predictHisToDelete);
-     const modal = document.getElementById("deleteModal");
-     if (modal) modal.classList.remove("hidden");
-   };
-  const handleDeleteConfirm = async () => {
-    //  console.log("Class deleted handleDeleteConfirm", predictHisToDelete);
-    //  console.log("Class deleted prediction", prediction);
-    if (predictHisToDelete !== null) {
-       console.log("Class deleted predictHisToDelete ! null");
-       const success = await DeleteHistoryPredictionByID(
-         String(predictHisToDelete)
-       );
-       if (success) {
-         console.log("Class deleted successfully");
-         router.refresh(); 
-       } else {
-         console.error("Failed to delete the class");
-       }
-       setPredictHisToDelete(null);
-       const modal = document.getElementById("deleteModal");
-       if (modal) modal.classList.add("hidden");
-       window.location.reload();
-     }
-   };
+
   return (
     <div className="flex flex-col gap-4 p-4 bg-card shadow-md border dark:border-border rounded-md">
       <div className="flex justify-center items-center w-full h-40">
@@ -61,7 +41,8 @@ export default function BoxPost({ prediction, onClick }: BoxPostInt) {
       </div>
 
       <span>
-        {prediction.total_min} -{prediction.total_max} ฿
+        {prediction.total_min.toLocaleString()} -
+        {prediction.total_max.toLocaleString()} ฿
         <p className="text-gray-600">
           {formatDate(new Date(prediction.timestamp))}
         </p>

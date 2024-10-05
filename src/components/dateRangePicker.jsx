@@ -9,22 +9,33 @@ export default function DateRangePicker({ onDateRangeChange }) {
     endDate: null,
   });
 
-  const handleDateSelect = (newRange) => {
-    console.log("newRange", newRange);
-    setValue(newRange);
+const handleDateSelect = (newRange) => {
+  console.log("newRange", newRange);
+  setValue(newRange);
 
-    // Handle cases where only one of the dates is selected
-    if (newRange?.startDate || newRange?.endDate) {
-      onDateRangeChange(newRange.startDate, newRange.endDate);
-    } else {
-      // Reset both dates when neither is selected
-      onDateRangeChange(null, null);
-    }
+  // Utility function to set the time to 00:00
+  const setToMidnight = (date) => {
+    if (!date) return null;
+    const newDate = new Date(date);
+    newDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+    return newDate;
   };
 
-  const formatDate = (date) => {
-    return date ? format(new Date(date), "MMM dd, yyyy") : "";
-  };
+  // Handle cases where only one of the dates is selected
+  const startDate = setToMidnight(newRange?.startDate);
+  const endDate = setToMidnight(newRange?.endDate);
+
+  if (startDate || endDate) {
+    onDateRangeChange(startDate, endDate);
+  } else {
+    // Reset both dates when neither is selected
+    onDateRangeChange(null, null);
+  }
+};
+
+const formatDate = (date) => {
+  return date ? format(new Date(date), "MMM dd, yyyy") : "";
+};
 
   return (
     <div className="flex items-center space-x-4">

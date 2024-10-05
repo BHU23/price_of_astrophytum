@@ -98,7 +98,7 @@ export function DropdownRoles({ role, setRole }: DropdownRolesProps) {
                     setRole(null); // ตั้งค่า role เป็น null สำหรับ "All Roles"
                     setIsDropdownOpen(false);
                   }}
-                  className={`block px-4 py-2 w-full text-left hover:bg-white ${
+                  className={`block px-4 py-2 w-full text-left hover:bg-white dark:hover:bg-gray-600 dark:hover:text-white ${
                     role === null ? "bg-card text-cta-text" : "text-gray-700"
                   }`}
                 >

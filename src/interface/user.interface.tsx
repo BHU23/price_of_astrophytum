@@ -5,7 +5,7 @@ export interface UserProfileInterface {
   role: string;
   first_name: string;
   last_name: string;
-  fackbook_name: string;
+  fackbook_name: string | null;
   phone_number: string | null;
   date_of_birth: string | null;
   gender: number | null;
@@ -19,7 +19,7 @@ export interface UserProfileDisplayInterface {
   role: string;
   first_name: string;
   last_name: string;
-  fackbook_name: string;
+  fackbook_name: string | null;
   phone_number: string | null;
   date_of_birth: string | null;
   gender: number | null;

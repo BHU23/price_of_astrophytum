@@ -137,7 +137,6 @@ export default function useFormUploadImage() {
         newPrediction.total_max /= 2;
       }
 
-      // Update global state and old image preview
       setImagePreviewOld(imagePreview);
       setPredictionHistoryGlobal(newPrediction);
 

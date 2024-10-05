@@ -94,7 +94,7 @@ export function DropdownStyles({ style, setStyle }: DropdownStylesProps) {
                     setStyle(null);
                     setIsDropdownOpen(false);
                   }}
-                  className={`block px-4 py-2 w-full text-left hover:bg-white ${
+                  className={`block px-4 py-2 w-full text-left dark:hover:bg-gray-600 dark:hover:text-white ${
                     style === null ? "bg-card text-cta-text" : "text-gray-700"
                   }`}
                 >

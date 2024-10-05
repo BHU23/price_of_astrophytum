@@ -32,14 +32,27 @@ export default function useClass(id: number) {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+
     if (file) {
+      // Validate that the file is an image
+      const validImageTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+      ];
+      if (!validImageTypes.includes(file.type)) {
+        console.error("Invalid file type. Please upload an image.");
+        return;
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
         if (typeof reader.result === "string") {
-          setFormDataClass({
-            ...formDataClass,
+          setFormDataClass((prev: any) => ({
+            ...prev,
             example_image: reader.result,
-          });
+          }));
         }
       };
       reader.readAsDataURL(file);

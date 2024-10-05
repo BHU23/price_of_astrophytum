@@ -3,9 +3,14 @@
 import { HistoryPredicstionInterface } from "@/interface/historyPredictions.interface";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import { HistoryPromptInterface } from "@/interface/hostoryprompt.interface";
+import { GetHistoryPrompts } from "@/service/https/promp";
 export const useFetchPredictions = () => {
   const [historyPredictions, setHistoryPredictions] = useState<
     HistoryPredicstionInterface[] | null
+  >([]);
+  const [historyPrompts, setHistoryPrompts] = useState<
+    HistoryPromptInterface[] | null
   >([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -39,8 +44,22 @@ export const useFetchPredictions = () => {
       }
     };
 
+    const fetchHistoryPrompts = async () => {
+      try {
+        const historyPrompts = await GetHistoryPrompts(); 
+        if (historyPrompts) {
+          setHistoryPrompts(historyPrompts); 
+          console.log("Fetched history prompts:", historyPrompts);
+        }
+      } catch (error) {
+        console.error("Error fetching history prompts:", error);
+      }
+    };
+
+
     fetchHistoryPredictions();
+    fetchHistoryPrompts();
   }, []);
 
-  return { historyPredictions, loading, error };
+  return { historyPredictions,historyPrompts, loading, error };
 };

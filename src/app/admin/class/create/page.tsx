@@ -12,7 +12,6 @@ import InputNumber from "@/components/input_number";
 export default function CreateClass() {
   const {
     useClassItems: {
-      handleFileChange,
       handleInputChange,
       handleCreataClass,
       newPriceState,
@@ -40,8 +39,36 @@ export default function CreateClass() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
 
-  
+    if (file) {
+      // Validate that the file is an image
+      const validImageTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+      ];
+      if (!validImageTypes.includes(file.type)) {
+        console.error("Invalid file type. Please upload an image.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          setFormDataClass((prev: any) => ({
+            ...prev,
+            example_image: reader.result,
+          }));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+
   if (loading) return <FetchingState state="Loading..." /> ;
   if (error) return <FetchingState state={`Error: ${error}`} />;
 

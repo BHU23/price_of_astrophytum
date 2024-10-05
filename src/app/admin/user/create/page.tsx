@@ -105,6 +105,7 @@ export default function CreateProfile() {
                       name="avatar"
                       onChange={handleFileChange}
                       className="sr-only" // Hide the input
+                      accept="image/*"
                     />
                   </div>
                 </div>

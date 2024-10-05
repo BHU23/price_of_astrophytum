@@ -7,20 +7,53 @@ import { useState } from "react";
 export default function ResultPost() {
   const {
     predictionHistoryGlobal,
+    setPredictionHistoryGlobal,
     loading_prompt,
-    setLoadingPrompt,
+    historyPromptImage,
+    setHistoryPromptImage,
     historyPrompt,
     setHistoryPrompt,
   } = useGlobal();
   console.log("predictionHistoryGlobalpost", predictionHistoryGlobal);
   console.log("class3", predictionHistoryGlobal.class);
-   const [copyStatus, setCopyStatus] = useState("Copy"); 
+  const [copyStatus, setCopyStatus] = useState("Copy");
 
-   const handleCopy = () => {
-     navigator.clipboard.writeText(historyPrompt.result); 
-     setCopyStatus("Copied!"); 
-     setTimeout(() => setCopyStatus("Copy"), 2000); 
-   };
+  const handleCopy = () => {
+    navigator.clipboard.writeText(historyPrompt.result);
+    setCopyStatus("Copied!");
+    setTimeout(() => setCopyStatus("Copy"), 2000);
+  };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]; // Get the first selected file
+
+    if (file) {
+      const validImageTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+      ];
+
+      // Validate the file type
+      if (validImageTypes.includes(file.type)) {
+        const reader = new FileReader();
+
+        // Set up the onload event to convert the file to Base64
+        reader.onload = (e) => {
+          const result = e.target?.result; // Use optional chaining to safely access result
+
+          if (typeof result === "string") {
+           setHistoryPromptImage(result);
+          }
+        };
+
+        // Read the file as a Data URL (Base64)
+        reader.readAsDataURL(file);
+      } else {
+        alert("Please select a valid image file (JPG, PNG, GIF, WEBP).");
+      }
+    }
+  };
 
   return (
     <div className="w-full flex flex-col justify-start h-[100%] gap-5 ">
@@ -38,7 +71,10 @@ export default function ResultPost() {
               disabled={loading_prompt}
             >
               <PiCopy size={15} /> {copyStatus}
-            </button>) : ("")}
+            </button>
+          ) : (
+            ""
+          )}
           {loading_prompt ? (
             <div className="min-h-48 h-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full dark:bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear">
               <div className="transition-all text-center text-cta-gray pt-4">
@@ -89,28 +125,78 @@ export default function ResultPost() {
             </div>
           )}
         </div>{" "}
-        <div className="flex flex-col gap-2">
-          <span className="text-cta-text font-semibold text-sm">Image</span>
-
-          <div
-            className="flex justify-center h-64 bg-gray-50 border pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600  w-full p-2.5 dark:bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear 
+        <label htmlFor="dropzone-file" className="flex flex-col gap-2">
+          <span className="text-cta-text font-semibold text-sm">
+            Image <span className="text-red-400 text-start text-sm"> *</span>
+          </span>
+          <div className="flex flex-col items-center justify-center w-full h-full hover:cursor-pointer">
+            <div
+              className="flex justify-center h-64 bg-gray-50 border pr-2 border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600  w-full p-2.5 dark:bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-pear focus:border-pear 
                 [&:not(:placeholder-shown):invalid~span]:block 
               invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-400
               focus:invalid:[&:not(:placeholder-shown)]:border-red-400 focus:invalid:[&:not(:placeholder-shown)]:ring-red-400"
-          >
-            {predictionHistoryGlobal.image && (
-              <Image
-                width={500}
-                height={500}
-                src={predictionHistoryGlobal.image ?? ""}
-                alt="Preview"
-                className="max-h-full  object-contain"
-              />
-            )}
+            >
+              {historyPromptImage ? (
+                <Image
+                  width={500}
+                  height={500}
+                  src={historyPromptImage ?? ""}
+                  alt="Preview"
+                  className="max-h-full  object-contain"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer hover:bg-border">
+                  {historyPromptImage ? (
+                    <Image
+                      width={500}
+                      height={500}
+                      src={historyPromptImage}
+                      alt="Preview"
+                      className="max-h-full max-w-auto object-contain"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                      <svg
+                        className="w-8 h-8 mb-4 text-gray"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 16"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                        />
+                      </svg>
+                      <p className="mb-2 text-sm tes">
+                        <span className="font-semibold text-pear">
+                          Click to upload
+                        </span>{" "}
+                        or drag and drop
+                      </p>
+                      <p className="text-xs text-cta-gray">
+                        SVG, PNG, JPG or GIF (MAX. 800x400px)
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+          <input
+            id="dropzone-file"
+            type="file"
+            className="hidden"
+            onChange={handleFileChange}
+            accept="image/*"
+          />
+        </label>
       </div>
-      {predictionHistoryGlobal.image && (
+
+      {predictionHistoryGlobal.id && (
         <ButtonReturn
           name={"return"}
           // path={`/${userProfile?.role}/prompt_ai`}

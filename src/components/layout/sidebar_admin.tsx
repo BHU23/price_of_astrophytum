@@ -92,6 +92,38 @@ export default function SidebarAdmin({ setIsOpenSM }: SidebarAdminProps) {
               Dashboard
             </Link>
 
+            {/* <Link
+              href={`/admin/predictions_history`}
+              className={getLinkClassName(`/admin/predictions_history`)}
+              onClick={setIsOpenSM}
+            >
+              <div className="grid mr-4 place-items-center">
+                <HiOutlineSparkles />
+              </div>
+              Predictions History
+            </Link> */}
+            <Link
+              href={`/admin/posts_history`}
+              className={getLinkClassName(`/admin/posts_history`)}
+              onClick={setIsOpenSM}
+            >
+              <div className="flex justify-between items-center w-full transition-all rounded-lg outline-none text-start">
+                <div className="flex ">
+                  <div className="grid mr-4 place-items-center">
+                    <RiFileTextLine />
+                  </div>
+                  Posts History
+                </div>
+                {/* <p>5</p> */}
+              </div>
+            </Link>
+          </nav>
+          <div className="px-4 pt-2">
+            <h5 className="block font-sans text-xs antialiased text-cta ">
+              AI
+            </h5>
+          </div>
+          <nav className="flex flex-col gap-1 p-2 font-sans text-base font-normal">
             <Link
               href={`/admin/use_ai`}
               className={getLinkClassName(`/admin/use_ai`)}

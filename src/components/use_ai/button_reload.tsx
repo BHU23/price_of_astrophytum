@@ -22,11 +22,17 @@ export default function ButtonReload({
   const [progress, setProgress] = useState<number>(0);
   const [file, setFile] = useState<File | null>(null);
 
-  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleFileChange(event);
+   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
 
-    const selectedFile = event.target.files?.[0]; // Store selected file
     if (selectedFile) {
+      // Validate that the file is an image
+      const validImageTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+      if (!validImageTypes.includes(selectedFile.type)) {
+        setUploadStatus("Invalid file type. Please upload an image.");
+        return;
+      }
+
       setFile(selectedFile);
       setUploadStatus("Uploading...");
       setProgress(0);
@@ -34,7 +40,7 @@ export default function ButtonReload({
       const interval = setInterval(() => {
         setProgress((prev) => {
           if (prev < 100) {
-            return prev + 75; // Faster progress increment (25%)
+            return prev + 75; // Faster progress increment (75%)
           } else {
             clearInterval(interval);
             setUploadStatus("Upload successful!");
@@ -52,10 +58,12 @@ export default function ButtonReload({
           setProgress(0);
         }
       }, 200); // Simulate upload duration
+
+      handleFileChange(event); // Call external file change handler
     }
   };
 
-  return (
+  return(
     <div className="relative">
       <input
         className="hidden"

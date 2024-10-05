@@ -14,59 +14,50 @@ import DateRangePicker from "@/components/DateRangePicker";
 import StatBox from "@/components/stat_box";
 import StatBoxPost from "@/components/stat_boxPost";
 import DropdownSort from "@/components/dropdown_sortOrder";
+import PredictionHistory from "@/components/prediction_his";
 
 export default function DeashBoard() {
   const router = useRouter();
-  const { historyPredictions, loading, error } = useFetchPredictions();
+  const { historyPredictions,historyPrompts, loading, error } = useFetchPredictions();
   const { predictionHistoryGlobal, setPredictionHistoryGlobal } = useGlobal();
 
   const classificationCount = historyPredictions?.length;
+  const historyPromptsCount = historyPrompts?.length;
   const [role, setRole] = useState<string | null>(null);
-  const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
-  const [dateRange, setDateRange] = useState<{
-    from: Date | undefined;
-    to: Date | undefined;
-  }>({ from: undefined, to: undefined });
+
   const countOnday = useMemo(() => {
-    const now = new Date(); // Current date and time
+    const now = new Date(); 
     return historyPredictions?.filter((prediction) => {
       const predictionDate = parseISO(prediction.timestamp);
-      const startDate = new Date(predictionDate);
-      startDate.setDate(startDate.getDate() - 1);
+      const startDate = new Date(now);
+      startDate.setHours(0, 0, 0, 0);
+      const endDate = new Date(now);
+      endDate.setDate(endDate.getDate() + 1); 
+      endDate.setHours(0, 0, 0, 0);
       return isWithinInterval(predictionDate, {
         start: startDate,
-        end: now,
+        end: endDate,
       });
     }).length;
-  }, [dateRange, historyPredictions]);
-
-  const filteredAndSortedPredictions = useMemo(() => {
-    return historyPredictions
-      ?.filter((prediction) => {
-        if (!dateRange.from || !dateRange.to) return true;
-        const predictionDate = parseISO(prediction.timestamp);
-        const startDate = new Date(dateRange.from);
-        startDate.setDate(startDate.getDate() - 1);
-        return isWithinInterval(predictionDate, {
-          start: startDate,
-          end: dateRange.to,
-        });
-      })
-      .sort((a, b) => {
-        const dateA = new Date(a.timestamp).getTime();
-        const dateB = new Date(b.timestamp).getTime();
-        return sortOrder === "latest" ? dateB - dateA : dateA - dateB;
+  }, [historyPredictions]);
+  
+  const historyPromptOnday = useMemo(() => {
+    const now = new Date();
+    return historyPrompts?.filter((prediction) => {
+      const predictionDate = parseISO(prediction?.timestamp ?? "");
+      const startDate = new Date(now);
+      startDate.setHours(0, 0, 0, 0);
+      const endDate = new Date(now);
+      endDate.setDate(endDate.getDate() + 1);
+      endDate.setHours(0, 0, 0, 0);
+      return isWithinInterval(predictionDate, {
+        start: startDate,
+        end: endDate,
       });
-  }, [sortOrder, dateRange, historyPredictions]);
+    }).length;
+  }, [historyPrompts]);
 
-  const handleDateRangeChange = (from: any, to: any) => {
-    if (!from || !to) {
-      setDateRange({ from: undefined, to: undefined });
-    } else {
-      setDateRange({ from, to });
-    }
-  };
-
+  
   useEffect(() => {
     const fetchedRole = Cookies.get("role");
     if (fetchedRole) {
@@ -126,58 +117,21 @@ export default function DeashBoard() {
           name={"Alls Classification"}
           count={classificationCount ?? 0}
         ></StatBox>
-        <StatBoxPost name={"Daliy Post"} count={countOnday ?? 0}></StatBoxPost>
+        <StatBoxPost
+          name={"Daliy Post"}
+          count={historyPromptOnday ?? 0}
+        ></StatBoxPost>
         <StatBoxPost
           name={"Alls Posts"}
-          count={classificationCount ?? 0}
+          count={historyPromptsCount ?? 0}
         ></StatBoxPost>
       </div>
-      <div className="h-auto w-full bg-card mt-5 rounded-md shadow-lg">
-        <div className="flex flex-col  md:flex-row justify-between items-center p-5 pb-0 gap-4">
-          <div className="font-semibold w-full md:w-40">Prediction History</div>
-          <div className=" w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
-            <DateRangePicker onDateRangeChange={handleDateRangeChange} />
-            <div
-              inline-datepicker
-              datepicker-buttons
-              datepicker-autoselect-today
-              className="mx-auto sm:mx-0"
-            ></div>
-            <DropdownSort
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            ></DropdownSort>
-          </div>
-        </div>
-        {/* <hr className="h-px my-6 bg-gray-200 border-none dark:bg-gray-700" /> */}
-
-        {classificationCount !== 0 ? (
-          <div className="grid grid-flow-row auto-rows-auto grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 m-5">
-            {filteredAndSortedPredictions?.map((prediction, index) => (
-              <BoxPost
-                key={index}
-                prediction={prediction}
-                onClick={() => handleGetPrediction(prediction)}
-              />
-            ))}
-            <div className="flex text-cta-gray w-full ">
-              {filteredAndSortedPredictions?.length
-                ? ""
-                : 'Not have "Classification".'}
-            </div>
-          </div>
-        ) : (
-          <div className="flex text-cta-gray w-full p-5 pt-0">
-            Prediction Now{" "}
-            <a
-              href={`/${role?.toLowerCase()}/use_ai`}
-              className="ml-1 text-pear hover:text-tan hover:underline"
-            >
-              click
-            </a>
-          </div>
-        )}
-      </div>
+      <PredictionHistory
+        historyPredictions={historyPredictions}
+        role={role}
+        classificationCount={classificationCount}
+        handleGetPrediction={(h)=>{handleGetPrediction(h)}}
+      />
     </div>
   );
 }

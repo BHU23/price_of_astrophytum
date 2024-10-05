@@ -28,21 +28,7 @@ export default function useCreateClass() {
 
   const router = useRouter();
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setFormDataClass((prev:any) => ({
-            ...prev,
-            example_image: reader.result,
-          }));
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -141,7 +127,6 @@ export default function useCreateClass() {
   console.log("formDataClass", formDataClass);
   return {
     useClassItems: {
-      handleFileChange,
       handleInputChange,
       handlePriceChange,
       newPriceState,

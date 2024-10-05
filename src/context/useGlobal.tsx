@@ -11,7 +11,10 @@ import React, {
 } from "react";
 import { UserProfileDisplayInterface, UserProfileInterface } from "@/interface/user.interface";
 import { GetUserProfile } from "@/app/admin/profile/้hook";
-import { HistoryPromptInterface } from "@/interface/hostoryprompt.interface";
+import {
+  HistoryPromptInterface,
+  PromptfromInterface,
+} from "@/interface/hostoryprompt.interface";
 
 const GlobalContext = createContext<any>(undefined);
 
@@ -30,18 +33,18 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
     });
   const [loading, setLoading] = useState(false);
 
-  const [historyPrompt, setHistoryPrompt] = useState<HistoryPromptInterface>({
+  const [historyPrompt, setHistoryPrompt] = useState<PromptfromInterface>({
     prompt: "",
     result: "",
     classes: [],
     image: "",
     price: 0,
-    user_profile: null,
-    history_predictions: null,
-    role: null,
-    style: null,
+    role_id: null,
+    style_id: null,
+    history_prediction_id: null,
   });
 
+  const [historyPromptImage, setHistoryPromptImage] = useState("");
   const [loading_prompt, setLoadingPrompt] = useState(false);
 
   // const [istoken, setIsToken] = useState(false);
@@ -54,9 +57,9 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
     last_name: "",
     email: "",
     role: "",
-    fackbook_name: "", 
-    phone_number: null, 
-    date_of_birth: null, 
+    fackbook_name: null,
+    phone_number: null,
+    date_of_birth: null,
     gender: null,
   });
 
@@ -144,6 +147,8 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
         setLoadingPrompt,
         historyPrompt,
         setHistoryPrompt,
+        historyPromptImage,
+        setHistoryPromptImage,
         // istoken,
         // toggleToken,
         // token,

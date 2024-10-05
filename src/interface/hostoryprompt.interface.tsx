@@ -2,13 +2,13 @@ import { HistoryPredicstionInterface } from "./historyPredictions.interface";
 import { UserProfileDisplayInterface } from "./user.interface";
 
 export interface HistoryPromptInterface {
-  id?: number;
+  id: number;
   prompt: string;
   result: string;
   classes: string[];
   image: string;
   price?: number;
-  timestamp?: string;
+  timestamp: string;
   user_profile: UserProfileDisplayInterface | null;
   history_predictions: HistoryPredicstionInterface | null;
   role?: RoleInterface | null;

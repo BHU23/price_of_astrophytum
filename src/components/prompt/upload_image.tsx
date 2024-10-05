@@ -22,9 +22,11 @@ export default function SettingPrompt() {
     loading_prompt,
     setLoadingPrompt,
     historyPrompt,
+    historyPromptImage,
+    setHistoryPromptImage,
     setHistoryPrompt,
   } = useGlobal();
-  console.log("eeee", predictionHistoryGlobal);
+  // console.log("eeee", predictionHistoryGlobal);
   const maxLength = 500;
   const [predictionHistory, setPredictionHistory] =
     useState<PredictionHistorysInterface>(predictionHistoryGlobal);
@@ -88,6 +90,7 @@ export default function SettingPrompt() {
 
   useEffect(() => {
     setPredictionHistory(predictionHistoryGlobal);
+    setHistoryPromptImage(predictionHistory?.image ?? "");
     setPrompt((prev: PromptfromInterface) => ({
       ...prev,
       image: predictionHistory?.image ?? "",
@@ -104,6 +107,12 @@ export default function SettingPrompt() {
       }));
     }
   }, [predictionHistory, predictionHistoryGlobal]);
+  useEffect(() => {
+    setPrompt((prev: PromptfromInterface) => ({
+      ...prev,
+      image: historyPromptImage ?? ""
+    }));
+  }, [historyPromptImage]);
 
   return (
     <form

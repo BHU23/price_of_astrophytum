@@ -2,10 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useGlobal } from "@/context/useGlobal";
-import { DeleteHistoryPredictionByID, useFetchPredictions } from "./api";
-import { PredictionHistorysInterface } from "@/interface/predictionHistorys.interface";
+import { DeleteHistoryPredictionByID, useFetchPredictions } from "../dashboard/api";
 import Cookies from "js-cookie";
-import { HistoryPredicstionInterface } from "@/interface/historyPredictions.interface";
 import FetchingState from "@/components/fetching_state";
 import { useState, useEffect, useMemo } from "react";
 import { parseISO, isWithinInterval } from "date-fns";
@@ -25,6 +23,7 @@ import { format } from "date-fns";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
 import { FiTrash } from "react-icons/fi";
 import DeleteModle from "@/components/delete_model";
+import { DeleteHistoryPrompt } from "@/service/https/promp";
 export default function DeashBoard() {
   const router = useRouter();
    const { historyPredictions, historyPrompts, loading, error } =
@@ -33,7 +32,6 @@ export default function DeashBoard() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const classificationCount = historyPredictions?.length;
   const historyPromptsCount = historyPrompts?.length;
   const [role, setRole] = useState<string | null>(null);
 
@@ -48,57 +46,30 @@ export default function DeashBoard() {
   const [month, setMonth] = useState<number | null>(now.getMonth() + 1);
   const [year, setYear] = useState<number | null>(now.getFullYear());
 
-  const filteredOnDayMonthYear = useMemo(() => {
-    return historyPredictions?.filter((prediction) => {
-      const predictionDate = parseISO(prediction.timestamp);
-
-      const matchesYear = year ? predictionDate.getFullYear() === year : true;
-      const matchesMonth = month
-        ? predictionDate.getMonth() + 1 === month
-        : true;
-      const matchesDay = day ? predictionDate.getDate() === day : true;
-      // Check if it matches the year, month, and day
-      return matchesYear && matchesMonth && matchesDay;
-    });
-  }, [day, month, year, historyPredictions]);
   const hisPromptFilteredOnDayMonthYear = useMemo(() => {
     return historyPrompts?.filter((prediction) => {
-      const predictionDate = parseISO(prediction.timestamp ?? "");
+      const timestamp = prediction.timestamp;
+
+      // If timestamp is undefined, we skip this prediction
+      if (!timestamp) {
+        return false;
+      }
+
+      const predictionDate = parseISO(timestamp);
 
       const matchesYear = year ? predictionDate.getFullYear() === year : true;
       const matchesMonth = month
         ? predictionDate.getMonth() + 1 === month
         : true;
       const matchesDay = day ? predictionDate.getDate() === day : true;
+
       // Check if it matches the year, month, and day
       return matchesYear && matchesMonth && matchesDay;
     });
   }, [day, month, year, historyPrompts]);
 
-  const countOnDayMonthYear = filteredOnDayMonthYear?.length;
-  const priceRangeOnDayMonthYear = filteredOnDayMonthYear?.reduce(
-    (acc, prediction) => {
-      const min = prediction.total_min || 0;
-      const max = prediction.total_max || 0;
-      return {
-        min: acc.min + min,
-        max: acc.max + max,
-      };
-    },
-    { min: 0, max: 0 }
-  );
-
-  const formattedPriceRange =
-    priceRangeOnDayMonthYear && countOnDayMonthYear
-      ? `${(
-          priceRangeOnDayMonthYear.min / (countOnDayMonthYear ?? 1)
-        ).toLocaleString("en-US", { maximumFractionDigits: 2 })} - ${(
-          priceRangeOnDayMonthYear.max / (countOnDayMonthYear ?? 1)
-        ).toLocaleString("en-US", { maximumFractionDigits: 2 })}`
-      : "No data";
-
-  const filteredAndSortedPredictions = useMemo(() => {
-    return historyPredictions
+  const filteredAndSortedPrompts = useMemo(() => {
+    return historyPrompts
       ?.filter((prediction) => {
         if (!dateRange.from || !dateRange.to) return true;
         const predictionDate = parseISO(prediction.timestamp);
@@ -124,7 +95,7 @@ export default function DeashBoard() {
 
         return sortOrder === "latest" ? dateB - dateA : dateA - dateB;
       });
-  }, [sortOrder, dateRange, historyPredictions]);
+  }, [sortOrder, dateRange, historyPrompts]);
 
   const handleDateRangeChange = (from: any, to: any) => {
     setCurrentPage(1);
@@ -144,54 +115,19 @@ export default function DeashBoard() {
     }
   }, []);
 
-  const handleGetPrediction = async (
-    prediction: HistoryPredicstionInterface
-  ) => {
-    if (!prediction.id) return;
-
-    const apiUrl = `http://127.0.0.1:8000/predictions/${prediction.id}/`;
-
-    try {
-      const token = Cookies.get("token");
-      const response = await fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      const newPrediction: PredictionHistorysInterface = {
-        id: prediction.id,
-        image: prediction.image,
-        class: data.map((item: any) => item.class_name),
-        total_min: prediction.total_min,
-        total_max: prediction.total_max,
-      };
-      await setPredictionHistoryGlobal(newPrediction);
-      router.push(`/admin/use_ai`);
-    } catch (error) {
-      console.error("Error fetching prediction details:", error);
-    }
-  };
-
-  const [predictHisToDelete, setPredictHisToDelete] = useState<number | null>(
+  const [promptHisToDelete, setPromptHisToDelete] = useState<number | null>(
     null
   );
 
   const [previewPredictHis, setPredictHis] = useState<number[]>([]);
-  // const [previewPredictHis, setPredictHisID] = useState<number | null>(null);
+
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const getNestedValue = (obj: any, key: string) => {
     return key.split(".").reduce((o, i) => (o ? o[i] : undefined), obj);
   };
 
-  const sortedPredictions = filteredAndSortedPredictions?.sort((a, b) => {
+  const sortedPrompts = filteredAndSortedPrompts?.sort((a, b) => {
     if (!sortKey) return 0;
 
     const valueA = getNestedValue(a, sortKey);
@@ -210,12 +146,12 @@ export default function DeashBoard() {
     return 0;
   });
 
-  const displayedPredictHus = sortedPredictions?.slice(
+  const displayedPromptsHis = sortedPrompts?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  const totalPages = Math.ceil((sortedPredictions?.length ?? 0) / itemsPerPage);
+  const totalPages = Math.ceil((sortedPrompts?.length ?? 0) / itemsPerPage);
   const onPageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -228,11 +164,7 @@ export default function DeashBoard() {
       setSortDirection("asc");
     }
   };
-  // const handlePreview = (hisspreID: number) => {
-  //   setPredictHisID(hisspreID);
-  //   const modal = document.getElementById("previewModal");
-  //   if (modal) modal.classList.remove("hidden");
-  // };
+  
   const togglePrediction = (id: number) => {
     setPredictHis((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
@@ -240,23 +172,21 @@ export default function DeashBoard() {
   };
 
   const handleDeleteClick = (hisspreID: number) => {
-    setPredictHisToDelete(hisspreID);
+    setPromptHisToDelete(hisspreID);
     const modal = document.getElementById("deleteModal");
     if (modal) modal.classList.remove("hidden");
   };
   const handleDeleteConfirm = async () => {
-    if (predictHisToDelete !== null) {
-      const success = await DeleteHistoryPredictionByID(
-        String(predictHisToDelete)
-      );
+    if (promptHisToDelete !== null) {
+      const success = await DeleteHistoryPrompt(String(promptHisToDelete));
       if (success) {
-        console.log("Class deleted successfully");
+        console.log("HistoryPrompt deleted successfully");
         // Refresh or update the UI after deletion
         router.refresh(); // Refresh the page or trigger re-fetching
       } else {
-        console.error("Failed to delete the class");
+        console.error("Failed to delete the HistoryPrompt");
       }
-      setPredictHisToDelete(null);
+      setPromptHisToDelete(null);
       const modal = document.getElementById("deleteModal");
       if (modal) modal.classList.add("hidden");
       window.location.reload();
@@ -274,7 +204,7 @@ export default function DeashBoard() {
       <div className="h-auto w-full bg-card rounded-md shadow-lg mb-5">
         <div className="flex flex-col  md:flex-row justify-between items-center p-5 gap-4 ">
           <div className="font-semibold text-lg w-full md:w-40">
-            Admin Dashboard
+            Postsed History
           </div>
           <div className=" w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
             <DropdownYear year={year} setYear={setYear} />{" "}
@@ -290,7 +220,7 @@ export default function DeashBoard() {
         </div>
       </div>
 
-      <div className="w-full grid grid-col1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
+      {/* <div className="w-full grid grid-col1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
         <StatBox
           name={"Total Classifications"}
           count={countOnDayMonthYear ?? 0}
@@ -298,13 +228,13 @@ export default function DeashBoard() {
         <StatBoxPrice
           name={"Average Price ฿"}
           count={formattedPriceRange ?? ""}
-        ></StatBoxPrice>
-        <StatBoxPost
+        ></StatBoxPrice> 
+      <StatBoxPost
           name={"Total Posts"}
           count={hisPromptFilteredOnDayMonthYear?.length ?? 0}
-        ></StatBoxPost>
-      </div>
-      <div className="flex flex-col md:flex-row justify-between items-center pt-5 gap-4 w-[99.9%] ">
+        ></StatBoxPost> 
+      </div>*/}
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 w-[99.9%] ">
         <BarChart
           series={"count"}
           title="Histories Graph"
@@ -312,16 +242,16 @@ export default function DeashBoard() {
             day ? day + "-" : "day-"
           }${month ? month : "month"}${year ? "-" + year : "-year"}`}
           config={{ colors: ["#C6ED46"] }}
-          filteredOnDayMonthYear={filteredOnDayMonthYear}
+          filteredOnDayMonthYear={hisPromptFilteredOnDayMonthYear}
           year={year}
           month={month}
           day={day}
-          count={null}
+          count={hisPromptFilteredOnDayMonthYear?.length ?? 0}
         />
       </div>
       <div className="h-auto w-full bg-card mt-5 rounded-md shadow-lg">
         <div className="flex flex-col  md:flex-row justify-between items-center p-5 pb-0 gap-4">
-          <div className="font-semibold w-full md:w-40">Prediction History</div>
+          <div className="font-semibold w-full md:w-40">Posts History</div>
           <div className=" w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
             <DateRangePicker onDateRangeChange={handleDateRangeChange} />
             <div
@@ -337,7 +267,7 @@ export default function DeashBoard() {
             ></DropdownSort>
           </div>
         </div>
-        {classificationCount !== 0 ? (
+        {historyPromptsCount !== 0 ? (
           <div className="p-5">
             <table className="w-full text-sm text-left">
               <thead className="text-xs text-cta-text uppercase bg-background">
@@ -366,24 +296,24 @@ export default function DeashBoard() {
                     {" "}
                     {sortKey === "timestamp" &&
                       (sortDirection === "asc" ? "↑" : "↓")}{" "}
-                    Date{" "}
+                    Data{" "}
                   </th>
                   <th
                     className="pl-6 py-3 text-end cursor-pointer "
-                    onClick={() => handleSort("total_max")}
+                    onClick={() => handleSort("role")}
                   >
                     {" "}
-                    {sortKey === "total_max" &&
+                    {sortKey === "role" &&
                       (sortDirection === "asc" ? "↑" : "↓")}{" "}
-                    Total Max (฿)
+                    Role
                   </th>
                   <th
                     className="pl-6 py-3 cursor-pointer text-end"
-                    onClick={() => handleSort("total_min")}
+                    onClick={() => handleSort("style")}
                   >
-                    {sortKey === "total_min" &&
+                    {sortKey === "style" &&
                       (sortDirection === "asc" ? "↑" : "↓")}{" "}
-                    Total Min (฿)
+                    Style
                   </th>
                   <th scope="col" className="px-6 py-3 text-center max-w-8">
                     Action
@@ -391,7 +321,7 @@ export default function DeashBoard() {
                 </tr>
               </thead>
 
-              {displayedPredictHus?.map((h, index) => (
+              {displayedPromptsHis?.map((h, index) => (
                 <>
                   <tr
                     key={h.id}
@@ -431,12 +361,8 @@ export default function DeashBoard() {
                         </div>
                       </div>
                     </th>
-                    <td className="pl-6 py-4 text-end">
-                      {h.total_min?.toLocaleString()}
-                    </td>
-                    <td className="pl-6 py-4 text-end">
-                      {h.total_max?.toLocaleString()}
-                    </td>
+                    <td className="pl-6 py-4 text-end">{h.role?.name}</td>
+                    <td className="pl-6 py-4 text-end">{h.style?.name}</td>
                     <td className="px-6 py-4">
                       {" "}
                       <button
@@ -457,7 +383,7 @@ export default function DeashBoard() {
                         colSpan={5}
                         className="bg-gray-100 dark:bg-gray-700 p-4 pl-16"
                       >
-                        <div className="text-gray-600 dark:text-gray-300 flex gap-5">
+                        <div className="text-gray-600 dark:text-gray-300 flex gap-5 flex-wrap">
                           <Image
                             width={40}
                             height={40}
@@ -466,7 +392,6 @@ export default function DeashBoard() {
                             alt={`${h.id} image`}
                           />
                           <div className="flex gap-4 flex-col">
-                            <strong>More Details:</strong>
                             <div className="flex gap-1 flex-col">
                               <p className="font-medium">Created by username</p>
                               {h?.user_profile?.username ?? "-"}
@@ -478,26 +403,64 @@ export default function DeashBoard() {
                             </div>
                           </div>
                           <div className="flex gap-4 flex-col">
-                            <br />
+                            <div className="flex gap-1 flex-col">
+                              <p className="font-medium">Task</p>
+                              {h?.prompt ?? "-"}
+                            </div>
+                            <div className="flex gap-1 flex-col">
+                              <p className="font-medium">Role</p>
+                              {h?.role?.name ?? "-"}
+                            </div>
+                            <div className="flex gap-1 flex-col">
+                              <p className="font-medium">Style</p>
+                              {h?.style?.name ?? "-"}
+                            </div>
+                          </div>
+                          <div className="flex gap-4 flex-col">
+                            <div className="flex gap-1 flex-col">
+                              <p className="font-medium">Class</p>
+                              {h?.classes ?? "-"}
+                            </div>
+                            <div className="flex gap-1 flex-col">
+                              <p className="font-medium">Price</p>
+                              {h?.price ?? "-"}
+                            </div>
+                          </div>
+                          <div className="flex gap-4 flex-col">
+                            <div
+                              className="flex gap-1 flex-col"
+                              style={{ whiteSpace: "pre-wrap" }}
+                            >
+                              <p className="font-medium text-cta-text">
+                                Result
+                              </p>
+                              {h?.result ?? "-"}
+                            </div>
+                          </div>
+                          {/* <div className="flex gap-4 flex-col">
                             <div className="flex gap-1 flex-col">
                               <p className="font-medium">Classes </p>
                               <div className="flex items-center gap-2">
-                                {h?.predictions.length >= 1 &&
-                                  h?.predictions.map((p, idx) => (
-                                    <div key={idx}>
-                                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                                        {p?.class_name.name ?? "-"}
-                                      </p>
-                                    </div>
-                                  ))}
+                                {h?.history_predictions?.predictions?.length &&
+                                  h?.history_predictions?.predictions?.map(
+                                    (p, idx) => (
+                                      <div key={idx}>
+                                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                                          {p?.class_name.name ?? "-"}
+                                        </p>
+                                      </div>
+                                    )
+                                  )}
                               </div>
                             </div>
                             <div className="flex gap-1 flex-col">
                               <p className="font-medium">Total Price</p>
-                              {h?.total_min.toLocaleString()} -{" "}
-                              {h?.total_max.toLocaleString()} Bath.
+                              {h?.history_predictions?.total_min.toLocaleString()}{" "}
+                              -{" "}
+                              {h?.history_predictions?.total_max.toLocaleString()}{" "}
+                              Bath.
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </td>
                     </tr>
@@ -508,7 +471,7 @@ export default function DeashBoard() {
 
             <Pagination
               itemsPerPage={itemsPerPage}
-              classCount={sortedPredictions?.length ?? 0}
+              classCount={sortedPrompts?.length ?? 0}
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={onPageChange}
@@ -523,18 +486,12 @@ export default function DeashBoard() {
 
             <DeleteModle
               handleDeleteConfirm={handleDeleteConfirm}
-              setClassToDelete={(e) => setPredictHisToDelete(e)}
+              setClassToDelete={(e) => setPromptHisToDelete(e)}
             />
           </div>
         ) : (
-          <div className="flex text-cta-gray w-full p-5 pt-0">
-            Prediction Now{" "}
-            <a
-              href={`/${role?.toLowerCase()}/use_ai`}
-              className="ml-1 text-pear hover:text-tan hover:underline"
-            >
-              click
-            </a>
+          <div className="flex text-cta-gray w-full p-5 sm:pt-0">
+            {" Have't Posts  "}
           </div>
         )}
       </div>

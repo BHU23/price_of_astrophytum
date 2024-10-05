@@ -65,6 +65,16 @@ export default function EditProfile({ params }: { params: { user: string } }) {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      const validImageTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+      ];
+      if (!validImageTypes.includes(file.type)) {
+        console.error("Invalid file type. Please upload an image.");
+        return;
+      }
       const reader = new FileReader();
       reader.onloadend = () => {
         if (typeof reader.result === "string") {
@@ -184,6 +194,7 @@ export default function EditProfile({ params }: { params: { user: string } }) {
                       name="avatar"
                       onChange={handleFileUpload}
                       className="sr-only" // Hide the input
+                      accept="image/*"
                     />
                   </div>
                 </div>
@@ -241,7 +252,7 @@ export default function EditProfile({ params }: { params: { user: string } }) {
                   type="fackbook_name"
                   htmlFor="fackbook_name"
                   placeholder="..."
-                  value={formData.fackbook_name}
+                  value={formData.fackbook_name ?? "-"}
                   autoComplete="fackbook_name"
                   handleChange={handleChange}
                   pattern=".*"
