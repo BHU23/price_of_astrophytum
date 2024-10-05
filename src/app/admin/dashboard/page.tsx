@@ -138,7 +138,7 @@ export default function DeashBoard() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 

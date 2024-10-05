@@ -6,6 +6,8 @@ import ButtonItems from "@/components/button_items";
 import InputItems from "@/components/input_items";
 import FetchingState from "@/components/fetching_state";
 import useCreateUserProfile from "./hook";
+import { DropdownGenders } from "@/components/dropdown_gender";
+import DateBDPicker from "@/components/date_BD_picker";
 
 export default function CreateProfile() {
   const {
@@ -230,8 +232,70 @@ export default function CreateProfile() {
                   value={formData.email ?? ""}
                   autoComplete="email"
                   handleChange={handleInputChange}
-                  pattern="[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   textError=" Please enter a valid email address."
+                />
+              </div>
+              <div className="col-span-full">
+                <InputItems
+                  id="fackbook_name"
+                  name="Facebook name or URL profile"
+                  type="fackbook_name"
+                  htmlFor="fackbook_name"
+                  placeholder="..."
+                  value={formData.fackbook_name ?? ""}
+                  autoComplete="fackbook_name"
+                  handleChange={handleInputChange}
+                  pattern=".*"
+                  textError=" Please enter a valid facebook name or URL profile."
+                />
+              </div>
+              <div className="col-span-full">
+                <InputItems
+                  id="phone_number"
+                  name="Phone Number"
+                  type="tel"
+                  htmlFor="phone_number"
+                  placeholder="0XXXXXXXXX" // Adjust placeholder to match Thai phone number format
+                  value={formData.phone_number ?? ""}
+                  autoComplete="tel"
+                  handleChange={handleInputChange}
+                  pattern="^0[0-9]{9}$" // Regex for Thai phone number validation
+                  textError="Please enter a valid 10-digit Thai phone number."
+                />
+              </div>
+              <div className="col-span-full">
+                <label
+                  className="text-cta-text text-sm font-semibold "
+                  htmlFor={"DropdownGenders"}
+                >
+                  Birth Date
+                </label>
+                <DateBDPicker
+                  onDateChange={(newDate: string | null) => {
+                    setFormData({
+                      ...formData,
+                      date_of_birth: newDate,
+                    });
+                  }}
+                  oldDate={formData.date_of_birth}
+                ></DateBDPicker>
+              </div>
+              <div className="col-span-full">
+                <label
+                  className="text-cta-text text-sm font-semibold"
+                  htmlFor={"DropdownGenders"}
+                >
+                  Gender
+                </label>
+                <DropdownGenders
+                  gender={formData.gender ?? null}
+                  setGender={(e) => {
+                    setFormData((prev: any) => ({
+                      ...prev,
+                      gender: e,
+                    }));
+                  }}
                 />
               </div>
             </div>
@@ -241,10 +305,10 @@ export default function CreateProfile() {
               <ButtonReturn name={"Cancel"}></ButtonReturn>
               <ButtonItems
                 name={"Save"}
-                onClick={() => { }}
+                onClick={() => {}}
                 type="submit"
                 withs="28"
-                loading={ false}
+                loading={false}
               />
             </div>
           </div>

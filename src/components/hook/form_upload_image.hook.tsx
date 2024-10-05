@@ -20,7 +20,7 @@ export default function useFormUploadImage() {
   const [imagePreviewOld, setImagePreviewOld] = useState<string | null>(
     predictionHistoryGlobal.image || null
   );
- 
+
   const [videoStatus, setVideoStatus] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -43,109 +43,126 @@ export default function useFormUploadImage() {
       reader.readAsDataURL(file);
     }
   };
+  const [role, setRole] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchedRole = Cookies.get("role");
+    if (fetchedRole) {
+      setRole(fetchedRole);
+    } else {
+      console.warn("Role not found in cookies");
+    }
+  }, []);
+  const handleUpload = async () => {
+    console.log("handleCheckInput");
 
-const handleUpload = async () => {
-  console.log("handleCheckInput");
+    if (!imagePreview) {
+      setIsShow(true);
+      setErrorMessage("Opp! Please enter Nudum image, this field is required.");
 
-  if (!imagePreview) {
-    setIsShow(true);
-    setErrorMessage("Opp! Please enter Nudum image, this field is required.");
-
-    return; 
-  } else {
-    setIsShow(false);
-    setErrorMessage("");
-  }
-
-  if (loading || imagePreview === imagePreviewOld) return;
-
-  try {
-    const token = Cookies.get("token");
-    console.log("Token:", token);
-
-    setLoading(true);
-    const apiUrl = "http://127.0.0.1:8000/api/history-predictions/";
-
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
-      },
-      body: JSON.stringify({ image: imagePreview }),
-    });
-
-    // Check if response is not OK
-    if (!response.ok) {
-      const data = await response.json();
-      console.error("Error response data:", data);
-      setPredictionHistoryGlobal((prev: PredictionHistorysInterface) => ({
-        ...prev, 
-        prompt: "",
-        result: "",
-        classes: [],
-        image: "",
-        price: 0,
-        user_profile: null,
-        history_predictions: null,
-        role: null,
-        style: null,
-      }));
-      throw new Error(data.status || "Failed to upload image");
+      return;
+    } else {
+      setIsShow(false);
+      setErrorMessage("");
     }
 
-    const data = await response.json();
-    console.log("data:", data);
+    if (loading || imagePreview === imagePreviewOld) return;
 
-    const newPrediction = {
-      image: imagePreview,
-      id: data.id,
-      class: data.classes.map((cls: any) => ({
-        id: cls.id,
-        name: cls.name,
-        example_image: cls.example_image,
-        extra_value: cls.extra_value,
-        description: cls.description,
-        price: {
-          id: cls.price.id ?? 1,
-          value_min: cls.price.value_min,
-          value_max: cls.price.value_max,
+    try {
+      const token = Cookies.get("token");
+      console.log("Token:", token);
+
+      setLoading(true);
+      const apiUrl = "http://127.0.0.1:8000/api/history-predictions/";
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      })),
-      total_min: data.total_min,
-      total_max: data.total_max,
-    };
+        body: JSON.stringify({ image: imagePreview }),
+      });
 
-    // Adjust total_min and total_max based on class types
-    const hasVtypeHigh = newPrediction.class.some(
-      (cls: any) => cls.name === "Vtype-High"
-    );
-    const hasVtypeLow = newPrediction.class.some(
-      (cls: any) => cls.name === "Vtype-Low"
-    );
+      // Check if response is not OK
+      if (!response.ok) {
+        const data = await response.json();
+        console.error("Error response data:", data);
+        setPredictionHistoryGlobal((prev: PredictionHistorysInterface) => ({
+          ...prev,
+          prompt: "",
+          result: "",
+          classes: [],
+          image: "",
+          price: 0,
+          user_profile: null,
+          history_predictions: null,
+          role: null,
+          style: null,
+        }));
+        throw new Error(data.status || "Failed to upload image");
+      }
 
-    if (hasVtypeHigh && hasVtypeLow) {
-      newPrediction.total_min /= 2;
-      newPrediction.total_max /= 2;
+      const data = await response.json();
+      console.log("data:", data);
+
+      const newPrediction = {
+        image: imagePreview,
+        id: data.id,
+        class: data.classes.map((cls: any) => ({
+          id: cls.id,
+          name: cls.name,
+          example_image: cls.example_image,
+          extra_value: cls.extra_value,
+          description: cls.description,
+          price: {
+            id: cls.price.id ?? 1,
+            value_min: cls.price.value_min,
+            value_max: cls.price.value_max,
+          },
+        })),
+        total_min: data.total_min,
+        total_max: data.total_max,
+      };
+
+      // Adjust total_min and total_max based on class types
+      const hasVtypeHigh = newPrediction.class.some(
+        (cls: any) => cls.name === "Vtype-High"
+      );
+      const hasVtypeLow = newPrediction.class.some(
+        (cls: any) => cls.name === "Vtype-Low"
+      );
+
+      if (hasVtypeHigh && hasVtypeLow) {
+        newPrediction.total_min /= 2;
+        newPrediction.total_max /= 2;
+      }
+
+      // Update global state and old image preview
+      setImagePreviewOld(imagePreview);
+      setPredictionHistoryGlobal(newPrediction);
+
+      // ตรวจสอบ role และกำหนดเส้นทางที่ถูกต้อง
+      let newPath;
+      if (role === "User") {
+        newPath = `/user/use_ai/${newPrediction.id}`;
+      } else if (role === "Admin") {
+        newPath = `/admin/use_ai/${newPrediction.id}`;
+      } else {
+        newPath = `/login`;
+      }
+
+      router.replace(newPath);
+    } catch (error) {
+      // Check if the error is an instance of Error
+      console.error("Error uploading image:", error);
+      setIsShow(true);
+      setErrorMessage(
+        error instanceof Error ? error.message : "An unexpected error occurred."
+      );
+    } finally {
+      setLoading(false); // Ensure loading state is reset
     }
-
-    // Update global state and old image preview
-    setImagePreviewOld(imagePreview);
-    setPredictionHistoryGlobal(newPrediction);
-     const newPath = `${window.location.pathname}/${newPrediction.id}`;
-     window.history.pushState({}, "", newPath); 
-  } catch (error) {
-    // Check if the error is an instance of Error
-    console.error("Error uploading image:", error);
-    setIsShow(true);
-    setErrorMessage(
-      error instanceof Error ? error.message : "An unexpected error occurred."
-    );
-  } finally {
-    setLoading(false); // Ensure loading state is reset
-  }
-};
-
+  };
 
   const openCamera = async () => {
     setVideoStatus(true);
@@ -210,10 +227,10 @@ const handleUpload = async () => {
     };
   }, []);
 
-   useEffect(() => {
-     setImagePreview(predictionHistoryGlobal.image || null);
-     setImagePreviewOld(predictionHistoryGlobal.image || null);
-   }, [predictionHistoryGlobal]);
+  useEffect(() => {
+    setImagePreview(predictionHistoryGlobal.image || null);
+    setImagePreviewOld(predictionHistoryGlobal.image || null);
+  }, [predictionHistoryGlobal]);
 
   return {
     useFormUploadImageItem: {

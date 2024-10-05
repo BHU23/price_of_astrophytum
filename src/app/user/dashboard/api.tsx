@@ -19,7 +19,7 @@ export const useFetchPredictions = () => {
           {
             method: "GET",
             headers: {
-              Authorization: `Token ${token}`,
+              Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
           }

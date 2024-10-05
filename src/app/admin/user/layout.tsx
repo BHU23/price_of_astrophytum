@@ -12,7 +12,7 @@ export default function RootLayout({
   const { breadcrumbLinks } = useGlobal();
   return (
     <div className="flex flex-1">
-      <div className="flex flex-col  h-auto w-full rounded-xl  bg-card shadow-md overflow-hidden">
+      <div className="flex flex-col  h-auto w-full rounded-xl  bg-card shadow-md">
         <Breadcrumb links={breadcrumbLinks} />
         {children}
       </div>

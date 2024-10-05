@@ -28,7 +28,7 @@ export function useUserProfile() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Token ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -64,7 +64,7 @@ export const CreateUserProfile = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(newProfileData),
     });
@@ -92,7 +92,7 @@ export const DeleteUserProfileByID = async (id: number): Promise<boolean> => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -109,9 +109,7 @@ export const DeleteUserProfileByID = async (id: number): Promise<boolean> => {
   }
 };
 
-export const GetUserProfileByID = async (
-  id: number
-) => {
+export const GetUserProfileByID = async (id: number) => {
   const apiUrl = `http://127.0.0.1:8000/api/profile/${id}/`;
 
   try {
@@ -120,7 +118,7 @@ export const GetUserProfileByID = async (
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -152,7 +150,7 @@ export const UpdateUserProfileByAdmin = async (
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(updatedData),
     });

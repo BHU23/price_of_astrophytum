@@ -41,7 +41,7 @@ export default function SidebarAdmin({ setIsOpenSM }: SidebarAdminProps) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -171,7 +171,7 @@ export default function SidebarAdmin({ setIsOpenSM }: SidebarAdminProps) {
               <Image
                 width={50}
                 height={50}
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full object-cover"
                 src={
                   userProfile?.avatar != "" && userProfile?.avatar
                     ? userProfile?.avatar

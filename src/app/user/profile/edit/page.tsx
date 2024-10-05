@@ -7,21 +7,24 @@ import ButtonReturn from "@/components/button_return";
 import ButtonItems from "@/components/button_items";
 import InputItems from "@/components/input_items";
 import FetchingState from "@/components/fetching_state";
+import { DropdownGenders } from "@/components/dropdown_gender";
+import DateBDPicker from "@/components/date_BD_picker";
+import { UserProfileInterface } from "@/interface/user.interface";
 
 export default function EditProfile() {
   const router = useRouter();
-  const initialFormData = {
-    username: "",
-    avatar: "",
-    password: "",
-    email: "",
-    role: "",
-    first_name: "",
-    last_name: "",
-    fackbook_name: "",
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState<UserProfileInterface>({
+    username: "", 
+    avatar: null, 
+    email: "", 
+    role: "", 
+    first_name: "", 
+    last_name: "", 
+    fackbook_name: "", 
+    phone_number: null, 
+    date_of_birth: null, 
+    gender: null, 
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,7 +34,18 @@ export default function EditProfile() {
       try {
         const data = await GetUserProfile();
         if (data) {
-          setFormData(data);
+          setFormData({
+            username: data.username,
+            avatar: data.avatar,
+            email: data.email,
+            role: data.role,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            fackbook_name: data.fackbook_name,
+            phone_number: data.phone_number,
+            date_of_birth: data.date_of_birth,
+            gender: data.gender,
+          });
         }
       } catch (err) {
         console.error("Failed to fetch user profile:", err);
@@ -77,6 +91,7 @@ export default function EditProfile() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    console.log("Profile formData:", formData);
     try {
       const updatedProfile = await UpdateUserProfile(formData);
       if (updatedProfile) {
@@ -93,7 +108,7 @@ export default function EditProfile() {
   };
 
   if (loading) {
-    return <FetchingState  state="Loading..." />;
+    return <FetchingState state="Loading..." />;
   }
   if (error) return <FetchingState state={`Error: ${error}`} />;
   return (
@@ -220,8 +235,70 @@ export default function EditProfile() {
                   value={formData.email}
                   autoComplete="email"
                   handleChange={handleChange}
-                  pattern="[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   textError=" Please enter a valid email address."
+                />
+              </div>
+              <div className="col-span-full">
+                <InputItems
+                  id="fackbook_name"
+                  name="Facebook name or URL profile"
+                  type="fackbook_name"
+                  htmlFor="fackbook_name"
+                  placeholder="..."
+                  value={formData.fackbook_name}
+                  autoComplete="fackbook_name"
+                  handleChange={handleChange}
+                  pattern=".*"
+                  textError=" Please enter a valid facebook name or URL profile."
+                />
+              </div>
+              <div className="col-span-full">
+                <InputItems
+                  id="phone_number"
+                  name="Phone Number"
+                  type="tel"
+                  htmlFor="phone_number"
+                  placeholder="0XXXXXXXXX" // Adjust placeholder to match Thai phone number format
+                  value={formData.phone_number ?? ""}
+                  autoComplete="tel"
+                  handleChange={handleChange}
+                  pattern="^0[0-9]{9}$" // Regex for Thai phone number validation
+                  textError="Please enter a valid 10-digit Thai phone number."
+                />
+              </div>
+              <div className="col-span-full">
+                <label
+                  className="text-cta-text text-sm font-semibold "
+                  htmlFor={"DropdownGenders"}
+                >
+                  Birth Date
+                </label>
+                <DateBDPicker
+                  onDateChange={(newDate: string | null) => {
+                    setFormData({
+                      ...formData,
+                      date_of_birth: newDate,
+                    });
+                  }}
+                  oldDate={formData.date_of_birth}
+                ></DateBDPicker>
+              </div>
+              <div className="col-span-full">
+                <label
+                  className="text-cta-text text-sm font-semibold"
+                  htmlFor={"DropdownGenders"}
+                >
+                  Gender
+                </label>
+                <DropdownGenders
+                  gender={formData.gender}
+                  setGender={(e) => {
+                    setFormData((prev: any) => ({
+                      ...prev,
+                      gender: e,
+                    }));
+                  }}
                 />
               </div>
             </div>

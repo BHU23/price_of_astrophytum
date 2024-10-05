@@ -45,8 +45,8 @@ export default function DeashBoard() {
       ?.filter((prediction) => {
         if (!dateRange.from || !dateRange.to) return true;
         const predictionDate = parseISO(prediction.timestamp);
-         const startDate = new Date(dateRange.from);
-         startDate.setDate(startDate.getDate() - 1);
+        const startDate = new Date(dateRange.from);
+        startDate.setDate(startDate.getDate() - 1);
         return isWithinInterval(predictionDate, {
           start: startDate,
           end: dateRange.to,
@@ -61,7 +61,6 @@ export default function DeashBoard() {
 
   const handleDateRangeChange = (from: any, to: any) => {
     if (!from || !to) {
-
       setDateRange({ from: undefined, to: undefined });
     } else {
       setDateRange({ from, to });
@@ -90,7 +89,7 @@ export default function DeashBoard() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -98,7 +97,7 @@ export default function DeashBoard() {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      console.log("dddd",data);
+      console.log("dddd", data);
       const newPrediction: PredictionHistorysInterface = {
         id: prediction.id,
         image: prediction.image,
@@ -112,7 +111,7 @@ export default function DeashBoard() {
       console.error("Error fetching prediction details:", error);
     }
   };
- 
+
   if (loading) return <FetchingState state="Loading..." />;
   if (error) return <FetchingState state={`Error: ${error}`} />;
 

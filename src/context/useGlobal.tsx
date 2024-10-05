@@ -9,7 +9,7 @@ import React, {
   useEffect,
   useRef,
 } from "react";
-import { UserProfileInterface } from "@/interface/user.interface";
+import { UserProfileDisplayInterface, UserProfileInterface } from "@/interface/user.interface";
 import { GetUserProfile } from "@/app/admin/profile/้hook";
 import { HistoryPromptInterface } from "@/interface/hostoryprompt.interface";
 
@@ -46,30 +46,33 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
 
   // const [istoken, setIsToken] = useState(false);
 
-  const [userProfile, setUserProfile] = useState<UserProfileInterface>({
+  const [userProfile, setUserProfile] = useState<UserProfileDisplayInterface>({
+    id: null,
     username: "",
     avatar: "",
     first_name: "",
     last_name: "",
-    password: "",
     email: "",
     role: "",
-    fackbook_name: "",
+    fackbook_name: "", 
+    phone_number: null, 
+    date_of_birth: null, 
+    gender: null,
   });
 
-  useEffect(() => {
-    const handleGetUserProfile = async () => {
-      try {
-        const data = await GetUserProfile();
-        console.log(data);
-        setUserProfile(data);
-      } catch (error) {
-        console.error("Failed to fetch user profile", error);
-      }
-    };
+   useEffect(() => {
+     const handleGetUserProfile = async () => {
+       try {
+         const data: UserProfileDisplayInterface = await GetUserProfile();
+         console.log(data);
+         setUserProfile(data);
+       } catch (error) {
+         console.error("Failed to fetch user profile", error);
+       }
+     };
 
-    handleGetUserProfile();
-  }, []);
+     handleGetUserProfile();
+   }, []);
 
   const [isOpenModel, setIsOpenModel] = useState(false);
   const [isOpen, setIsOpen] = useState(true);

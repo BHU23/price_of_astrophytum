@@ -14,7 +14,7 @@ const LogoutButton: React.FC = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`, // Include the token in the Authorization header
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the Authorization header
         },
       });
 

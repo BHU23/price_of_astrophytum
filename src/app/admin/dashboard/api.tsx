@@ -1,5 +1,5 @@
 "use client";
-
+import {jwtDecode} from "jwt-decode";
 import { HistoryPredicstionInterface } from "@/interface/historyPredictions.interface";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
@@ -12,6 +12,9 @@ export const useFetchPredictions = () => {
   const [error, setError] = useState("");
 
   const fetchHistoryPredictions = async () => {
+    const token = Cookies.get("token");
+    const decodedToken = jwtDecode(token ?? "");
+    console.log("Decoded Token: ", decodedToken);
     try {
       const token = Cookies.get("token");
       const response = await fetch(
@@ -19,7 +22,7 @@ export const useFetchPredictions = () => {
         {
           method: "GET",
           headers: {
-            Authorization: `Token ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }
@@ -66,7 +69,7 @@ export const DeleteHistoryPredictionByID = async (hisID: string): Promise<boolea
     const response = await fetch(apiUrl, {
       method: "DELETE",
       headers: {
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 

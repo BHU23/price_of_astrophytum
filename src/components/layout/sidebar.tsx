@@ -47,7 +47,7 @@ export default function Sidebar() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -55,9 +55,9 @@ export default function Sidebar() {
         Cookies.remove("token");
         Cookies.remove("role");
         setTimeout(() => {
-         router.push("/");
-       }, 1000)
-        
+          router.push("/");
+        }, 1000);
+
         window.location.reload();
       } else {
         const errorData = await response.json();

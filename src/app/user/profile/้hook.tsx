@@ -1,8 +1,11 @@
 "use client";
 
-import { UserProfileInterface } from "@/interface/user.interface";
+import {
+  UserProfileDisplayInterface,
+  UserProfileInterface,
+} from "@/interface/user.interface";
 import Cookies from "js-cookie";
-export const GetUserProfile = async () => { 
+export const GetUserProfile = async () => {
   const apiUrl = `http://127.0.0.1:8000/api/user/profile/`;
 
   try {
@@ -11,7 +14,7 @@ export const GetUserProfile = async () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -21,11 +24,11 @@ export const GetUserProfile = async () => {
 
     const data = await response.json();
     console.log("data", data);
-    return data
+    return data;
   } catch (error) {
     console.error("Error fetching user data:", error);
-    };
-}
+  }
+};
 
 export const UpdateUserProfile = async (
   updatedData: Partial<UserProfileInterface>
@@ -42,7 +45,7 @@ export const UpdateUserProfile = async (
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(updatedData),
     });
@@ -64,5 +67,3 @@ export const UpdateUserProfile = async (
     return null;
   }
 };
-
-

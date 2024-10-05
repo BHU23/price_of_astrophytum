@@ -11,7 +11,7 @@ import {
 export default function PostsAI({
   params,
 }: {
-  params: { history_id: string;};
+  params: { history_id: string };
 }) {
   const History_id = parseInt(params.history_id, 10);
   const { predictionHistoryGlobal, setPredictionHistoryGlobal } = useGlobal();
@@ -28,7 +28,7 @@ export default function PostsAI({
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 

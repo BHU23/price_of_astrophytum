@@ -53,7 +53,7 @@ export default function useSignUp() {
 
         const expirationTimeInDays = 6 / 24;
 
-        Cookies.set("token", data.token, {
+        Cookies.set("token", data.access, {
           secure: true,
           expires: expirationTimeInDays,
         });

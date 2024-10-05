@@ -24,11 +24,15 @@ export default function BoxPost({ prediction, onClick }: BoxPostInt) {
   );
    const handleDeleteClick = (hisspreID: number) => {
      setPredictHisToDelete(hisspreID);
+    //  console.log("Class setPredictHisToDelete", predictHisToDelete);
      const modal = document.getElementById("deleteModal");
      if (modal) modal.classList.remove("hidden");
    };
-   const handleDeleteConfirm = async () => {
-     if (predictHisToDelete !== null) {
+  const handleDeleteConfirm = async () => {
+    //  console.log("Class deleted handleDeleteConfirm", predictHisToDelete);
+    //  console.log("Class deleted prediction", prediction);
+    if (predictHisToDelete !== null) {
+       console.log("Class deleted predictHisToDelete ! null");
        const success = await DeleteHistoryPredictionByID(
          String(predictHisToDelete)
        );

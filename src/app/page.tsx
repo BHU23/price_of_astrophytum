@@ -58,12 +58,12 @@ export default function Home() {
           />
           <BoxLanding
             Name="Prompt"
-            LinkTo={role ? `${role?.toLowerCase()}/prompt_ai` : "/login"}
+            LinkTo={role ? `${role?.toLowerCase()}/post_ai` : "/login"}
             Description="Prompt for texts to help your write posts sale cactus."
           />
           <BoxLanding
             Name="Posts"
-            LinkTo={role ? `${role?.toLowerCase()}/posts` : "/login"}
+            LinkTo={role ? `${role?.toLowerCase()}/post_ai` : "/login"}
             Description="You can automated create posts to yours Facebook."
           />
         </div>

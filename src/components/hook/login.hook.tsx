@@ -20,9 +20,9 @@ export default function useLogIn() {
     try {
       const data = await PostLogIn(username, password);
 
-      const expirationTimeInDays = 6 / 24; // 6 hours
-
-      Cookies.set("token", data.token, {
+      const expirationTimeInDays = 6 / 24; 
+      console.log("loginData",data)
+      Cookies.set("token", data.access, {
         secure: true,
         expires: expirationTimeInDays,
       });

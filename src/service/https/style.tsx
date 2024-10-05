@@ -4,14 +4,14 @@ export const ListStyles = async (): Promise<StyleInterface[] | null> => {
   const apiUrl = "http://127.0.0.1:8000/api/styles/";
 
   try {
-  const token = Cookies.get("token");
-  const response = await fetch(apiUrl, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Token ${token}`,
-    },
-  });
+    const token = Cookies.get("token");
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!response.ok) {
       const errorData = await response.json();

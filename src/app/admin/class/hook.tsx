@@ -1,7 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { ClassesInterface, UpdateClassesInterface } from "@/interface/classes.interface";
+import {
+  ClassesInterface,
+  UpdateClassesInterface,
+} from "@/interface/classes.interface";
 import { PriceInterface } from "@/interface/prices.interface";
 
 export function useClasses() {
@@ -18,7 +21,7 @@ export function useClasses() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Token ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -28,7 +31,7 @@ export function useClasses() {
 
         const data = await response.json();
         setClasses(data);
-        console.log("class:",data);
+        console.log("class:", data);
       } catch (err) {
         setError("Error fetching classes" + err);
       } finally {
@@ -41,7 +44,6 @@ export function useClasses() {
 
   return { classes, loading, error };
 }
-
 
 export const UpdateClass = async (
   classId: number,
@@ -59,7 +61,7 @@ export const UpdateClass = async (
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(updatedClassData),
     });
@@ -82,23 +84,22 @@ export const UpdateClass = async (
   }
 };
 export const GetClass = async (
-  id: number,
+  id: number
 ): Promise<ClassesInterface | null> => {
-
   try {
-   const token = Cookies.get("token");
-   const apiUrl = `http://127.0.0.1:8000/api/classes/${id}/`;
-   const response = await fetch(apiUrl, {
-     method: "GET",
-     headers: {
-       "Content-Type": "application/json",
-       Authorization: `Token ${token}`,
-     },
-   });
+    const token = Cookies.get("token");
+    const apiUrl = `http://127.0.0.1:8000/api/classes/${id}/`;
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-   if (!response.ok) {
-     throw new Error(`Error: ${response.statusText}`);
-   }
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
 
     const data: ClassesInterface = await response.json();
     return data;
@@ -117,7 +118,7 @@ export const GetPrice = async () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -148,7 +149,7 @@ export const createPrice = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(newPriceData),
     });
@@ -187,7 +188,7 @@ export const CreateClass = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`, // Using Token-based authentication
+        Authorization: `Bearer ${token}`, // Using Token-based authentication
       },
       body: JSON.stringify(newClassData), // Sending the new class data
     });
@@ -223,7 +224,7 @@ export const DeleteClassByID = async (classID: string): Promise<boolean> => {
     const response = await fetch(apiUrl, {
       method: "DELETE",
       headers: {
-        Authorization: `Token ${token}`, // Using Token-based authentication
+        Authorization: `Bearer ${token}`, // Using Token-based authentication
       },
     });
 

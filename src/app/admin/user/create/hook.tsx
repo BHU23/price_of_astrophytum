@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { UserProfileDisplayInterface, UserProfileInterface } from "@/interface/user.interface";
+import { UserProfileInterface } from "@/interface/user.interface";
 import { CreateUserProfile } from "../hook";
 
 export default function useCreateUserProfile() {
@@ -16,6 +16,9 @@ export default function useCreateUserProfile() {
     first_name: "",
     last_name: "",
     fackbook_name: "",
+    phone_number: null,
+    date_of_birth: null,
+    gender: null,
   };
 
   const [formData, setFormData] =

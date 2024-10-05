@@ -9,10 +9,12 @@ import { GetUserProfile } from "./้hook";
 import FetchingState from "@/components/fetching_state";
 import profile from "../../../../public/profile_default_png.png";
 import Cookies from "js-cookie";
+import { UserProfileDisplayInterface } from "@/interface/user.interface";
+import { GetGenderById } from "@/service/https/gender";
 export default function Profile() {
   const { userProfile, setUserProfile } = useGlobal();
   const [role, setRole] = useState<string | null>(null);
-
+  const [gender, setGender] = useState<string | null>(null);
   useEffect(() => {
     const fetchedRole = Cookies.get("role");
     if (fetchedRole) {
@@ -22,13 +24,19 @@ export default function Profile() {
     }
   }, []);
   const handleGetUserProfile = async () => {
-    const data = await GetUserProfile();
+    const data: UserProfileDisplayInterface = await GetUserProfile();
+    var gender = null;
+    if( data.gender) {
+      gender = await GetGenderById(data.gender);
+    }
+    setGender(gender);
     setUserProfile(data);
   };
 
   useEffect(() => {
     handleGetUserProfile();
   }, []);
+  console.log("userProfile", userProfile);
 
   if (!userProfile) {
     return <FetchingState state="Loading..." />;
@@ -42,7 +50,7 @@ export default function Profile() {
             <div className=" w-full absolute -top-20 md:-top-24 flex flex-col lg:flex-row justify-between  lg:pr-[125px] gap-5 ">
               <div className="flex pr-5  lg:pr-0 lg:flex-row item-end gap-5 ">
                 <Image
-                  className="w-28 h-28 md:w-40 md:h-40 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                  className="w-28 h-28 md:w-40 md:h-40 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
                   src={
                     userProfile?.avatar != "" && userProfile?.avatar
                       ? userProfile?.avatar
@@ -77,8 +85,8 @@ export default function Profile() {
 
           <div className="w-full flex p-5 md:p-16 md:pt-0 lg:p-5 pt-0 ">
             <div className="w-full flex flex-col justify-start h-[100%] gap-5 border-t border-border pt-5">
-              <div className="flex justify-between gap-5 lg:gap-20 lg:justify-normal">
-                <div className="w-1/2 lg:w-auto">
+              <div className="flex gap-5 gap-10 lg:justify-normal">
+                <div className="lg:w-auto">
                   <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
                     First Name
                   </h5>
@@ -86,7 +94,7 @@ export default function Profile() {
                     {userProfile?.first_name ?? "-"}
                   </p>
                 </div>
-                <div className="lg:w-auto w-1/2">
+                <div className="lg:w-auto">
                   {" "}
                   <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
                     Last Name
@@ -96,14 +104,47 @@ export default function Profile() {
                   </p>
                 </div>
               </div>
-              <div className="w-1/2">
-                {" "}
-                <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
-                  Email
-                </h5>
-                <p className="mb-4 text-cta-gray text-start dark:text-gray-300">
-                  {userProfile?.email ?? "-"}
-                </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-5">
+                <div className="w-full">
+                  <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
+                    Email
+                  </h5>
+                  <p className="mb-4 text-cta-gray text-start dark:text-gray-300">
+                    {userProfile?.email ?? "-"}
+                  </p>
+                </div>
+                <div className="w-full">
+                  <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
+                    Phone Number
+                  </h5>
+                  <p className="mb-4 text-cta-gray text-start dark:text-gray-300">
+                    {userProfile?.phone_number ?? "-"}
+                  </p>
+                </div>
+                <div className="w-full">
+                  <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
+                    Birth Date
+                  </h5>
+                  <p className="mb-4 text-cta-gray text-start dark:text-gray-300">
+                    {userProfile?.date_of_birth ?? "-"}
+                  </p>
+                </div>
+                <div className="w-full">
+                  <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
+                    Facebook
+                  </h5>
+                  <p className="mb-4 text-cta-gray text-start dark:text-gray-300">
+                    {userProfile?.fackbook_name ?? "-"}
+                  </p>
+                </div>
+                <div className="w-full">
+                  <h5 className="mb-2 font-semibold text-gray-900 text-start dark:text-white">
+                    Gender
+                  </h5>
+                  <p className="mb-4 text-cta-gray text-start dark:text-gray-300">
+                    {gender ?? "-"}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

@@ -21,7 +21,6 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
   const router = useRouter();
   const { userProfile } = useGlobal();
 
-
   const [isLogOutModalOpen, setLogOutModalOpen] = useState(false);
 
   const getLinkClassName = (path: string) => {
@@ -45,7 +44,7 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -79,10 +78,10 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
 
   return (
     <div className="px-5 py-5 sm:py-4 h-full w-full">
-      <div className="h-full w-full flex flex-col justify-between rounded-xl border border-border p-4 ">
-        <div className="relative flex h-full w-full max-w-[20rem] flex-col">
+      <div className="h-full w-full flex flex-col justify-between rounded-xl border border-border p-2 ">
+        <div className="relative flex h-full w-full max-w-[20rem] flex-col  ">
           <div className="px-4 pt-2">
-            <h5 className="block font-sans text-xs antialiased text-cta">
+            <h5 className="block font-sans text-xs antialiased text-cta ">
               MAIN
             </h5>
           </div>
@@ -155,7 +154,7 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
               <Image
                 width={50}
                 height={50}
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full object-cover"
                 src={
                   userProfile?.avatar != "" && userProfile?.avatar
                     ? userProfile?.avatar
