@@ -54,7 +54,7 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
         Cookies.remove("role");
         toast.success("Successfully logged out!", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
         });
 
         setTimeout(() => {
@@ -67,7 +67,7 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
         console.error("Logout error:", errorData);
         toast.error(`Logout failed: ${errorData.detail || "Unknown error"}`, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 1000,
         });
       }
     } catch (error) {

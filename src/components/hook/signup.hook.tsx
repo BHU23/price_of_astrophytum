@@ -76,7 +76,7 @@ export default function useSignUp() {
         // เพิ่ม toast สำหรับการสมัครสำเร็จ
         toast.success("Registration successful!", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 1000,
         });
 
         setTimeout(() => {

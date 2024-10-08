@@ -38,7 +38,7 @@ const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     // เพิ่ม toast สำหรับการเข้าสู่ระบบสำเร็จ
     toast.success("Login successful!", {
       position: "top-right",
-      autoClose: 2500,
+      autoClose: 1000,
     });
 
     setTimeout(() => {
@@ -50,7 +50,7 @@ const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     // เพิ่ม toast สำหรับข้อผิดพลาด
     toast.error("Login failed. Please check your credentials and try again.", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 1000,
     });
   }
 };

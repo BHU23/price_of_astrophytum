@@ -65,14 +65,14 @@ export default function SidebarAdmin({ setIsOpenSM }: SidebarAdminProps) {
        console.error("Logout error:", errorData);
        toast.error(`Logout failed: ${errorData.detail || "Unknown error"}`, {
          position: "top-right",
-         autoClose: 5000,
+         autoClose: 1000,
        });
      }
    } catch (error) {
      console.error("Error during logout:", error);
      toast.error("An unexpected error occurred. Please try again later.", {
        position: "top-right",
-       autoClose: 5000,
+       autoClose: 1000,
      });
     }
   };
