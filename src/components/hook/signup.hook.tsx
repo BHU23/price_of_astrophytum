@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobal } from "@/context/useGlobal";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 export default function useSignUp() {
   const [formData, setFormData] = useState({
     email: "",
@@ -39,6 +40,7 @@ export default function useSignUp() {
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
+
     try {
       const response = await fetch("http://127.0.0.1:8000/api/register/", {
         method: "POST",
@@ -67,21 +69,50 @@ export default function useSignUp() {
         setUserProfile(data.user_profile);
 
         toggleIsOpenModelBoolean(false);
+
         const role = data.user_profile.role;
         console.log("role", role);
-        // toggleToken(true);
+
+        // เพิ่ม toast สำหรับการสมัครสำเร็จ
+        toast.success("Registration successful!", {
+          position: "top-right",
+          autoClose: 5000,
+        });
+
         setTimeout(() => {
           router.push(`/${role?.toLowerCase()}/dashboard`);
         }, 100);
       } else {
         const errorData = await response.json();
         setError(errorData.error);
+        console.error("An error occurred:", errorData);
+        // เพิ่ม toast สำหรับข้อผิดพลาด
+        if (errorData.username) {
+          toast.error(`Username error: ${errorData.username[0]}`, {
+            position: "top-right",
+            autoClose: 5000,
+          });
+        }
+
+        if (errorData.email) {
+          toast.error(`Email error: ${errorData.email[0]}`, {
+            position: "top-right",
+            autoClose: 5000,
+          });
+        }
       }
     } catch (error) {
       console.error("An error occurred:", error);
       setError("An error occurred during registration.");
+
+      // เพิ่ม toast สำหรับข้อผิดพลาดทั่วไป
+      toast.error("An error occurred during registration.", {
+        position: "top-right",
+        autoClose: 2500,
+      });
     }
   };
+
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);

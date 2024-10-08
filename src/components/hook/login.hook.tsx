@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGlobal } from "@/context/useGlobal";
 import Cookies from "js-cookie";
-
+import { toast } from "react-toastify";
 export default function useLogIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -14,37 +14,47 @@ export default function useLogIn() {
   const { setUserProfile, toggleIsOpenModelBoolean, toggleToken } =
     useGlobal();
 
-  const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
 
-    try {
-      const data = await PostLogIn(username, password);
+  try {
+    const data = await PostLogIn(username, password);
 
-      const expirationTimeInDays = 6 / 24; 
-      console.log("loginData",data)
-      Cookies.set("token", data.access, {
-        secure: true,
-        expires: expirationTimeInDays,
-      });
-      Cookies.set("role", data.user_profile.role, {
-        secure: true,
-        expires: expirationTimeInDays,
-      });
+    const expirationTimeInDays = 6 / 24;
+    console.log("loginData", data);
 
-      setUserProfile(data.user_profile);
-      toggleIsOpenModelBoolean(false);
+    Cookies.set("token", data.access, {
+      secure: true,
+      expires: expirationTimeInDays,
+    });
+    Cookies.set("role", data.user_profile.role, {
+      secure: true,
+      expires: expirationTimeInDays,
+    });
 
-      // toggleToken(true);
+    setUserProfile(data.user_profile);
+    toggleIsOpenModelBoolean(false);
 
-      setTimeout(() => {
-        router.push(`/${data.user_profile.role.toLowerCase()}/dashboard`);
-      }, 100);
-    } catch (error) {
-      setError(
-        "An unexpected error occurred. Please try again."
-      );
-    }
-  };
+    // เพิ่ม toast สำหรับการเข้าสู่ระบบสำเร็จ
+    toast.success("Login successful!", {
+      position: "top-right",
+      autoClose: 2500,
+    });
+
+    setTimeout(() => {
+      router.push(`/${data.user_profile.role.toLowerCase()}/dashboard`);
+    }, 100);
+  } catch (error) {
+    setError("An unexpected error occurred. Please try again.");
+
+    // เพิ่ม toast สำหรับข้อผิดพลาด
+    toast.error("Login failed. Please check your credentials and try again.", {
+      position: "top-right",
+      autoClose: 5000,
+    });
+  }
+};
+
 
   const [activeTab, setActiveTab] = useState("sign-in");
   const [showPassword, setShowPassword] = useState(false);

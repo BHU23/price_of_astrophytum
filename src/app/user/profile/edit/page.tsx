@@ -10,7 +10,7 @@ import FetchingState from "@/components/fetching_state";
 import { DropdownGenders } from "@/components/dropdown_gender";
 import DateBDPicker from "@/components/date_BD_picker";
 import { UserProfileInterface } from "@/interface/user.interface";
-
+import { toast } from "react-toastify";
 export default function EditProfile() {
   const router = useRouter();
   const [formData, setFormData] = useState<UserProfileInterface>({
@@ -97,25 +97,33 @@ export default function EditProfile() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    console.log("Profile formData:", formData);
-    try {
-      const updatedProfile = await UpdateUserProfile(formData);
-      if (updatedProfile) {
-        // Handle successful update, e.g., notify the user or redirect
-        console.log("Profile updated successfully:", updatedProfile);
-        router.back();
-      }
-    } catch (err) {
-      console.error("Failed to update user profile:", err);
-      setError("Failed to update user profile.");
-    } finally {
-      setLoading(false);
-    }
-  };
+ const handleSubmit = async (e: React.FormEvent) => {
+   e.preventDefault();
+   setLoading(true);
+   setError(null);
+   console.log("Profile formData:", formData);
+   try {
+     const updatedProfile = await UpdateUserProfile(formData);
+     if (updatedProfile) {
+       // Handle successful update
+       console.log("Profile updated successfully:", updatedProfile);
+       toast.success("Profile updated successfully!", {
+         position: "top-right",
+         autoClose: 5000,
+       });
+       router.back();
+     }
+   } catch (err) {
+     console.error("Failed to update user profile:", err);
+     toast.error("Failed to update user profile.", {
+       position: "top-right",
+       autoClose: 5000,
+     });
+     setError("Failed to update user profile.");
+   } finally {
+     setLoading(false);
+   }
+ };
 
   if (loading) {
     return <FetchingState state="Loading..." />;

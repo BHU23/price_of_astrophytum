@@ -10,7 +10,7 @@ import { GetUserProfileByID, UpdateUserProfileByAdmin } from "../hook";
 import { UserProfileInterface } from "@/interface/user.interface";
 import DateBDPicker from "@/components/date_BD_picker";
 import { DropdownGenders } from "@/components/dropdown_gender";
-
+import { toast } from "react-toastify";
 export default function EditProfile({ params }: { params: { user: string } }) {
   const userID = parseInt(params.user, 10);
   const router = useRouter();
@@ -95,10 +95,19 @@ export default function EditProfile({ params }: { params: { user: string } }) {
     try {
       const updatedProfile = await UpdateUserProfileByAdmin(formData,userID);
       if (updatedProfile) {
-        // Handle successful update, e.g., notify the user or redirect
-        console.log("Profile updated successfully:", updatedProfile);
-        router.back();
-      }
+          console.log("Profile updated successfully");
+          toast.success("Profile updated successfully", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+          router.refresh();
+        } else {
+          console.error("Profile to updated the class");
+          toast.error("Profile to updated the class", {
+            position: "top-right",
+            autoClose: 5000,
+          });
+        }
     } catch (err) {
       console.error("Failed to update user profile:", err);
       setError("Failed to update user profile.");

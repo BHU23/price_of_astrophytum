@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { UserProfileInterface } from "@/interface/user.interface";
 import { CreateUserProfile } from "../hook";
-
+import { toast } from "react-toastify";
 export default function useCreateUserProfile() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -72,13 +72,21 @@ export default function useCreateUserProfile() {
     try {
        console.log(formData);
       const result = await CreateUserProfile(formData);
-
       if (result) {
+        console.log("User created successfully");
+        toast.success("User created successfully", {
+          position: "top-right",
+          autoClose: 3000,
+        });
         router.push("/admin/user");
       } else {
-        console.error("Failed to create the user profile");
-        setError("Failed to create the user profile");
+        console.error("Failed to create the new user");
+        toast.error("Failed to create the new user", {
+          position: "top-right",
+          autoClose: 5000,
+        });
       }
+     
     } catch (error) {
       console.error("Error creating user profile:", error);
       setError("Error creating user profile: " + (error as Error).message);

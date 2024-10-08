@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useGlobal } from "@/context/useGlobal";
 import profile from "../../../public/profile_default_png.png";
 import LogOutModle from "../logOut_model";
-
+import { toast } from "react-toastify";
 interface usePathnameProps {
   setIsOpenSM: () => void;
 }
@@ -37,6 +37,7 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
       const token = Cookies.get("token");
       if (!token) {
         console.warn("No token found. User might already be logged out.");
+        toast.info("You are already logged out.");
         return;
       }
 
@@ -51,6 +52,11 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
       if (response.ok) {
         Cookies.remove("token");
         Cookies.remove("role");
+        toast.success("Successfully logged out!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+
         setTimeout(() => {
           router.push("/");
         }, 100);
@@ -59,9 +65,17 @@ export default function SidebarUser({ setIsOpenSM }: usePathnameProps) {
       } else {
         const errorData = await response.json();
         console.error("Logout error:", errorData);
+        toast.error(`Logout failed: ${errorData.detail || "Unknown error"}`, {
+          position: "top-right",
+          autoClose: 5000,
+        });
       }
     } catch (error) {
       console.error("Error during logout:", error);
+      toast.error("An unexpected error occurred. Please try again later.", {
+        position: "top-right",
+        autoClose: 5000,
+      });
     }
   };
 

@@ -6,6 +6,7 @@ import DropdownSort from "./dropdown_sortOrder";
 import BoxPost from "./box_yourpost";
 import { useRouter } from "next/navigation";
 import { DeleteHistoryPredictionByID } from "@/app/admin/dashboard/api";
+import { toast } from "react-toastify";
 interface PredictionHistoryProp {
   historyPredictions: HistoryPredicstionInterface[] | null;
   role: string | null;
@@ -75,9 +76,17 @@ export default function PredictionHistory({
       );
       if (success) {
         console.log("Class deleted successfully");
+        toast.success("Class deleted successfully", {
+          position: "top-right",
+          autoClose: 3000,
+        });
         router.refresh();
       } else {
         console.error("Failed to delete the class");
+        toast.error("Failed to delete the class", {
+          position: "top-right",
+          autoClose: 5000,
+        });
       }
       setPredictHisToDelete(null);
       const modal = document.getElementById("deleteModal");

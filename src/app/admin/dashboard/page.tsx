@@ -25,6 +25,8 @@ import { format } from "date-fns";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
 import { FiTrash } from "react-icons/fi";
 import DeleteModle from "@/components/delete_model";
+import { toast } from "react-toastify";
+
 export default function DeashBoard() {
   const router = useRouter();
    const { historyPredictions, historyPrompts, loading, error } =
@@ -240,28 +242,38 @@ export default function DeashBoard() {
   };
 
   const handleDeleteClick = (hisspreID: number) => {
+    console.log("dlelte:", predictHisToDelete)
     setPredictHisToDelete(hisspreID);
     const modal = document.getElementById("deleteModal");
     if (modal) modal.classList.remove("hidden");
   };
-  const handleDeleteConfirm = async () => {
-    if (predictHisToDelete !== null) {
-      const success = await DeleteHistoryPredictionByID(
-        String(predictHisToDelete)
-      );
-      if (success) {
-        console.log("Class deleted successfully");
-        // Refresh or update the UI after deletion
-        router.refresh(); // Refresh the page or trigger re-fetching
-      } else {
-        console.error("Failed to delete the class");
-      }
-      setPredictHisToDelete(null);
-      const modal = document.getElementById("deleteModal");
-      if (modal) modal.classList.add("hidden");
-      window.location.reload();
-    }
-  };
+   const handleDeleteConfirm = async () => {
+     console.log("Class deleted handleDeleteConfirm", predictHisToDelete);
+     if (predictHisToDelete !== null) {
+       console.log("Class deleted predictHisToDelete ! null");
+       const success = await DeleteHistoryPredictionByID(
+         String(predictHisToDelete)
+       );
+       if (success) {
+         console.log("Class deleted successfully");
+         toast.success("Class deleted successfully", {
+           position: "top-right",
+           autoClose: 3000,
+         });
+         router.refresh();
+       } else {
+         console.error("Failed to delete the class");
+         toast.error("Failed to delete the class", {
+           position: "top-right",
+           autoClose: 5000,
+         });
+       }
+       setPredictHisToDelete(null);
+       const modal = document.getElementById("deleteModal");
+       if (modal) modal.classList.add("hidden");
+      //  window.location.reload();
+     }
+   };
   const formatDate = (timestamp: Date) => {
     if (!timestamp) return "";
     const date = new Date(timestamp);

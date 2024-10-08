@@ -12,6 +12,7 @@ import { useGlobal } from "@/context/useGlobal";
 import Image from "next/image";
 import profile from "../../../public/profile_default_png.png";
 import LogOutModle from "../logOut_model";
+import { toast } from "react-toastify";
 interface SidebarAdminProps {
   setIsOpenSM: () => void; // พารามิเตอร์คือฟังก์ชันไม่มีพารามิเตอร์คืนค่า void
 }
@@ -29,38 +30,53 @@ export default function SidebarAdmin({ setIsOpenSM }: SidebarAdminProps) {
     }`;
   };
 
-  const handleLogout = async () => {
-    try {
-      const token = Cookies.get("token");
-      if (!token) {
-        console.warn("No token found. User might already be logged out.");
-        return;
-      }
+ const handleLogout = async () => {
+   try {
+     const token = Cookies.get("token");
+     if (!token) {
+       console.warn("No token found. User might already be logged out.");
+       toast.info("You are already logged out.");
+       return;
+     }
 
-      const response = await fetch("http://127.0.0.1:8000/api/logout/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+     const response = await fetch("http://127.0.0.1:8000/api/logout/", {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+         Authorization: `Bearer ${token}`,
+       },
+     });
 
-      if (response.ok) {
-        Cookies.remove("token");
-        Cookies.remove("role");
-        setTimeout(() => {
-          router.push("/");
-        }, 100);
+     if (response.ok) {
+       Cookies.remove("token");
+       Cookies.remove("role");
+       toast.success("Successfully logged out!", {
+         position: "top-right",
+         autoClose: 3000,
+       });
 
-        // window.location.reload();
-      } else {
-        const errorData = await response.json();
-        console.error("Logout error:", errorData);
-      }
-    } catch (error) {
-      console.error("Error during logout:", error);
+       setTimeout(() => {
+         router.push("/");
+       }, 100);
+
+       // window.location.reload();
+     } else {
+       const errorData = await response.json();
+       console.error("Logout error:", errorData);
+       toast.error(`Logout failed: ${errorData.detail || "Unknown error"}`, {
+         position: "top-right",
+         autoClose: 5000,
+       });
+     }
+   } catch (error) {
+     console.error("Error during logout:", error);
+     toast.error("An unexpected error occurred. Please try again later.", {
+       position: "top-right",
+       autoClose: 5000,
+     });
     }
   };
+
   const [isLogOutModalOpen, setLogOutModalOpen] = useState(false);
   const handleLogoutOpen = () => {
     setLogOutModalOpen(true);

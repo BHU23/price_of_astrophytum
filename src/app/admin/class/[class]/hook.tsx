@@ -6,7 +6,7 @@ import { ClassesInterface } from "@/interface/classes.interface";
 import Cookies from "js-cookie";
 import { createPrice, GetClass, GetPrice, UpdateClass } from "../hook";
 import { PriceInterface } from "@/interface/prices.interface";
-
+import { toast } from "react-toastify";
 export default function useClass(id: number) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -100,9 +100,18 @@ export default function useClass(id: number) {
         const createdPrice = await createPrice(newPriceData);
 
         if (createdPrice) {
-          priceId = createdPrice.id; 
+          console.log("Class created successfully");
+          toast.success("Class created successfully", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+          router.refresh();
         } else {
-          throw new Error("Failed to create a new price");
+          console.error("Failed to created the class");
+          toast.error("Failed to created the class", {
+            position: "top-right",
+            autoClose: 5000,
+          });
         }
       }
 
@@ -119,11 +128,19 @@ export default function useClass(id: number) {
       console.log("updatedData: ", updatedData);
 
       const result = await UpdateClass(formDataClass.id, updatedData);
-
       if (result) {
+        console.log("Class updated successfully");
+        toast.success("Class updated successfully", {
+          position: "top-right",
+          autoClose: 3000,
+        });
         router.push("/admin/class");
       } else {
         console.error("Failed to update the class");
+        toast.error("Failed to update the class", {
+          position: "top-right",
+          autoClose: 5000,
+        });
       }
     } catch (error) {
       console.error("Error updating class:", error);

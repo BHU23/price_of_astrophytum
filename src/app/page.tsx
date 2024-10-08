@@ -22,7 +22,7 @@ export default function Home() {
   }, []);
   return (
     <main className="h-screen pt-2">
-      <div className="w-full md:h-[100%] relative flex flex-col justify-center items-center gap-4 px-5 -top-5">
+      <div className="w-full min-h-[100vh]  md:h-[100%] relative flex flex-col justify-center items-center gap-4 px-5 -top-5">
         <div className="flex flex-row items-center justify-between ">
           <Image
             width={500}

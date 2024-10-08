@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { HistoryPromptInterface } from "@/interface/hostoryprompt.interface";
 import { GetHistoryPrompts } from "@/service/https/promp";
+import { toast } from "react-toastify";
+
 export const useFetchPredictions = () => {
   const [historyPredictions, setHistoryPredictions] = useState<
     HistoryPredicstionInterface[] | null
@@ -93,6 +95,10 @@ export const DeleteHistoryPredictionByID = async (hisID: string): Promise<boolea
     return true;
   } catch (error) {
     console.error("Error deleting class:", hisID);
+    toast.error(`Failed to delete class with ID: ${hisID}`, {
+      position: "top-right",
+      autoClose: 5000,
+    });
     return false;
   }
 };

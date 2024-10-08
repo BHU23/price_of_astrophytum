@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ClassesInterface } from "@/interface/classes.interface";
 import { createPrice, CreateClass, GetPrice } from "../hook";
 import { PriceInterface } from "@/interface/prices.interface";
-
+import { toast } from "react-toastify";
 export default function useCreateClass() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -71,9 +71,18 @@ export default function useCreateClass() {
         const createdPrice = await createPrice(newPriceData);
 
         if (createdPrice) {
-          priceId = createdPrice.id;
+          console.log("Class deleted successfully");
+          toast.success("Class deleted successfully", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+          router.refresh();
         } else {
-          throw new Error("Failed to create a new price");
+          console.error("Failed to delete the class");
+          toast.error("Failed to delete the class", {
+            position: "top-right",
+            autoClose: 5000,
+          });
         }
       }
 

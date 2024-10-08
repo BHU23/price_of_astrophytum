@@ -15,7 +15,7 @@ import StatBox from "@/components/stat_box";
 import StatBoxPost from "@/components/stat_boxPost";
 import DropdownSort from "@/components/dropdown_sortOrder";
 import PredictionHistory from "@/components/prediction_his";
-
+import { toast } from "react-toastify";
 export default function DeashBoard() {
   const router = useRouter();
   const { historyPredictions,historyPrompts, loading, error } = useFetchPredictions();
